@@ -37,3 +37,9 @@ Make sure you have the necessary drivers installed. You can download them from t
 |-------------|----------------|
 | D3 (GPIO0)  | Red led        |
 | D4 (GPIO2 ) | Green led      |
+
+## 📌 Buzzer to NodeMCU Pin Connections
+
+| NodeMCU Pin | Function       |
+|-------------|----------------|
+| D6 (GPIO12) | Sound          |
