@@ -1,30 +1,18 @@
-/*****************************************************************************
- *
-/ Program for writing to NHD-C12864A1Z display Series with the ST7565P Controller.
-/ This code is written for the Arduino Uno R3 using Serial Interface
-/
-/ Newhaven Display invests time and resources providing this open source code,
-/ Please support Newhaven Display by purchasing products from Newhaven Display!
+/*
+ * Portions of this code are derived from the original work of Newhaven Display International.
+ * Original Copyright (c) 2019, Newhaven Display International.
+ * Licensed under GNU General Public License.
+ */
 
-* Copyright (c) 2019, Newhaven Display International
-*
-* This code is provided as an example only and without any warranty by Newhaven Display.
-* Newhaven Display accepts no responsibility for any issues resulting from its use.
-* The developer of the final application incorporating any parts of this
-* sample code is responsible for ensuring its safe and correct operation
-* and for any consequences resulting from its use.
-* See the GNU General Public License for more details.
-*
-* Use Vertical Orientation when converting BMP to hex code to display 
-* custom image using LCD assistant.
-*
-*****************************************************************************/
+/****************************************************
+ *               Includes               
+ *****************************************************/
+
+#include "pitches.h"
 
 /****************************************************
  *               Hex Table for NHD Pic               
  *****************************************************/
-
-#include "pitches.h"
 
 unsigned char NHD[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -203,145 +191,23 @@ int durations[] = {
   8, 8, 8, 8, 8, 2
 };
 
-/*    Pinout Table    
-  Display:                          NodeMCU:
-  SCL (Serial Clock)----------------D5 (GPIO14)
-  SI (Serial Data input)------------D7 (GPIO13)
-  A0 (Register Select)--------------D1 (GPIO5)
-  /RESET (Reset signal)-------------D2 (GPIO4)
-  /CS (Chip Select Signal)----------D8 (GPIO15)
-  VDD (Supply Voltage +3.0V)--------3V3
-  VSS (Ground)----------------------GND
-  LED- (Backlight Cathode)----------GND
-  LED+ (Backlight Anode)------------3V3
-*/
-
 #define RES D1 // /RES (Reset signal) connected to D2 (GPIO4)
-#define CS D8 // /CS (Chip Select Signal) connected to D8 (GPIO15)
-#define RS D1 // RS (Register Select) signal connected to D1 (GPIO5)
+#define CS D8  // /CS (Chip Select Signal) connected to D8 (GPIO15)
+#define RS D1  // RS (Register Select) signal connected to D1 (GPIO5)
 #define SC D5  // SCL (serial mode) signal connected to D5 (GPIO14)
-#define SI D7 // SDI (serial mode) signal connected to D7 (GPIO13)
+#define SI D7  // SDI (serial mode) signal connected to D7 (GPIO13)
 
-#define LED_RED D3 // (GPIO 9)
+#define LED_RED D3   // (GPIO 9)
 #define LED_GREEN D4 // (GPIO 10)
 
-#define BUZZER D6 // (GPIO 12)
-
-/****************************************************
- *                 Function Commands                 
- *****************************************************/
-
-void data_write(unsigned char d) // Data Output Serial Interface
-{
-  unsigned int n;
-  digitalWrite(CS, LOW);
-  digitalWrite(RS, HIGH);
-  for (n = 0; n < 8; n++)
-  {
-    if ((d & 0x80) == 0x80)
-      digitalWrite(SI, HIGH);
-    else
-      digitalWrite(SI, LOW);
-    while (0);
-    d = (d << 1);
-    digitalWrite(SC, LOW);
-    while (0);
-    digitalWrite(SC, HIGH);
-    while (0);
-    digitalWrite(SC, LOW);
-  }
-  digitalWrite(CS, HIGH);
-}
-
-void comm_write(unsigned char d) // Command Output Serial Interface
-{
-  unsigned int n;
-  digitalWrite(CS, LOW);
-  digitalWrite(RS, LOW);
-  for (n = 0; n < 8; n++)
-  {
-    if ((d & 0x80) == 0x80)
-      digitalWrite(SI, HIGH);
-    else
-      digitalWrite(SI, LOW);
-    while (0);
-    d = (d << 1);
-    digitalWrite(SC, LOW);
-    while (0);
-    digitalWrite(SC, HIGH);
-    while (0);
-    digitalWrite(SC, LOW);
-  }
-  digitalWrite(CS, HIGH);
-}
-
-void DispPic(unsigned char *lcd_string)
-{
-  unsigned int i, j;
-  unsigned char page = 0xB0;
-  comm_write(0xAE); // Display OFF
-  comm_write(0x40); // Display start address + 0x40
-  for (i = 0; i < 8; i++)
-  {                   // 64 pixel display / 8 pixels per page = 8 pages
-    comm_write(page); // send page address
-    comm_write(0x10); // column address upper 4 bits + 0x10
-    comm_write(0x00); // column address lower 4 bits + 0x00
-    for (j = 0; j < 128; j++)
-    {                          // 128 columns wide
-      data_write(*lcd_string); // send picture data
-      lcd_string++;
-    }
-    page++; // after 128 columns, go to next page
-  }
-  comm_write(0xAF);
-}
-
-void ClearLCD(unsigned char *lcd_string)
-{
-  unsigned int i, j;
-  unsigned char page = 0xB0;
-  comm_write(0xAE); // Display OFF
-  comm_write(0x40); // Display start address + 0x40
-  for (i = 0; i < 8; i++)
-  {                   // 64 pixel display / 8 pixels per page = 8 pages
-    comm_write(page); // send page address
-    comm_write(0x10); // column address upper 4 bits + 0x10
-    comm_write(0x00); // column address lower 4 bits + 0x00
-    for (j = 0; j < 128; j++)
-    {                   // 128 columns wide
-      data_write(0x00); // write clear pixels
-      lcd_string++;
-    }
-    page++; // after 128 columns, go to next page
-  }
-  comm_write(0xAF);
-}
+#define BUZZER D6    // (GPIO 12)
 
 /****************************************************
  *           Initialization For controller           
  *****************************************************/
 
-void init_LCD()
-{
-  comm_write(0xA0); // ADC select
-  comm_write(0xAE); // Display OFF
-  comm_write(0xC8); // COM direction scan
-  comm_write(0xA2); // LCD bias set
-  comm_write(0x2F); // Power Control set
-  comm_write(0x26); // Resistor Ratio Set
-  comm_write(0x81); // Electronic Volume Command (set contrast) Double Byte: 1 of 2
-  comm_write(0x11); // Electronic Volume value (contrast value) Double Byte: 2 of 2
-  comm_write(0xAF); // Display ON
-}
-
-/*****************************************************
- *           Setup Function, to run once              
- *****************************************************/
-
 void setup()
 {
-
-  //DDRD = 0xFF;          // configure PORTD as output
   pinMode(RES, OUTPUT); // configure RES as output
   pinMode(CS, OUTPUT);  // configure CS as output
   pinMode(RS, OUTPUT);  // configure RS as output
@@ -370,17 +236,12 @@ void loop()
   int size = sizeof(durations) / sizeof(int);
 
   for (int note = 0; note < size; note++) {
-    //to calculate the note duration, take one second divided by the note type.
-    //e.g. quarter note = 1000 / 4, eighth note = 1000/8, etc.
     int duration = 1000 / durations[note];
     tone(BUZZER, melody[note], duration);
 
-    //to distinguish the notes, set a minimum time between them.
-    //the note's duration + 30% seems to work well:
     int pauseBetweenNotes = duration * 1.30;
     delay(pauseBetweenNotes);
     
-    //stop the tone playing:
     noTone(BUZZER);
   }
 
