@@ -30,3 +30,10 @@ Make sure you have the necessary drivers installed. You can download them from t
 | 10 (LED-)   | Backlight Cathode     | GND         | Ground         |
 | 11 (LED+)   | Backlight Anode       | 3V3         | 3.3V Power     |
 | 12 (NC)     | No Connect            | -           | Not Connected  |
+
+## 📌 LEDs to NodeMCU Pin Connections
+
+| NodeMCU Pin | Function       |
+|-------------|----------------|
+| D3 (GPIO0)  | Red led        |
+| D4 (GPIO2 ) | Green led      |
