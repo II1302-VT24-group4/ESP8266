@@ -13,3 +13,33 @@ Follow the guide below to set up and start programming NodeMCU ESP8266:
 Make sure you have the necessary drivers installed. You can download them from the link below:
 
 [🔗 USB to UART Bridge VCP Drivers](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers?tab=downloads)
+
+## 📌 Display to NodeMCU Pin Connections
+
+| Display Pin | Function              | NodeMCU Pin | Function       |
+|-------------|-----------------------|-------------|----------------|
+| 1 (SCL)     | Serial Clock input    | D5 (GPIO14) | SPI Clock      |
+| 2 (SI)      | Serial Data input     | D7 (GPIO13) | SPI MOSI       |
+| 3 (VDD)     | Supply Voltage (+3.0V)| 3V3         | 3.3V Power     |
+| 4 (A0)      | Register Select       | D1 (GPIO5)  | GPIO           |
+| 5 (/RESET)  | Reset signal          | D2 (GPIO4)  | GPIO           |
+| 6 (/CS)     | Chip Select Signal    | D8 (GPIO15) | GPIO           |
+| 7 (VSS)     | Ground                | GND         | Ground         |
+| 8 (H)       | Heater Connection     | -           | Not Connected  |
+| 9 (H)       | Heater Connection     | -           | Not Connected  |
+| 10 (LED-)   | Backlight Cathode     | GND         | Ground         |
+| 11 (LED+)   | Backlight Anode       | 3V3         | 3.3V Power     |
+| 12 (NC)     | No Connect            | -           | Not Connected  |
+
+## 📌 LEDs to NodeMCU Pin Connections
+
+| NodeMCU Pin | Function       |
+|-------------|----------------|
+| D3 (GPIO0)  | Red led        |
+| D4 (GPIO2 ) | Green led      |
+
+## 📌 Buzzer to NodeMCU Pin Connections
+
+| NodeMCU Pin | Function       |
+|-------------|----------------|
+| D6 (GPIO12) | Sound          |
