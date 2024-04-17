@@ -24,6 +24,8 @@
  *               Hex Table for NHD Pic               
  *****************************************************/
 
+#include "pitches.h"
+
 unsigned char NHD[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -93,6 +95,114 @@ unsigned char NHD[] = {
 /****************************************************      
  *****************************************************/
 
+int melody[] = {
+  NOTE_E4, NOTE_G4, NOTE_A4, NOTE_A4, REST,
+  NOTE_A4, NOTE_B4, NOTE_C5, NOTE_C5, REST,
+  NOTE_C5, NOTE_D5, NOTE_B4, NOTE_B4, REST,
+  NOTE_A4, NOTE_G4, NOTE_A4, REST,
+  
+  NOTE_E4, NOTE_G4, NOTE_A4, NOTE_A4, REST,
+  NOTE_A4, NOTE_B4, NOTE_C5, NOTE_C5, REST,
+  NOTE_C5, NOTE_D5, NOTE_B4, NOTE_B4, REST,
+  NOTE_A4, NOTE_G4, NOTE_A4, REST,
+  
+  NOTE_E4, NOTE_G4, NOTE_A4, NOTE_A4, REST,
+  NOTE_A4, NOTE_C5, NOTE_D5, NOTE_D5, REST,
+  NOTE_D5, NOTE_E5, NOTE_F5, NOTE_F5, REST,
+  NOTE_E5, NOTE_D5, NOTE_E5, NOTE_A4, REST,
+  
+  NOTE_A4, NOTE_B4, NOTE_C5, NOTE_C5, REST,
+  NOTE_D5, NOTE_E5, NOTE_A4, REST,
+  NOTE_A4, NOTE_C5, NOTE_B4, NOTE_B4, REST,
+  NOTE_C5, NOTE_A4, NOTE_B4, REST,
+  
+  NOTE_A4, NOTE_A4,
+  //Repeat of first part
+  NOTE_A4, NOTE_B4, NOTE_C5, NOTE_C5, REST,
+  NOTE_C5, NOTE_D5, NOTE_B4, NOTE_B4, REST,
+  NOTE_A4, NOTE_G4, NOTE_A4, REST,
+  
+  NOTE_E4, NOTE_G4, NOTE_A4, NOTE_A4, REST,
+  NOTE_A4, NOTE_B4, NOTE_C5, NOTE_C5, REST,
+  NOTE_C5, NOTE_D5, NOTE_B4, NOTE_B4, REST,
+  NOTE_A4, NOTE_G4, NOTE_A4, REST,
+  
+  NOTE_E4, NOTE_G4, NOTE_A4, NOTE_A4, REST,
+  NOTE_A4, NOTE_C5, NOTE_D5, NOTE_D5, REST,
+  NOTE_D5, NOTE_E5, NOTE_F5, NOTE_F5, REST,
+  NOTE_E5, NOTE_D5, NOTE_E5, NOTE_A4, REST,
+  
+  NOTE_A4, NOTE_B4, NOTE_C5, NOTE_C5, REST,
+  NOTE_D5, NOTE_E5, NOTE_A4, REST,
+  NOTE_A4, NOTE_C5, NOTE_B4, NOTE_B4, REST,
+  NOTE_C5, NOTE_A4, NOTE_B4, REST,
+  //End of Repeat
+  
+  NOTE_E5, REST, REST, NOTE_F5, REST, REST,
+  NOTE_E5, NOTE_E5, REST, NOTE_G5, REST, NOTE_E5, NOTE_D5, REST, REST,
+  NOTE_D5, REST, REST, NOTE_C5, REST, REST,
+  NOTE_B4, NOTE_C5, REST, NOTE_B4, REST, NOTE_A4,
+  
+  NOTE_E5, REST, REST, NOTE_F5, REST, REST,
+  NOTE_E5, NOTE_E5, REST, NOTE_G5, REST, NOTE_E5, NOTE_D5, REST, REST,
+  NOTE_D5, REST, REST, NOTE_C5, REST, REST,
+  NOTE_B4, NOTE_C5, REST, NOTE_B4, REST, NOTE_A4
+};
+
+int durations[] = {
+  8, 8, 4, 8, 8,
+  8, 8, 4, 8, 8,
+  8, 8, 4, 8, 8,
+  8, 8, 4, 8,
+  
+  8, 8, 4, 8, 8,
+  8, 8, 4, 8, 8,
+  8, 8, 4, 8, 8,
+  8, 8, 4, 8,
+  
+  8, 8, 4, 8, 8,
+  8, 8, 4, 8, 8,
+  8, 8, 4, 8, 8,
+  8, 8, 8, 4, 8,
+  
+  8, 8, 4, 8, 8,
+  4, 8, 4, 8,
+  8, 8, 4, 8, 8,
+  8, 8, 4, 4,
+  
+  4, 8,
+  //Repeat of First Part
+  8, 8, 4, 8, 8,
+  8, 8, 4, 8, 8,
+  8, 8, 4, 8,
+  
+  8, 8, 4, 8, 8,
+  8, 8, 4, 8, 8,
+  8, 8, 4, 8, 8,
+  8, 8, 4, 8,
+  
+  8, 8, 4, 8, 8,
+  8, 8, 4, 8, 8,
+  8, 8, 4, 8, 8,
+  8, 8, 8, 4, 8,
+  
+  8, 8, 4, 8, 8,
+  4, 8, 4, 8,
+  8, 8, 4, 8, 8,
+  8, 8, 4, 4,
+  //End of Repeat
+  
+  4, 8, 4, 4, 8, 4,
+  8, 8, 8, 8, 8, 8, 8, 8, 4,
+  4, 8, 4, 4, 8, 4,
+  8, 8, 8, 8, 8, 2,
+  
+  4, 8, 4, 4, 8, 4,
+  8, 8, 8, 8, 8, 8, 8, 8, 4,
+  4, 8, 4, 4, 8, 4,
+  8, 8, 8, 8, 8, 2
+};
+
 /*    Pinout Table    
   Display:                          NodeMCU:
   SCL (Serial Clock)----------------D5 (GPIO14)
@@ -111,6 +221,11 @@ unsigned char NHD[] = {
 #define RS D1 // RS (Register Select) signal connected to D1 (GPIO5)
 #define SC D5  // SCL (serial mode) signal connected to D5 (GPIO14)
 #define SI D7 // SDI (serial mode) signal connected to D7 (GPIO13)
+
+#define LED_RED D3 // (GPIO 9)
+#define LED_GREEN D4 // (GPIO 10)
+
+#define BUZZER D6 // (GPIO 12)
 
 /****************************************************
  *                 Function Commands                 
@@ -225,6 +340,7 @@ void init_LCD()
 
 void setup()
 {
+
   //DDRD = 0xFF;          // configure PORTD as output
   pinMode(RES, OUTPUT); // configure RES as output
   pinMode(CS, OUTPUT);  // configure CS as output
@@ -235,6 +351,14 @@ void setup()
   delay(100);
   digitalWrite(RES, HIGH);
   delay(100);
+
+  // LEDS
+  pinMode(LED_RED, OUTPUT);
+  pinMode(LED_GREEN, OUTPUT);
+
+  // Buzzer
+  pinMode(BUZZER, OUTPUT);
+  pinMode(BUZZER, INPUT_PULLUP);
 }
 
 /*****************************************************
@@ -243,6 +367,23 @@ void setup()
 
 void loop()
 {
+  int size = sizeof(durations) / sizeof(int);
+
+  for (int note = 0; note < size; note++) {
+    //to calculate the note duration, take one second divided by the note type.
+    //e.g. quarter note = 1000 / 4, eighth note = 1000/8, etc.
+    int duration = 1000 / durations[note];
+    tone(BUZZER, melody[note], duration);
+
+    //to distinguish the notes, set a minimum time between them.
+    //the note's duration + 30% seems to work well:
+    int pauseBetweenNotes = duration * 1.30;
+    delay(pauseBetweenNotes);
+    
+    //stop the tone playing:
+    noTone(BUZZER);
+  }
+
   delay(10);
   init_LCD();
   while (1)
@@ -250,10 +391,14 @@ void loop()
     ClearLCD(NHD); // clear LCD
     delay(1000);
     DispPic(NHD); // Show Image
+    digitalWrite(LED_RED, HIGH); 
+    digitalWrite(LED_GREEN, HIGH); 
     delay(3000);
     comm_write(0xA5); // Turn all points ON
     delay(1000);
     comm_write(0xA4); // Revert to Normal Display
+    digitalWrite(LED_RED, LOW); 
+    digitalWrite(LED_GREEN, LOW); 
     delay(1000);
   }
 }
