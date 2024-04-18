@@ -43,3 +43,12 @@ Make sure you have the necessary drivers installed. You can download them from t
 | NodeMCU Pin | Function       |
 |-------------|----------------|
 | D6 (GPIO12) | Sound          |
+
+## 📌 Buttons to NodeMCU Pin Connections
+
+| NodeMCU Pin | Function       |
+|-------------|----------------|
+| RX (GPIO3)  | Confirm button |
+| TX (GPIO1)  | Abort button   |
+| ADC0 (A0)   | Up, Down, Left, Right buttons |
+
