@@ -52,3 +52,11 @@ Make sure you have the necessary drivers installed. You can download them from t
 | TX (GPIO1)  | Abort button   |
 | ADC0 (A0)   | Up, Down, Left, Right buttons |
 
+## 📌 RFID to NodeMCU Pin Connections
+
+| RFID Pin    | Function              | NodeMCU Pin |
+|-------------|-----------------------|-------------|
+| 1 (TX)      | TX                    | SD3 (GPIO10)|
+| 2 (RX)      | RX                    | SD2 (GPIO9) |
+| 3 (VCC)     | Supply Voltage (+5.0V)| VIN (+5.0V) |
+| 4 (GND)     | Ground                | GND         |
