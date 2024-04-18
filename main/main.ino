@@ -9,6 +9,14 @@
  *****************************************************/
 
 #include "pitches.h"
+#include "ESP8266WiFi.h"
+
+/****************************************************
+ *               WiFI parameters               
+ *****************************************************/
+
+const char* ssid = "Christoffers iPhone 12";
+const char* password = "test123";
 
 /****************************************************
  *               Hex Table for NHD Pic               
@@ -191,15 +199,17 @@ int durations[] = {
   8, 8, 8, 8, 8, 2
 };
 
-#define RES D1 // /RES (Reset signal) connected to D2 (GPIO4)
-#define CS D8  // /CS (Chip Select Signal) connected to D8 (GPIO15)
-#define RS D1  // RS (Register Select) signal connected to D1 (GPIO5)
-#define SC D5  // SCL (serial mode) signal connected to D5 (GPIO14)
-#define SI D7  // SDI (serial mode) signal connected to D7 (GPIO13)
+/****************************************************
+ *               Pin parameters               
+ *****************************************************/
 
+#define RES D1       // /RES (Reset signal) connected to D2 (GPIO4)
+#define CS D8        // /CS (Chip Select Signal) connected to D8 (GPIO15)
+#define RS D1        // RS (Register Select) signal connected to D1 (GPIO5)
+#define SC D5        // SCL (serial mode) signal connected to D5 (GPIO14)
+#define SI D7        // SDI (serial mode) signal connected to D7 (GPIO13)
 #define LED_RED D3   // (GPIO 9)
 #define LED_GREEN D4 // (GPIO 10)
-
 #define BUZZER D6    // (GPIO 12)
 
 /****************************************************
@@ -208,11 +218,12 @@ int durations[] = {
 
 void setup()
 {
-  pinMode(RES, OUTPUT); // configure RES as output
-  pinMode(CS, OUTPUT);  // configure CS as output
-  pinMode(RS, OUTPUT);  // configure RS as output
-  pinMode(SC, OUTPUT);  // configure SC as output
-  pinMode(SI, OUTPUT);  // configure SI as output
+  // Display
+  pinMode(RES, OUTPUT);
+  pinMode(CS, OUTPUT); 
+  pinMode(RS, OUTPUT);
+  pinMode(SC, OUTPUT);
+  pinMode(SI, OUTPUT);
   digitalWrite(RES, LOW);
   delay(100);
   digitalWrite(RES, HIGH);
@@ -225,6 +236,9 @@ void setup()
   // Buzzer
   pinMode(BUZZER, OUTPUT);
   pinMode(BUZZER, INPUT_PULLUP);
+
+  // WiFI
+  connectToWiFi(ssid, password);
 }
 
 /*****************************************************
