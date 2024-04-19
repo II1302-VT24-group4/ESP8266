@@ -33,6 +33,7 @@ const char* password = "test123";
 #define BUZZER D6    // (GPIO 12)
 #define BUTTON_CONFIRM 3 // (GPIO 3 RX)
 #define BUTTON_ABORT 1 // (GPIO 1 TX)
+#define BUTTONS A0 // A0 (ADC)
 
 // Initialize the display using hardware SPI
 U8G2_ST7565_NHD_C12864_F_4W_HW_SPI u8g2(U8G2_R2, /* cs=*/ CS, /* dc=*/ RS, /* reset=*/ RES);
@@ -70,6 +71,7 @@ void loop()
 {
   byte button_confirm_state = digitalRead(BUTTON_CONFIRM);
   byte button_abort_state = digitalRead(BUTTON_ABORT);
+  int buttons_direction = analogRead(BUTTONS); // For moving left, right, up and down.
   
   u8g2.firstPage();  // Start a page to write graphics
   do {
@@ -96,11 +98,42 @@ void loop()
           delay(100);
       }
   }
-  else {
+  else if(button_confirm_state == HIGH && button_abort_state == HIGH && (buttons_direction < 8)){
       Serial.println("Button is not pressed");
       noTone(BUZZER);
       digitalWrite(LED_RED, LOW); 
       digitalWrite(LED_GREEN, LOW); 
+  }
+  else if(buttons_direction < 225 && buttons_direction > 210){
+    u8g2.firstPage();
+    do{
+      draw("Left");
+    } while(u8g2.nextPage());
+    delay(100);
+  }
+  else if(buttons_direction < 60 && buttons_direction > 50){
+    u8g2.firstPage();
+    do{
+      draw("Right");
+    } while(u8g2.nextPage());
+    delay(100);
+  }
+  else if(buttons_direction < 117 && buttons_direction > 110){
+    u8g2.firstPage();
+    do{
+      draw("Up");
+    } while(u8g2.nextPage());
+    delay(100);
+  }
+  else if(buttons_direction < 910 && buttons_direction > 900){
+    u8g2.firstPage();
+    do{
+      draw("Down");
+    } while(u8g2.nextPage());
+    delay(100);
+  }
+  else{
+    
   }
   delay(100);
 }
