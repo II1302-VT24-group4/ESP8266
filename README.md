@@ -22,7 +22,7 @@ Make sure you have the necessary drivers installed. You can download them from t
 | 2 (SI)      | Serial Data input     | D7 (GPIO13) | SPI MOSI       |
 | 3 (VDD)     | Supply Voltage (+3.0V)| 3V3         | 3.3V Power     |
 | 4 (A0)      | Register Select       | D1 (GPIO5)  | GPIO           |
-| 5 (/RESET)  | Reset signal          | D2 (GPIO4)  | GPIO           |
+| 5 (/RESET)  | Reset signal          | D4 (GPIO2)  | GPIO           |
 | 6 (/CS)     | Chip Select Signal    | D8 (GPIO15) | GPIO           |
 | 7 (VSS)     | Ground                | GND         | Ground         |
 | 8 (H)       | Heater Connection     | -           | Not Connected  |
@@ -35,8 +35,8 @@ Make sure you have the necessary drivers installed. You can download them from t
 
 | NodeMCU Pin | Function       |
 |-------------|----------------|
-| D3 (GPIO0)  | Red led        |
-| D4 (GPIO2 ) | Green led      |
+| D0 (GPIO16 )| Red led        |
+| SD3 (GPIO9) | Green led      |
 
 ## 📌 Buzzer to NodeMCU Pin Connections
 
@@ -56,7 +56,7 @@ Make sure you have the necessary drivers installed. You can download them from t
 
 | RFID Pin    | Function              | NodeMCU Pin |
 |-------------|-----------------------|-------------|
-| 1 (TX)      | TX                    | SD3 (GPIO10)|
-| 2 (RX)      | RX                    | SD2 (GPIO9) |
+| 1 (TX)      | TX                    | D3 (GPIO0)|
+| 2 (RX)      | RX                    | D2 (GPIO4) |
 | 3 (VCC)     | Supply Voltage (+5.0V)| VIN (+5.0V) |
 | 4 (GND)     | Ground                | GND         |
