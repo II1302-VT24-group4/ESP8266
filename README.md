@@ -35,8 +35,8 @@ Make sure you have the necessary drivers installed. You can download them from t
 
 | NodeMCU Pin | Function       |
 |-------------|----------------|
-| SD3 (GPIO10)| Red led        |
-| SD2 (GPIO9) | Green led      |
+| D0 (GPIO16 )| Red led        |
+| SD3 (GPIO9) | Green led      |
 
 ## 📌 Buzzer to NodeMCU Pin Connections
 
