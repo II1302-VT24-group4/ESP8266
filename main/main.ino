@@ -38,8 +38,8 @@ const char* password = "test123";
 #define BUTTON_CONFIRM 3 // (GPIO3)
 #define BUTTON_ABORT 1 // (GPIO1)
 #define BUTTONS A0 // A0 (ADC)
-#define RX D2
-#define TX D3
+#define RX 4
+#define TX 0
 
 /****************************************************
  *               Global variabels           
@@ -49,7 +49,7 @@ const char* password = "test123";
 U8G2_ST7565_NHD_C12864_F_4W_HW_SPI u8g2(U8G2_R2, /* cs=*/ CS, /* dc=*/ RS, /* reset=*/ RES);
 
 // RFID
-SoftwareSerial SoftSerial(4, 0);
+SoftwareSerial SoftSerial(RX, TX);
 unsigned char buffer[64];       // buffer array for data receive over serial port
 int count = 0;                    // counter for buffer array
 String cardNumber = "";
@@ -89,7 +89,6 @@ void setup()
 
 void loop()
 {
-  // if date is coming from software serial port ==> data is coming from SoftSerial shield
   if (SoftSerial.available())              
   {
       while(SoftSerial.available())               // reading data into char array
@@ -111,8 +110,6 @@ void loop()
   }
   if (Serial.available())             // if data is available on hardware serial port ==> data is coming from PC or notebook
   SoftSerial.write(Serial.read());    // write it to the SoftSerial shield
-
-
 
   byte button_confirm_state = digitalRead(BUTTON_CONFIRM);
   byte button_abort_state = digitalRead(BUTTON_ABORT);
