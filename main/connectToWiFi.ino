@@ -1,7 +1,6 @@
 void connectToWiFi(const char* ssid, const char* password) {
   Serial.begin(9600);
   WiFi.begin(ssid, password);   // Connect to WiFi
-  pinMode(D4, OUTPUT);
 
   while (WiFi.status() != WL_CONNECTED) {
     delay(1000);
