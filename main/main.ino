@@ -4,6 +4,18 @@
  * More details: https://github.com/olikraus/u8g2/wiki
  */
 
+ /* 
+ * The FirebaseJsonData object holds the returned data which can be read from the following properties.
+ * jsonData.stringValue - contains the returned string.
+ * jsonData.intValue - contains the returned integer value.
+ * jsonData.floatValue - contains the returned float value.
+ * jsonData.doubleValue - contains the returned double value.
+ * jsonData.boolValue - contains the returned boolean value.
+ * jsonData.success - used to determine the result of the get operation.
+ * jsonData.type - used to determine the type of returned value in string represent 
+ * the types of value e.g. string, int, double, boolean, array, object, null and undefined.
+*/
+
 /****************************************************
  *               Includes               
  *****************************************************/
@@ -12,16 +24,48 @@
 #include "ESP8266WiFi.h"
 #include "U8g2lib.h"
 #include "SoftwareSerial.h"
+#include "Firebase_ESP_Client.h"
+#include "addons/TokenHelper.h"
+#include "NTPClient.h"
+#include "WiFiUdp.h"
 
 /****************************************************
- *               WiFI parameters               
+ *               WiFI parameters          
  *****************************************************/
 
-const char* ssid = "Christoffers iPhone 12";
-const char* password = "test123";
+const char* ssid = "iPhone";
+const char* password = "89korvkorv";
 
 //const char* ssid = "KTH-IoT";
 //const char* password = "LRVsNdJ8bAkHWt6lACzW";
+
+/****************************************************
+ *               Firebase parameters          
+ *****************************************************/
+
+#define API_KEY "AIzaSyB1vrEG7FRHz0qx1usl56Nph130NA-KUMM"
+#define PROJECT_ID "meeting-planner-56526"
+#define FIREBASE_AUTH "vc2VyiUJEQZyZrck7bkNDX932JG3"
+
+#define USER_EMAIL "test@test.com"
+#define USER_PASSWORD "test123"
+
+//Define Firebase Data object
+FirebaseData fbdo;
+FirebaseAuth auth;
+FirebaseConfig config;
+FirebaseData dbData;
+String uid;
+String path;
+String firebaseStatus = "on";
+
+/****************************************************
+ *               NTP parameters               
+ *****************************************************/
+
+// Define NTP Client to get time
+WiFiUDP ntpUDP;
+NTPClient timeClient(ntpUDP, "pool.ntp.org");
 
 /****************************************************
  *               Pin parameters               
@@ -63,6 +107,10 @@ void setup()
   SoftSerial.begin(9600);     // the SoftSerial baud rate
   Serial.begin(9600);         // the Serial port of Arduino baud rate.
 
+  // Initialize a NTPClient to get time
+  timeClient.begin();
+  timeClient.setTimeOffset(7200);
+
   // Screen
   u8g2.begin();  // Initialize the display
   u8g2.setContrast(100); // Adjust the contrast level (0-255)
@@ -76,8 +124,37 @@ void setup()
   pinMode(BUZZER, INPUT_PULLUP);
 
   // WiFI
-  //connectToWiFi(ssid, password);
+  connectToWiFi(ssid, password);
 
+  // Set up config API KEY
+  config.api_key = API_KEY;
+
+  // Set up firebase auth
+  auth.user.email = USER_EMAIL;
+  auth.user.password = USER_PASSWORD;
+
+  // Generate token
+  config.token_status_callback = tokenStatusCallback;
+
+  // Connect to firebase
+  Firebase.begin(&config, &auth);
+  Firebase.reconnectWiFi(true);
+
+  // Get userID
+  Serial.println("Getting User UID");
+  delay(1000);
+  while ((auth.token.uid) == "") {
+    Serial.print('.');
+    delay(1000);
+  }
+
+  // Print uid to console
+  uid = auth.token.uid.c_str();
+  Serial.print("User UID: ");
+  delay(1000);
+  Serial.println(uid);
+  delay(1000);
+           
   // Buttons
   pinMode(BUTTON_CONFIRM, INPUT_PULLUP);
   pinMode(BUTTON_ABORT, INPUT_PULLUP);
@@ -89,6 +166,23 @@ void setup()
 
 void loop()
 {
+  // Time stuff
+  timeClient.update();
+
+  String formattedTime = timeClient.getFormattedTime();
+  Serial.print("Formatted Time: ");
+  Serial.println(formattedTime); 
+
+  time_t epochTime = timeClient.getEpochTime();
+
+  struct tm *ptm = gmtime ((time_t *)&epochTime); 
+
+  int monthDay = ptm->tm_mday;
+  int currentMonth = ptm->tm_mon+1;
+  int currentYear = ptm->tm_year+1900;
+
+  String currentDate = String(currentYear) + "-" + String(currentMonth) + "-" + String(monthDay);
+
   if (SoftSerial.available())              
   {
       while(SoftSerial.available())               // reading data into char array
@@ -101,6 +195,7 @@ void loop()
       clearBufferArray();             // call clearBufferArray function to clear the stored data from the array
       count = 0;                      // set counter of while loop to zero
       tone(BUZZER, 440);
+      String displayText = formattedTime + " Date: " + currentDate;
       u8g2.firstPage();  // Start a page to write graphics
       do {
         delay(50);
@@ -115,10 +210,12 @@ void loop()
   byte button_abort_state = digitalRead(BUTTON_ABORT);
   int buttons_direction = analogRead(BUTTONS); // For moving left, right, up and down.
   
-  u8g2.firstPage();  // Start a page to write graphics
-  do {
-    draw("Room 420");  // Call the draw function where the graphics commands are executed
-  } while ( u8g2.nextPage() );  // Continue to the next page
+  String displayText = formattedTime + " Date: " + currentDate;
+
+  u8g2.firstPage();
+  do{
+    draw(displayText.c_str());
+  } while(u8g2.nextPage());
 
   if (button_confirm_state == LOW || button_abort_state == LOW) {
       Serial.println("Button is pressed");
