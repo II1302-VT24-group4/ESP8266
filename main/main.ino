@@ -20,6 +20,8 @@
  *               Includes               
  *****************************************************/
 
+#include <Arduino.h>
+#include <SPI.h>
 #include "pitches.h"              // Sketch -> Include Libary -> Add .ZIP Libary (https://github.com/hibit-dev/buzzer/tree/master/lib)
 #include "ESP8266WiFi.h"          // Finns defualt
 #include "U8g2lib.h"              // Library manager U8g2
@@ -33,11 +35,8 @@
  *               WiFI parameters          
  *****************************************************/
 
-const char* ssid = "iPhone";
-const char* password = "89korvkorv";
-
-//const char* ssid = "KTH-IoT";
-//const char* password = "LRVsNdJ8bAkHWt6lACzW";
+const char* ssids[] = {"Christoffers iPhone 12", "iPhone", "KTH-IoT"};
+const char* passwords[] = {"89korvkorv", "89korvkorv", "LRVsNdJ8bAkHWt6lACzW"};
 
 /****************************************************
  *               Firebase parameters          
@@ -90,13 +89,17 @@ NTPClient timeClient(ntpUDP, "pool.ntp.org");
  *****************************************************/
 
 // Initialize the display using hardware SPI
-U8G2_ST7565_NHD_C12864_F_4W_HW_SPI u8g2(U8G2_R2, /* cs=*/ CS, /* dc=*/ RS, /* reset=*/ RES);
+//U8G2_ST7565_NHD_C12864_F_4W_HW_SPI u8g2(U8G2_R2, /* cs=*/ CS, /* dc=*/ RS, /* reset=*/ RES);
+//U8G2_ST7565_NHD_C12864_1_4W_HW_SPI u8g2(U8G2_R2, /* cs=*/ CS, /* dc=*/ RS, /* reset=*/ RES);
+U8G2_ST7565_NHD_C12864_2_4W_HW_SPI u8g2(U8G2_R2, /* cs=*/ CS, /* dc=*/ RS, /* reset=*/ RES);
 
 // RFID
 SoftwareSerial SoftSerial(RX, TX);
 unsigned char buffer[64];       // buffer array for data receive over serial port
 int count = 0;                    // counter for buffer array
 String cardNumber = "";
+
+uint8_t cursor = 0;
 
 /****************************************************
  *           Initialization For controller           
@@ -106,10 +109,6 @@ void setup()
 {
   SoftSerial.begin(9600);     // the SoftSerial baud rate
   Serial.begin(9600);         // the Serial port of Arduino baud rate.
-
-  // Initialize a NTPClient to get time
-  timeClient.begin();
-  timeClient.setTimeOffset(7200);
 
   // Screen
   u8g2.begin();  // Initialize the display
@@ -124,7 +123,16 @@ void setup()
   pinMode(BUZZER, INPUT_PULLUP);
 
   // WiFI
-  connectToWiFi(ssid, password);
+  for (int i = 0; i < sizeof(ssids) / sizeof(ssids[0]); i++) {
+    connectToWiFi(ssids[i], passwords[i]);
+    if (WiFi.status() == WL_CONNECTED) {
+      break;
+    }
+  }
+
+  // Initialize a NTPClient to get time
+  timeClient.begin();
+  timeClient.setTimeOffset(7200);
 
   // Set up config API KEY
   config.api_key = API_KEY;
@@ -144,8 +152,8 @@ void setup()
   Serial.println("Getting User UID");
   delay(1000);
   while ((auth.token.uid) == "") {
-    Serial.print('.');
-    delay(1000);
+   Serial.print('.');
+   delay(1000);
   }
 
   // Print uid to console
@@ -185,6 +193,7 @@ void loop()
 
   if (SoftSerial.available())              
   {
+      delay(50);
       while(SoftSerial.available())               // reading data into char array
       {
           buffer[count++] = SoftSerial.read();      // writing data into array
@@ -209,13 +218,10 @@ void loop()
   byte button_confirm_state = digitalRead(BUTTON_CONFIRM);
   byte button_abort_state = digitalRead(BUTTON_ABORT);
   int buttons_direction = analogRead(BUTTONS); // For moving left, right, up and down.
-  
-  String displayText = formattedTime + " Date: " + currentDate;
 
-  u8g2.firstPage();
-  do{
-    draw(displayText.c_str());
-  } while(u8g2.nextPage());
+  String displayText = currentDate + " | " + formattedTime;
+  
+  drawDefaultCalender(displayText);
 
   if (button_confirm_state == LOW || button_abort_state == LOW) {
       Serial.println("Button is pressed");
@@ -225,16 +231,16 @@ void loop()
           digitalWrite(LED_GREEN, HIGH); 
           u8g2.firstPage();  // Start a page to write graphics
           do {
-            draw("Confirm");  // Call the draw function where the graphics commands are executed
+            draw("Confirm \n nya rad");  // Call the draw function where the graphics commands are executed
           } while ( u8g2.nextPage() );  // Continue to the next page
-          delay(100);
+          delay(600);
       } else{
           digitalWrite(LED_RED, HIGH); 
           u8g2.firstPage();  // Start a page to write graphics
           do {
-            draw("Abort");  // Call the draw function where the graphics commands are executed
+            draw("Abort \n nya rad");  // Call the draw function where the graphics commands are executed
           } while ( u8g2.nextPage() );  // Continue to the next page
-          delay(100);
+          delay(600);
       }
   }
   else if(button_confirm_state == HIGH && button_abort_state == HIGH && (buttons_direction < 8)){
@@ -248,30 +254,27 @@ void loop()
     do{
       draw("Left");
     } while(u8g2.nextPage());
-    delay(100);
+    delay(600);
   }
   else if(buttons_direction < 60 && buttons_direction > 50){
     u8g2.firstPage();
     do{
       draw("Right");
     } while(u8g2.nextPage());
-    delay(100);
+    delay(600);
   }
-  else if(buttons_direction < 117 && buttons_direction > 110){
+  else if(buttons_direction < 118 && buttons_direction > 109){
     u8g2.firstPage();
     do{
       draw("Up");
     } while(u8g2.nextPage());
-    delay(100);
+    delay(600);
   }
-  else if(buttons_direction < 910 && buttons_direction > 900){
+  else if(buttons_direction < 911 && buttons_direction > 899){
     u8g2.firstPage();
     do{
       draw("Down");
     } while(u8g2.nextPage());
-    delay(100);
-  }
-  else{
-    
+    delay(600);
   }
 }
