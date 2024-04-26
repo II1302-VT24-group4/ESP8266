@@ -27,19 +27,19 @@ const char* password = "test123";
  *               Pin parameters               
  *****************************************************/
 
-#define RES D1       // /RES (Reset signal) connected to D2 (GPIO4)
-#define CS D8        // /CS (Chip Select Signal) connected to D8 (GPIO15)
-#define RS D1        // RS (Register Select) signal connected to D1 (GPIO5)
-#define SC D5        // SCL (serial mode) signal connected to D5 (GPIO14)
-#define SI D7        // SDI (serial mode) signal connected to D7 (GPIO13)
-#define LED_RED D0   // (GPIO 0)
-#define LED_GREEN 10 // (GPIO 2)
-#define BUZZER D6    // (GPIO 12)
-#define BUTTON_CONFIRM 3 // (GPIO3)
-#define BUTTON_ABORT 1 // (GPIO1)
-#define BUTTONS A0 // A0 (ADC)
-#define RX 4
-#define TX 0
+#define RES D4
+#define CS D8
+#define RS D1
+#define SC D5   
+#define SI D7
+#define LED_RED D0
+#define LED_GREEN 10 // SD3
+#define BUZZER D6
+#define BUTTON_CONFIRM 3 // RX
+#define BUTTON_ABORT 1 // TX
+#define BUTTONS A0
+#define RX D2 // D2
+#define TX D3 // D3
 
 /****************************************************
  *               Global variabels           
