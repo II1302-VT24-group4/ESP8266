@@ -20,14 +20,14 @@
  *               Includes               
  *****************************************************/
 
-#include "pitches.h"
-#include "ESP8266WiFi.h"
-#include "U8g2lib.h"
-#include "SoftwareSerial.h"
-#include "Firebase_ESP_Client.h"
-#include "addons/TokenHelper.h"
-#include "NTPClient.h"
-#include "WiFiUdp.h"
+#include "pitches.h"              // Sketch -> Include Libary -> Add .ZIP Libary (https://github.com/hibit-dev/buzzer/tree/master/lib)
+#include "ESP8266WiFi.h"          // Finns defualt
+#include "U8g2lib.h"              // Library manager U8g2
+#include "SoftwareSerial.h"       // Finns defualt
+#include "Firebase_ESP_Client.h"  // Library manager Firebase_ESP_Client
+#include "addons/TokenHelper.h"   // Finns om man laddar ner Firebase_ESP_Client
+#include "NTPClient.h"            // Library manager NTPClient
+#include "WiFiUdp.h"              // Finns defualt
 
 /****************************************************
  *               WiFI parameters          
