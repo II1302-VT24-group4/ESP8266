@@ -1,4 +1,10 @@
 /**
+ * @file rfid.ino
+ * @brief Rfid code
+ * @details Some of this code is taken from https://www.instructables.com/ and modified by Christoffer Franzén
+ */
+
+/**
  * @brief Parses the RFID card string to the correct format.
  *
  * This function removes the start and end characters from the card number,
@@ -108,10 +114,17 @@ bool readRFIDData() {
     return true;
 }
 
+/**
+ * @brief Detects the removal of an RFID card.
+ *
+ * This function checks if a certain amount of time has passed since the last
+ * RFID read. If it has, it assumes that the card has been removed.
+ *
+ * @return True if the card is assumed to be removed, false otherwise.
+ */
 bool detectCardRemoval() {
   if (millis() - lastRFIDReadTime > removalTimeout) {
     return true; // No data for more than 1 second, assume card removed
   }
   return false; // Card is still present or not enough time has passed
 }
-

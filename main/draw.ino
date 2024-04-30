@@ -1,8 +1,8 @@
-/*
- * This code is used to display text 
+/**
+ * @file draw.ino
+ * @brief Display code
+ * @details This code is by Christoffer Franzén
  */
-
- 
 
 void draw(const char* str) {
   u8g2.setFont(u8g2_font_ncenB08_tr);  // Set the font for drawing text

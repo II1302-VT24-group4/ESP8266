@@ -1,30 +1,18 @@
-/*
- * This code uses the U8g2 library for monochrome displays.
- * The library is licensed under the GPL v3 license.
- * More details: https://github.com/olikraus/u8g2/wiki
+/**
+ * @file main.ino
+ * @brief The main code for the project
+ * @details GPL v3 license.
  */
-
- /* 
- * The FirebaseJsonData object holds the returned data which can be read from the following properties.
- * jsonData.stringValue - contains the returned string.
- * jsonData.intValue - contains the returned integer value.
- * jsonData.floatValue - contains the returned float value.
- * jsonData.doubleValue - contains the returned double value.
- * jsonData.boolValue - contains the returned boolean value.
- * jsonData.success - used to determine the result of the get operation.
- * jsonData.type - used to determine the type of returned value in string represent 
- * the types of value e.g. string, int, double, boolean, array, object, null and undefined.
-*/
 
 /****************************************************
  *               Includes               
  *****************************************************/
 
-#include <Arduino.h>
-#include <SPI.h>
+#include <Arduino.h>              // Finns defualt
+#include <SPI.h>                  // Finns defualt
 #include "pitches.h"              // Sketch -> Include Libary -> Add .ZIP Libary (https://github.com/hibit-dev/buzzer/tree/master/lib)
 #include "ESP8266WiFi.h"          // Finns defualt
-#include "U8g2lib.h"              // Library manager U8g2
+#include "U8g2lib.h"              // Library manager U8g2 (This code uses the U8g2 library for monochrome displays.)
 #include "SoftwareSerial.h"       // Finns defualt
 #include "Firebase_ESP_Client.h"  // Library manager Firebase_ESP_Client
 #include "addons/TokenHelper.h"   // Finns om man laddar ner Firebase_ESP_Client
@@ -99,23 +87,21 @@ unsigned char buffer[64];       // buffer array for data receive over serial por
 int count = 0;                    // counter for buffer array
 String cardNumber = "";
 
-uint8_t cursor = 0;
-
-// State machine
+// States
 enum State {
   IDLE,
   RECEIVE_RFID_DATA,
   DISPLAY_CARD
 };
 
-
 State currentState = IDLE;
 bool cardPresent = false; // Flag to check the presence of the card
-String formattedTime;
-String currentDate;
-
 unsigned long lastRFIDReadTime = 0; // Timestamp of the last RFID read
 const unsigned long removalTimeout = 1000; // Timeout in milliseconds (1 second)
+
+// Time 
+String formattedTime;
+String currentDate;
 
 /****************************************************
  *           Initialization For controller           

@@ -1,10 +1,14 @@
 /**
+ * @file time.ino
+ * @brief Time code
+ * @details This code is taken from https://randomnerdtutorials.com/ and modified by Christoffer Franzén
+ */
+
+/**
  * @brief Updates the current time and date.
  *
  * This function retrieves the current time from a time client, formats it,
  * and updates the global variables `formattedTime` and `currentDate`.
- * The time is printed to the serial port for debugging purposes.
- * The date is constructed from the epoch time.
  */
 void updateTime() {
   // Update the time client
