@@ -91,7 +91,7 @@ int count = 0;            // counter for buffer array
 String cardNumber = "";
 
 // States
-enum State { IDLE, RECEIVE_RFID_DATA, DISPLAY_CARD };
+enum State { IDLE, BOOK, RECEIVE_RFID_DATA, DISPLAY_CARD };
 
 State currentState = IDLE;
 bool cardPresent = false;           // Flag to check the presence of the card
@@ -101,6 +101,14 @@ const unsigned long removalTimeout = 1000; // Timeout in milliseconds (1 second)
 // Time
 String formattedTime;
 String currentDate;
+
+// Buttons
+byte button_confirm_state;
+byte button_abort_state;
+int buttons_direction;
+
+// Cursor
+int cursor = 0;
 
 /****************************************************
  *           Initialization For controller
@@ -150,18 +158,18 @@ void setup() {
 
   // Get userID
   Serial.println("Getting User UID");
-  delay(1000);
+  delay(500);
   while ((auth.token.uid) == "") {
     Serial.print('.');
-    delay(1000);
+    delay(500);
   }
 
   // Print uid to console
   uid = auth.token.uid.c_str();
   Serial.print("User UID: ");
-  delay(1000);
+  delay(500);
   Serial.println(uid);
-  delay(1000);
+  delay(500);
 
   // Buttons
   pinMode(BUTTON_CONFIRM, INPUT_PULLUP);
@@ -179,12 +187,48 @@ void loop() {
 
   switch (currentState) {
   case IDLE:
+    drawIdle(formattedTime);
+    
+    // Om användaren trycker på någon knapp
+    if(button_confirm_state == LOW || button_abort_state == LOW){
+      currentState = BOOK;
+    }
+  break;
+
+  case BOOK:
     drawDefaultCalender(displayText);
 
+    // Om användaren trycker abort gå tillbacka till start state
+    if(getButtonState() == "Abort"){
+      currentState = IDLE;
+      delay(100);
+    }
+
+    if(getButtonState() == "Down"){
+      cursor++;
+
+      if(cursor >= 3){
+        cursor = 0;
+      }
+
+      delay(100);
+    }
+
+    if(getButtonState() == "Up"){
+      cursor--;
+
+      if(cursor < 0){
+        cursor = 2;
+      }
+
+      delay(100);
+    }
+
+    // Om rfid blip
     if (SoftSerial.available()) {
       currentState = RECEIVE_RFID_DATA;
     }
-    break;
+  break;
 
   case RECEIVE_RFID_DATA:
     if (readRFIDData()) {

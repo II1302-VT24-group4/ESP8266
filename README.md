@@ -14,6 +14,10 @@ Make sure you have the necessary drivers installed. You can download them from t
 
 [🔗 USB to UART Bridge VCP Drivers](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers?tab=downloads)
 
+## 🤝 Contributing
+
+We appreciate your interest in contributing to our project! Please read our Contributing Guidelines for information on how to contribute to this project.
+
 ## 📌 Display to NodeMCU Pin Connections
 
 | Display Pin | Function              | NodeMCU Pin | Function       |

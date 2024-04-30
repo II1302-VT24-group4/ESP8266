@@ -18,10 +18,24 @@ void connectToWiFi(const char *ssid, const char *password) {
   Serial.begin(9600);
   WiFi.begin(ssid, password); // Connect to WiFi
 
+  u8g2.firstPage();
+  do {
+    u8g2.setFont(u8g2_font_6x10_tf);
+    u8g2.setCursor(0, 30);
+    u8g2.print("Connecting");
+  } while (u8g2.nextPage());
+
   while (WiFi.status() != WL_CONNECTED) {
     delay(1000);
     Serial.print("."); // while wifi not connected yet, print '.'
   }
+
+  u8g2.firstPage();
+  do {
+    u8g2.setFont(u8g2_font_6x10_tf);
+    u8g2.setCursor(0, 30);
+    u8g2.print("WiFi connected");
+  } while (u8g2.nextPage());
 
   Serial.println(""); // new line, then print WiFi connected and the IP address
   Serial.println("WiFi connected");
