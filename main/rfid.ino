@@ -1,7 +1,8 @@
 /**
  * @file rfid.ino
  * @brief Rfid code
- * @details Some of this code is taken from https://www.instructables.com/ and modified by Christoffer Franzén
+ * @details Some of this code is taken from https://www.instructables.com/ and
+ * modified by Christoffer Franzén
  */
 
 /**
@@ -17,70 +18,72 @@ String cardParser() {
   return cardNumberNew;
 }
 
-
 /**
  * @brief Displays RFID data on the screen.
  *
- * This function retrieves the owner and email data associated with the RFID card from Firestore,
- * and displays this information on the screen. If the data retrieval fails, it sounds a buzzer.
+ * This function retrieves the owner and email data associated with the RFID
+ * card from Firestore, and displays this information on the screen. If the data
+ * retrieval fails, it sounds a buzzer.
  */
 void displayRFIDData() {
-    String owner;
-    String email;
+  String owner;
+  String email;
 
-    // Prepare the Firestore paths
-    String rfidPath = "rfid/" + cardParser();
-    String userPath;
+  // Prepare the Firestore paths
+  String rfidPath = "rfid/" + cardParser();
+  String userPath;
 
-    // Retrieve the owner data
-    if (Firebase.Firestore.getDocument(&fbdo, PROJECT_ID, "", rfidPath.c_str(), "")) {
-        FirebaseJson payload;
-        payload.setJsonData(fbdo.payload().c_str());
+  // Retrieve the owner data
+  if (Firebase.Firestore.getDocument(&fbdo, PROJECT_ID, "", rfidPath.c_str(),
+                                     "")) {
+    FirebaseJson payload;
+    payload.setJsonData(fbdo.payload().c_str());
 
-        FirebaseJsonData jsonData;
-        payload.get(jsonData, "fields/owner/stringValue", true);
+    FirebaseJsonData jsonData;
+    payload.get(jsonData, "fields/owner/stringValue", true);
 
-        owner = jsonData.stringValue;
-        userPath = "users/" + owner;
-    } else {
-        tone(BUZZER, 360);
-        return;
-    }
+    owner = jsonData.stringValue;
+    userPath = "users/" + owner;
+  } else {
+    tone(BUZZER, 360);
+    return;
+  }
 
-    // Retrieve the email data
-    if (Firebase.Firestore.getDocument(&fbdo, PROJECT_ID, "", userPath.c_str(), "")) {
-        FirebaseJson payload;
-        payload.setJsonData(fbdo.payload().c_str());
+  // Retrieve the email data
+  if (Firebase.Firestore.getDocument(&fbdo, PROJECT_ID, "", userPath.c_str(),
+                                     "")) {
+    FirebaseJson payload;
+    payload.setJsonData(fbdo.payload().c_str());
 
-        FirebaseJsonData jsonData;
-        payload.get(jsonData, "fields/email/stringValue", true);
+    FirebaseJsonData jsonData;
+    payload.get(jsonData, "fields/email/stringValue", true);
 
-        email = jsonData.stringValue;
-    } else {
-        tone(BUZZER, 560);
-        return;
-    }
+    email = jsonData.stringValue;
+  } else {
+    tone(BUZZER, 560);
+    return;
+  }
 
-    // Display the data
-    u8g2.firstPage();
-    do {
-        delay(50);
+  // Display the data
+  u8g2.firstPage();
+  do {
+    delay(50);
 
-        u8g2.setCursor(0, 12);
-        u8g2.print(cardNumber.c_str());
+    u8g2.setCursor(0, 12);
+    u8g2.print(cardNumber.c_str());
 
-        u8g2.setFont(u8g2_font_6x10_tf);
-        u8g2.setCursor(0, 22);
-        u8g2.print(rfidPath.c_str());
+    u8g2.setFont(u8g2_font_6x10_tf);
+    u8g2.setCursor(0, 22);
+    u8g2.print(rfidPath.c_str());
 
-        u8g2.setCursor(0, 34);
-        u8g2.print(owner.c_str());
+    u8g2.setCursor(0, 34);
+    u8g2.print(owner.c_str());
 
-        u8g2.setCursor(0, 46);
-        u8g2.print(email.c_str());
-    } while (u8g2.nextPage());
+    u8g2.setCursor(0, 46);
+    u8g2.print(email.c_str());
+  } while (u8g2.nextPage());
 
-    noTone(BUZZER);
+  noTone(BUZZER);
 }
 
 /**
@@ -93,25 +96,25 @@ void displayRFIDData() {
  * @return True if data was available and read, false otherwise.
  */
 bool readRFIDData() {
-    static char buffer[64];
-    int count = 0;
+  static char buffer[64];
+  int count = 0;
 
-    if (!SoftSerial.available()) {
-        return false;
-    }
+  if (!SoftSerial.available()) {
+    return false;
+  }
 
-    lastRFIDReadTime = millis(); // Update the time when data is received
-    delay(50); // Wait for data to be ready
+  lastRFIDReadTime = millis(); // Update the time when data is received
+  delay(50);                   // Wait for data to be ready
 
-    while (SoftSerial.available() && count < sizeof(buffer)) {
-        buffer[count++] = SoftSerial.read();
-    }
+  while (SoftSerial.available() && count < sizeof(buffer)) {
+    buffer[count++] = SoftSerial.read();
+  }
 
-    Serial.write(buffer, count); // Echo the buffer for debugging
-    cardNumber = String(buffer); // Assuming cardNumber is a global String
-    memset(buffer, 0, sizeof(buffer)); // Clear the buffer for the next read
+  Serial.write(buffer, count);       // Echo the buffer for debugging
+  cardNumber = String(buffer);       // Assuming cardNumber is a global String
+  memset(buffer, 0, sizeof(buffer)); // Clear the buffer for the next read
 
-    return true;
+  return true;
 }
 
 /**

@@ -4,10 +4,12 @@
  * @details This code is by Christoffer Franzén
  */
 
-void draw(const char* str) {
-  u8g2.setFont(u8g2_font_ncenB08_tr);  // Set the font for drawing text
-  u8g2.drawStr(0, 10, str);  // Draw the input string at position (0, 10)
+void draw(const char *str) {
+  u8g2.setFont(u8g2_font_ncenB08_tr); // Set the font for drawing text
+  u8g2.drawStr(0, 10, str); // Draw the input string at position (0, 10)
 }
+
+void drawIdle() {}
 
 void drawDefaultCalender(String date) {
 
@@ -16,7 +18,7 @@ void drawDefaultCalender(String date) {
     u8g2.setFont(u8g2_font_6x10_tf);
     u8g2.setCursor(0, 10);
     u8g2.print(date.c_str());
-    u8g2.drawBox(0,11,128,1);
+    u8g2.drawBox(0, 11, 128, 1);
     u8g2.setCursor(0, 22);
     u8g2.print("Nuvarande: Ledigt");
     u8g2.setCursor(0, 32);
