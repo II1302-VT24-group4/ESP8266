@@ -101,6 +101,22 @@ String cardNumber = "";
 
 uint8_t cursor = 0;
 
+// State machine
+enum State {
+  IDLE,
+  RECEIVE_RFID_DATA,
+  DISPLAY_CARD
+};
+
+
+State currentState = IDLE;
+bool cardPresent = false; // Flag to check the presence of the card
+String formattedTime;
+String currentDate;
+
+unsigned long lastRFIDReadTime = 0; // Timestamp of the last RFID read
+const unsigned long removalTimeout = 1000; // Timeout in milliseconds (1 second)
+
 /****************************************************
  *           Initialization For controller           
  *****************************************************/
@@ -174,107 +190,40 @@ void setup()
 
 void loop()
 {
-  // Time stuff
-  timeClient.update();
+  updateTime();
+  String displayText = currentDate + " | " + formattedTime;
 
-  String formattedTime = timeClient.getFormattedTime();
-  Serial.print("Formatted Time: ");
-  Serial.println(formattedTime); 
-
-  time_t epochTime = timeClient.getEpochTime();
-
-  struct tm *ptm = gmtime ((time_t *)&epochTime); 
-
-  int monthDay = ptm->tm_mday;
-  int currentMonth = ptm->tm_mon+1;
-  int currentYear = ptm->tm_year+1900;
-
-  String currentDate = String(currentYear) + "-" + String(currentMonth) + "-" + String(monthDay);
-
-  if (SoftSerial.available())              
-  {
-      delay(50);
-      while(SoftSerial.available())               // reading data into char array
-      {
-          buffer[count++] = SoftSerial.read();      // writing data into array
-          if(count == 64)break;
-      }
-      Serial.write(buffer, count);     // if no data transmission ends, write buffer to hardware serial port
-      cardNumber = String((char*)buffer);
-      clearBufferArray();             // call clearBufferArray function to clear the stored data from the array
-      count = 0;                      // set counter of while loop to zero
-      tone(BUZZER, 440);
-      String displayText = formattedTime + " Date: " + currentDate;
-      u8g2.firstPage();  // Start a page to write graphics
-      do {
-        delay(50);
-        draw(cardNumber.c_str());  // Call the draw function where the graphics commands are executed
-      } while ( u8g2.nextPage() );  // Continue to the next page
-      delay(600);
-  }
-  if (Serial.available())             // if data is available on hardware serial port ==> data is coming from PC or notebook
-  SoftSerial.write(Serial.read());    // write it to the SoftSerial shield
-
+  // Buttons
   byte button_confirm_state = digitalRead(BUTTON_CONFIRM);
   byte button_abort_state = digitalRead(BUTTON_ABORT);
   int buttons_direction = analogRead(BUTTONS); // For moving left, right, up and down.
 
-  String displayText = currentDate + " | " + formattedTime;
-  
-  drawDefaultCalender(displayText);
+  switch (currentState) {
+    case IDLE:
+      drawDefaultCalender(displayText);
 
-  if (button_confirm_state == LOW || button_abort_state == LOW) {
-      Serial.println("Button is pressed");
-      tone(BUZZER, 540);
-
-      if(button_confirm_state == LOW){
-          digitalWrite(LED_GREEN, HIGH); 
-          u8g2.firstPage();  // Start a page to write graphics
-          do {
-            draw("Confirm \n nya rad");  // Call the draw function where the graphics commands are executed
-          } while ( u8g2.nextPage() );  // Continue to the next page
-          delay(600);
-      } else{
-          digitalWrite(LED_RED, HIGH); 
-          u8g2.firstPage();  // Start a page to write graphics
-          do {
-            draw("Abort \n nya rad");  // Call the draw function where the graphics commands are executed
-          } while ( u8g2.nextPage() );  // Continue to the next page
-          delay(600);
+      if (SoftSerial.available()) {
+        currentState = RECEIVE_RFID_DATA;
       }
-  }
-  else if(button_confirm_state == HIGH && button_abort_state == HIGH && (buttons_direction < 8)){
-      Serial.println("Button is not pressed");
-      noTone(BUZZER);
-      digitalWrite(LED_RED, LOW); 
-      digitalWrite(LED_GREEN, LOW); 
-  }
-  else if(buttons_direction < 225 && buttons_direction > 210){
-    u8g2.firstPage();
-    do{
-      draw("Left");
-    } while(u8g2.nextPage());
-    delay(600);
-  }
-  else if(buttons_direction < 60 && buttons_direction > 50){
-    u8g2.firstPage();
-    do{
-      draw("Right");
-    } while(u8g2.nextPage());
-    delay(600);
-  }
-  else if(buttons_direction < 118 && buttons_direction > 109){
-    u8g2.firstPage();
-    do{
-      draw("Up");
-    } while(u8g2.nextPage());
-    delay(600);
-  }
-  else if(buttons_direction < 911 && buttons_direction > 899){
-    u8g2.firstPage();
-    do{
-      draw("Down");
-    } while(u8g2.nextPage());
-    delay(600);
+    break;
+    case RECEIVE_RFID_DATA:
+      if (readRFIDData()) {
+        currentState = DISPLAY_CARD;
+        cardPresent = true; // Set card presence flag
+      }
+    break;
+    case DISPLAY_CARD:
+      displayRFIDData();
+      if (!SoftSerial.available() && cardPresent) {
+        if (detectCardRemoval()) {
+          cardPresent = false; // Card is removed
+        }
+      } else if (!cardPresent && SoftSerial.available()) {
+        // Detect fresh card presentation
+      if (readRFIDData()) {  // Make sure it's a valid card re-presentation
+        currentState = IDLE;  // Transition back to IDLE on second card presentation
+        }
+      }
+    break;
   }
 }
