@@ -1,7 +1,7 @@
 /**
  * @file wifi.ino
  * @brief WiFi connection function.
- * @details This code is taken from https://randomnerdtutorials.com/
+ * @details Some of this code is taken from https://randomnerdtutorials.com/
  */
 
 /**
@@ -26,9 +26,13 @@ void connectToWiFi(const char *ssid, const char *password) {
   } while (u8g2.nextPage());
 
   while (WiFi.status() != WL_CONNECTED) {
+    digitalWrite(LED_RED, HIGH); 
     delay(1000);
+    digitalWrite(LED_RED, LOW); 
     Serial.print("."); // while wifi not connected yet, print '.'
   }
+
+  digitalWrite(LED_RED, LOW); 
 
   u8g2.firstPage();
   do {

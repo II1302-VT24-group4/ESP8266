@@ -45,7 +45,8 @@ void displayRFIDData() {
     owner = jsonData.stringValue;
     userPath = "users/" + owner;
   } else {
-    tone(BUZZER, 360);
+    draw("Did not find owner");
+    delay(2000);
     return;
   }
 
@@ -60,7 +61,8 @@ void displayRFIDData() {
 
     email = jsonData.stringValue;
   } else {
-    tone(BUZZER, 560);
+    draw("Did not find email");
+    delay(2000);
     return;
   }
 
@@ -103,8 +105,10 @@ bool readRFIDData() {
     return false;
   }
 
+  tone(BUZZER, 660);
   lastRFIDReadTime = millis(); // Update the time when data is received
   delay(50);                   // Wait for data to be ready
+  noTone(BUZZER);
 
   while (SoftSerial.available() && count < sizeof(buffer)) {
     buffer[count++] = SoftSerial.read();
