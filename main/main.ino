@@ -113,6 +113,8 @@ int cursor = 0;
 unsigned long debounceDuration = 150; // millis
 unsigned long lastTimeButtonStateChanged = 0;
 
+int val = 0;
+
 /****************************************************
  *           Initialization For controller
  *****************************************************/
@@ -184,6 +186,8 @@ void setup() {
  *****************************************************/
 
 void loop() {
+  val = analogRead(A0);  // read the input pin
+  Serial.println(val);          // debug value
   updateTime();
   uppdateButtons();
   String displayText = currentDate + " | " + formattedTime;
