@@ -110,6 +110,9 @@ int buttons_direction;
 // Cursor
 int cursor = 0;
 
+unsigned long debounceDuration = 150; // millis
+unsigned long lastTimeButtonStateChanged = 0;
+
 /****************************************************
  *           Initialization For controller
  *****************************************************/
@@ -201,7 +204,7 @@ void loop() {
     // Om användaren trycker abort gå tillbacka till start state
     if(getButtonState() == "Abort"){
       currentState = IDLE;
-      delay(100);
+      delay(150);
     }
 
     if(getButtonState() == "Down"){
@@ -211,7 +214,7 @@ void loop() {
         cursor = 0;
       }
 
-      delay(100);
+      delay(150);
     }
 
     if(getButtonState() == "Up"){
@@ -221,7 +224,7 @@ void loop() {
         cursor = 2;
       }
 
-      delay(100);
+      delay(150);
     }
 
     // Om rfid blip
