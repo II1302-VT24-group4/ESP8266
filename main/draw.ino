@@ -12,34 +12,31 @@ void draw(const char *str) {
 /**
  * @brief Draws the idle state
  * 
+ * This function is responsible for drawing the idle state of the display.
  */
 void drawIdle() {
+  u8g2.setFont(u8g2_font_ncenB14_tr);
+
+  // Create an array of strings to display
+  String displayTexts[] = {"Anna", formattedTime.substring(0, formattedTime.length() - 3), "Nästa tid", nextAvailableTime.isEmpty() ? "Ledigt" : nextAvailableTime};
+
   u8g2.firstPage();
   do {
-    // Set the font to a larger size
-    u8g2.setFont(u8g2_font_ncenB14_tr);
-
-    String roomName = "Anna";
-    int roomNameWidth = u8g2.getStrWidth(roomName.c_str());
-    u8g2.setCursor((128 - roomNameWidth) / 2, 15);
-    u8g2.print(roomName.c_str());
-
-    String time = formattedTime;
-    int timeWidth = u8g2.getStrWidth(time.c_str());
-    u8g2.setCursor((128 - timeWidth) / 2, 30);
-    u8g2.print(time.c_str());
-
-    String nextText = "Nästa tid";
-    int nextTextWidth = u8g2.getStrWidth(nextText.c_str());
-    u8g2.setCursor((128 - nextTextWidth) / 2, 45);
-    u8g2.print(nextText.c_str());
-
-    String nextSlot = nextAvailableTime;
-    int nextSlotWidth = u8g2.getStrWidth(nextSlot.c_str());
-    u8g2.setCursor((128 - nextSlotWidth) / 2, 60);
-    u8g2.print(nextSlot.c_str());
-
+    // Iterate over the displayTexts array and print each string centered on the display
+    for (int i = 0; i < 4; i++) {
+      int textWidth = u8g2.getStrWidth(displayTexts[i].c_str());
+      u8g2.setCursor((128 - textWidth) / 2, 15 + i * 15);
+      u8g2.print(displayTexts[i].c_str());
+    }
   } while (u8g2.nextPage());
+
+  if(nextAvailableTime.isEmpty()){
+    digitalWrite(LED_GREEN, HIGH);
+    digitalWrite(LED_RED, LOW);
+  } else {
+    digitalWrite(LED_GREEN, LOW);
+    digitalWrite(LED_RED, HIGH);
+  }
 }
 
 /**
