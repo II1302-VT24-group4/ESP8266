@@ -29,13 +29,13 @@ String getButtonState() {
     return "Confirm";
   } else if (button_abort_state == LOW) {
     return "Abort";
-  } else if(buttons_direction < 225 && buttons_direction > 210){
+  } else if(buttons_direction < 890 && buttons_direction > 860){
     return "Left";
-  } else if(buttons_direction < 70 && buttons_direction > 40){
+  } else if(buttons_direction < 60 && buttons_direction > 30){
     return "Right";
-  } else if(buttons_direction < 128 && buttons_direction > 100){
+  } else if(buttons_direction < 200 && buttons_direction > 180){
     return "Up";
-  } else if(buttons_direction < 921 && buttons_direction > 889){
+  } else if(buttons_direction < 110 && buttons_direction > 90){
     return "Down";
   } else {
     return "No button pressed";

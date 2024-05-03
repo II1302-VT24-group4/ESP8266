@@ -5,6 +5,13 @@
  */
 
 /****************************************************
+ *               Test
+ *****************************************************/
+
+#define RUN_TEST_PROGRAM
+#undef RUN_TEST_PROGRAM // Uncomment this line if you want to run the test program
+
+/****************************************************
  *               Includes
  *****************************************************/
 
@@ -12,13 +19,13 @@
 #include "Firebase_ESP_Client.h" // Library manager Firebase_ESP_Client
 #include "NTPClient.h"           // Library manager NTPClient
 #include "SoftwareSerial.h"      // Finns defualt
-#include "U8g2lib.h" // Library manager U8g2 (This code uses the U8g2 library for monochrome displays.)
-#include "WiFiUdp.h" // Finns defualt
-#include "addons/TokenHelper.h" // Finns om man laddar ner Firebase_ESP_Client
-#include "pitches.h" // Sketch -> Include Libary -> Add .ZIP Libary (https://github.com/hibit-dev/buzzer/tree/master/lib)
-#include <Arduino.h> // Finns defualt
-#include <SPI.h>     // Finns defualt
-
+#include "U8g2lib.h"             // Library manager U8g2 (This code uses the U8g2 library for monochrome displays.)
+#include "WiFiUdp.h"             // Finns defualt
+#include "addons/TokenHelper.h"  // Finns om man laddar ner Firebase_ESP_Client
+#include "pitches.h"             // Sketch -> Include Libary -> Add .ZIP Libary (https://github.com/hibit-dev/buzzer/tree/master/lib)
+#include "Arduino.h"             // Finns defualt
+#include "SPI.h"                 // Finns defualt
+#include "ArduinoJson.h" // finns i library manager
 
 /****************************************************
  *               WiFI parameters
@@ -34,7 +41,6 @@ const char *passwords[] = {"89korvkorv", "89korvkorv", "LRVsNdJ8bAkHWt6lACzW"};
 #define API_KEY "AIzaSyB1vrEG7FRHz0qx1usl56Nph130NA-KUMM"
 #define PROJECT_ID "meeting-planner-56526"
 #define FIREBASE_AUTH "vc2VyiUJEQZyZrck7bkNDX932JG3"
-
 #define USER_EMAIL "test@test.com"
 #define USER_PASSWORD "test123"
 
@@ -51,7 +57,6 @@ String firebaseStatus = "on";
  *               NTP parameters
  *****************************************************/
 
-// Define NTP Client to get time
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP, "pool.ntp.org");
 
@@ -78,9 +83,6 @@ NTPClient timeClient(ntpUDP, "pool.ntp.org");
  *****************************************************/
 
 // Initialize the display using hardware SPI
-// U8G2_ST7565_NHD_C12864_F_4W_HW_SPI u8g2(U8G2_R2, /* cs=*/ CS, /* dc=*/ RS, /*
-// reset=*/ RES); U8G2_ST7565_NHD_C12864_1_4W_HW_SPI u8g2(U8G2_R2, /* cs=*/ CS,
-// /* dc=*/ RS, /* reset=*/ RES);
 U8G2_ST7565_NHD_C12864_2_4W_HW_SPI u8g2(U8G2_R2, /* cs=*/CS, /* dc=*/RS,
                                         /* reset=*/RES);
 
@@ -91,11 +93,17 @@ int count = 0;            // counter for buffer array
 String cardNumber = "";
 
 // States
-enum State { IDLE, BOOK, RECEIVE_RFID_DATA, DISPLAY_CARD };
+enum State
+{
+  IDLE,
+  BOOK,
+  RECEIVE_RFID_DATA,
+  DISPLAY_CARD
+};
 
 State currentState = IDLE;
-bool cardPresent = false;           // Flag to check the presence of the card
-unsigned long lastRFIDReadTime = 0; // Timestamp of the last RFID read
+bool cardPresent = false;                  // Flag to check the presence of the card
+unsigned long lastRFIDReadTime = 0;        // Timestamp of the last RFID read
 const unsigned long removalTimeout = 1000; // Timeout in milliseconds (1 second)
 
 // Time
@@ -112,6 +120,91 @@ int cursor = 0;
 
 unsigned long debounceDuration = 150; // millis
 unsigned long lastTimeButtonStateChanged = 0;
+
+int val = 0;
+
+
+// global stuffs and potential war crimes
+String currentMeetingID = "";
+bool roomAvailable = false;
+const int MAX_DOCUMENTS = 10; // Max antal dokument du förväntar dig hantera
+const int TIME_LENGTH = 6;
+String startTimes[48];
+String endTimes[48];
+int documentsCount = 0;
+String nextAvailableTimeSlot = "";
+String nextAvailableTime = "";
+
+
+void updateDailyCalendar(){
+  String pathToMeetings = "test/" + uid + "/" + currentDate;
+  Serial.println(pathToMeetings);
+  
+  if(Firebase.Firestore.getDocument(&fbdo, PROJECT_ID, "", pathToMeetings.c_str(), "")){
+    // Create a FirebaseJson object and set content with received payload
+    Serial.println("Före payload");
+    FirebaseJson payload;
+    Serial.println("Efter payload");
+    payload.setJsonData(fbdo.payload().c_str());
+    Serial.println(fbdo.payload().c_str());
+    Serial.println("Efter SetJson");
+    delay(100);
+    
+    String jsonString = fbdo.payload().c_str();
+    bool available = parseJson(jsonString, formattedTime);
+    Serial.println(available);
+    
+    if(available){
+    String path2 = "test/" + uid;
+
+    // Create document to send to firebase
+    FirebaseJson content;
+    content.set("fields/available/booleanValue", true);
+
+      if (Firebase.Firestore.patchDocument(&fbdo, PROJECT_ID, "", path2.c_str(), content.raw(), "available")) {
+          Serial.printf("ok\n%s\n\n", fbdo.payload().c_str());
+          roomAvailable = true;
+
+          
+      } else {
+          Serial.println(fbdo.errorReason());
+      }
+    } else {
+      String path2 = "test/" + uid;
+
+      // Create document to send to firebase
+      FirebaseJson content;
+      content.set("fields/available/booleanValue", false);
+
+      if (Firebase.Firestore.patchDocument(&fbdo, PROJECT_ID, "", path2.c_str(), content.raw(), "available")) {
+          Serial.printf("ok\n%s\n\n", fbdo.payload().c_str());
+          roomAvailable = false;
+
+          
+      } else {
+          Serial.println(fbdo.errorReason());
+      }
+
+    }
+
+  } else {
+    String path2 = "test/" + uid;
+
+    // Create document to send to firebase
+    FirebaseJson content;
+    content.set("fields/available/booleanValue", true);
+
+      if (Firebase.Firestore.patchDocument(&fbdo, PROJECT_ID, "", path2.c_str(), content.raw(), "available")) {
+          Serial.printf("ok\n%s\n\n", fbdo.payload().c_str());
+
+          
+      } else {
+        Serial.println(fbdo.errorReason());
+      }
+    roomAvailable = true;
+    currentMeetingID = "";  
+  }
+}
 
 /****************************************************
  *           Initialization For controller
@@ -183,76 +276,11 @@ void setup() {
  *           Loop Function, to run repeatedly
  *****************************************************/
 
-void loop() {
-  updateTime();
-  uppdateButtons();
-  String displayText = currentDate + " | " + formattedTime;
-
-  switch (currentState) {
-  case IDLE:
-    drawIdle(formattedTime);
-    
-    // Om användaren trycker på någon knapp
-    if(button_confirm_state == LOW || button_abort_state == LOW){
-      currentState = BOOK;
-    }
-  break;
-
-  case BOOK:
-    drawDefaultCalender(displayText);
-
-    // Om användaren trycker abort gå tillbacka till start state
-    if(getButtonState() == "Abort"){
-      currentState = IDLE;
-      delay(150);
-    }
-
-    if(getButtonState() == "Down"){
-      cursor++;
-
-      if(cursor >= 3){
-        cursor = 0;
-      }
-
-      delay(150);
-    }
-
-    if(getButtonState() == "Up"){
-      cursor--;
-
-      if(cursor < 0){
-        cursor = 2;
-      }
-
-      delay(150);
-    }
-
-    // Om rfid blip
-    if (SoftSerial.available()) {
-      currentState = RECEIVE_RFID_DATA;
-    }
-  break;
-
-  case RECEIVE_RFID_DATA:
-    if (readRFIDData()) {
-      currentState = DISPLAY_CARD;
-      cardPresent = true; // Set card presence flag
-    }
-    break;
-
-  case DISPLAY_CARD:
-    displayRFIDData();
-    if (!SoftSerial.available() && cardPresent) {
-      if (detectCardRemoval()) {
-        cardPresent = false; // Card is removed
-      }
-    } else if (!cardPresent && SoftSerial.available()) {
-      // Detect fresh card presentation
-      if (readRFIDData()) { // Make sure it's a valid card re-presentation
-        currentState =
-            IDLE; // Transition back to IDLE on second card presentation
-      }
-    }
-    break;
-  }
+void loop()
+{
+#ifdef RUN_TEST_PROGRAM
+  test();
+#else
+  stateMachine();
+#endif
 }
