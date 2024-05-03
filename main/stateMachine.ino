@@ -6,7 +6,14 @@
 
 void stateMachine(){
   updateTime();
+  updateDailyCalendar();
   uppdateButtons();
+
+  if (roomAvailable == false) {
+    nextAvailableTime = nextFreeSlot(startTimes, endTimes);
+  } else {
+    nextAvailableTime = "";
+  }
 
   switch (currentState) {
   case IDLE:

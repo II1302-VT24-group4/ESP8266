@@ -16,3 +16,20 @@
  * represent the types of value e.g. string, int, double, boolean, array,
  * object, null and undefined.
  */
+
+void updateNextAvailable(String *startTimes, String *endTimes, int sizeOfArray) {
+  int counter = 0;
+  while(startTimes[counter] != currentMeetingID){
+    counter++;
+  }
+  
+  for(int i = counter; i < sizeOfArray; i++){
+    if(endTimes[counter] < startTimes[counter + 1]){
+      String nextAvailableTimeSlot = endTimes[counter] + " - " + startTimes[counter + 1];
+      break;
+    }
+    if(counter >= sizeOfArray)
+      break;
+
+  }
+}

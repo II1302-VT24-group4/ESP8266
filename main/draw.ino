@@ -34,7 +34,7 @@ void drawIdle() {
     u8g2.setCursor((128 - nextTextWidth) / 2, 45);
     u8g2.print(nextText.c_str());
 
-    String nextSlot = "15:30 <-";
+    String nextSlot = nextAvailableTime;
     int nextSlotWidth = u8g2.getStrWidth(nextSlot.c_str());
     u8g2.setCursor((128 - nextSlotWidth) / 2, 60);
     u8g2.print(nextSlot.c_str());
