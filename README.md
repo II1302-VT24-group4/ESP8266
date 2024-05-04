@@ -18,6 +18,19 @@ Make sure you have the necessary drivers installed. You can download them from t
 
 We appreciate your interest in contributing to our project! Please read our Contributing Guidelines for information on how to contribute to this project.
 
+## 📚 Libraries Used
+
+This project uses the following libraries:
+
+- ESP8266WiFi (GNU)
+- Firebase-ESP-Client (MIT)
+- ArduinoJson (MIT)
+- NTPClient  
+- Tone (MIT)
+- u8g2 (BSD)
+
+Make sure to install these libraries through your Arduino IDE.
+
 ## 📌 Display to NodeMCU Pin Connections
 
 | Display Pin | Function              | NodeMCU Pin | Function       |
