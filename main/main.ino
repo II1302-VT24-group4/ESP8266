@@ -29,8 +29,8 @@
  *               WiFI parameters
  *****************************************************/
 
-const char *ssids[] = {"Christoffers iPhone 12", "iPhone", "KTH-IoT"};
-const char *passwords[] = {"89korvkorv", "89korvkorv", "LRVsNdJ8bAkHWt6lACzW"};
+const char *ssids[] = {"LmNf06bfUgFwtbO4L5od", "Christoffers iPhone 12", "iPhone", "KTH-IoT"};
+const char *passwords[] = {"r*\z3Teg|ao.4zFJ0jDA", "89korvkorv", "89korvkorv", "LRVsNdJ8bAkHWt6lACzW"};
 
 /****************************************************
  *               Firebase parameters
