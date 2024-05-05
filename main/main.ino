@@ -9,7 +9,7 @@
  *****************************************************/
 
 #define RUN_TEST_PROGRAM
-//#undef RUN_TEST_PROGRAM  // Uncomment this line if you want to run the test program
+#undef RUN_TEST_PROGRAM  // Uncomment this line if you want to run the test program
 
 /****************************************************
  *               Includes

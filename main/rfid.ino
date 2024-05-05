@@ -14,8 +14,10 @@
  * @return The parsed card number.
  */
 String cardParser() {
+  cardNumber = "550068A773E9"; // Demo 3 no working rfid reader
+
   String cardNumberNew = cardNumber.substring(1, cardNumber.length() - 1);
-  return cardNumberNew;
+  return cardNumber;  // demo 3
 }
 
 /**

@@ -98,8 +98,9 @@ void stateMachine() {
         cursor = (cursor + 1) % 3;
       } else if (getButtonState() == "Up") {
         cursor = (cursor + 2) % 3;
-      } else if (SoftSerial.available()) {
-        currentState = RECEIVE_RFID_DATA;
+      } else if (SoftSerial.available() || getButtonState() == "Trigger RFID") {
+        //currentState = RECEIVE_RFID_DATA;
+        currentState = DISPLAY_CARD;
       }
       break;
 
@@ -115,7 +116,7 @@ void stateMachine() {
 
       if (!SoftSerial.available() && cardPresent && detectCardRemoval()) {
         cardPresent = false;
-      } else if (!cardPresent && SoftSerial.available() && readRFIDData()) {
+      } else if (!cardPresent && SoftSerial.available() && readRFIDData() || getButtonState() == "Abort" || getButtonState() == "Confirm") {
         currentState = IDLE;
       }
       break;
