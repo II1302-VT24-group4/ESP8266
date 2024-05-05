@@ -14,8 +14,10 @@
  * @return The parsed card number.
  */
 String cardParser() {
+  cardNumber = "550068A773E9"; // Demo 3 no working rfid reader
+
   String cardNumberNew = cardNumber.substring(1, cardNumber.length() - 1);
-  return cardNumberNew;
+  return cardNumber;  // demo 3
 }
 
 /**
@@ -106,17 +108,17 @@ bool readRFIDData() {
   }
 
   tone(BUZZER, 660);
-  lastRFIDReadTime = millis(); // Update the time when data is received
-  delay(50);                   // Wait for data to be ready
+  lastRFIDReadTime = millis();  // Update the time when data is received
+  delay(50);                    // Wait for data to be ready
   noTone(BUZZER);
 
   while (SoftSerial.available() && count < sizeof(buffer)) {
     buffer[count++] = SoftSerial.read();
   }
 
-  Serial.write(buffer, count);       // Echo the buffer for debugging
-  cardNumber = String(buffer);       // Assuming cardNumber is a global String
-  memset(buffer, 0, sizeof(buffer)); // Clear the buffer for the next read
+  Serial.write(buffer, count);        // Echo the buffer for debugging
+  cardNumber = String(buffer);        // Assuming cardNumber is a global String
+  memset(buffer, 0, sizeof(buffer));  // Clear the buffer for the next read
 
   return true;
 }
@@ -131,7 +133,7 @@ bool readRFIDData() {
  */
 bool detectCardRemoval() {
   if (millis() - lastRFIDReadTime > removalTimeout) {
-    return true; // No data for more than 1 second, assume card removed
+    return true;  // No data for more than 1 second, assume card removed
   }
-  return false; // Card is still present or not enough time has passed
+  return false;  // Card is still present or not enough time has passed
 }

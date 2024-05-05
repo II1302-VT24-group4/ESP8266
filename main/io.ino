@@ -13,7 +13,7 @@
 void uppdateButtons() {
   button_confirm_state = digitalRead(BUTTON_CONFIRM);
   button_abort_state = digitalRead(BUTTON_ABORT);
-  buttons_direction = analogRead(BUTTONS); // For moving left, right, up and down.
+  buttons_direction = analogRead(BUTTONS);  // For moving left, right, up and down.
 }
 
 /**
@@ -29,14 +29,16 @@ String getButtonState() {
     return "Confirm";
   } else if (button_abort_state == LOW) {
     return "Abort";
-  } else if(buttons_direction < 890 && buttons_direction > 860){
+  } else if (buttons_direction < 880 && buttons_direction > 870) {
     return "Left";
-  } else if(buttons_direction < 60 && buttons_direction > 30){
+  } else if (buttons_direction < 45 && buttons_direction > 38) {
     return "Right";
-  } else if(buttons_direction < 200 && buttons_direction > 180){
+  } else if (buttons_direction < 188 && buttons_direction > 180) {
     return "Up";
-  } else if(buttons_direction < 110 && buttons_direction > 90){
+  } else if (buttons_direction < 92 && buttons_direction > 85) {
     return "Down";
+  } else if (buttons_direction < 889 && buttons_direction > 882) {
+    return "Trigger RFID";
   } else {
     return "No button pressed";
   }
