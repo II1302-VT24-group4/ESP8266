@@ -9,13 +9,13 @@
  * 
  * This function initializes the necessary components and settings for testing.
  */
-void setupTest(){
-  SoftSerial.begin(9600); // the SoftSerial baud rate
-  Serial.begin(9600);     // the Serial port of Arduino baud rate.
+void setupTest() {
+  SoftSerial.begin(9600);  // the SoftSerial baud rate
+  Serial.begin(9600);      // the Serial port of Arduino baud rate.
 
   // Screen
-  u8g2.begin();          // Initialize the display
-  u8g2.setContrast(100); // Adjust the contrast level (0-255)
+  u8g2.begin();           // Initialize the display
+  u8g2.setContrast(100);  // Adjust the contrast level (0-255)
 
   // LEDS
   pinMode(LED_RED, OUTPUT);
@@ -35,13 +35,15 @@ void setupTest(){
  * 
  * This function runs a series of tests to verify the functionality of different components.
  */
-void test(){
+void test() {
   Test_BUTTONS();
   Test_GPIO();
   Test_BUZZER();
+  Test_wifi();
 
   draw("All tests done!");
-  delay(2000);
+  delay(4000);
+
 }
 
 /**
@@ -50,24 +52,27 @@ void test(){
  * This function tests the functionality of buttons.
  * It checks if buttons are responsive and updates the display accordingly.
  */
-void Test_BUTTONS(){
+void Test_BUTTONS() {
   draw("Buttons test click confirm to exit");
   bool exit = false;
 
-  while(exit != true){
-    uppdateButtons();
-    if(button_confirm_state == LOW){
+  while (!exit) {
+    uppdateButtons(); // Continuously update button state
+    
+    if (button_confirm_state == LOW) {
       exit = true;
     }
 
-    delay(10);
+    delay(100);
+
     u8g2.firstPage();
     do {
       u8g2.setFont(u8g2_font_ncenB08_tr);
       u8g2.drawStr(0, 10, getButtonState().c_str());
       u8g2.drawStr(0, 30, String(buttons_direction).c_str());
     } while (u8g2.nextPage());
-    delay(10);
+
+    delay(100);
   }
 }
 
@@ -77,13 +82,15 @@ void Test_BUTTONS(){
  * This function tests the functionality of GPIO pins, specifically LED blinking.
  * It checks if LEDs are blinking and updates the display accordingly.
  */
-void Test_GPIO(){
+void Test_GPIO() {
   draw("Are the red and green LED blinking?");
   bool exit = false;
 
-  while(exit != true){
+  delay(200);
+
+  while (!exit) {
     uppdateButtons();
-    if(button_confirm_state == LOW){
+    if (button_confirm_state == LOW) {
       exit = true;
     }
 
@@ -105,14 +112,14 @@ void Test_GPIO(){
  * This function tests the functionality of the buzzer.
  * It checks if the buzzer is making noise and updates the display accordingly.
  */
-void Test_BUZZER(){
+void Test_BUZZER() {
   draw("Is the buzzer making noise?");
 
   bool exit = false;
 
-  while(exit != true){
+  while (!exit) {
     uppdateButtons();
-    if(button_confirm_state == LOW){
+    if (button_confirm_state == LOW) {
       exit = true;
     }
 
@@ -124,4 +131,57 @@ void Test_BUZZER(){
 
   draw("BUZZER test done!");
   delay(2000);
+}
+
+/**
+ * @brief 
+ * 
+ */
+void Test_wifi() {
+  draw("Connecting to WiFi...");
+
+  // Attempt to connect to WiFi
+  WiFi.begin(ssids[0], passwords[0]);
+
+  // Display connecting message
+  u8g2.firstPage();
+  do {
+    u8g2.setFont(u8g2_font_ncenB08_tr);
+    u8g2.drawStr(0, 10, "Connecting to:");
+    u8g2.drawStr(0, 30, ssids[0]);
+  } while (u8g2.nextPage());
+
+  // Wait for WiFi connection
+  int connectionAttempts = 0;
+  while (WiFi.status() != WL_CONNECTED && connectionAttempts < 20) {
+    delay(500);
+    connectionAttempts++;
+  }
+
+  if (WiFi.status() == WL_CONNECTED) {
+    // Display connection success message with IP address
+    String ip = ipToString(WiFi.localIP());
+    draw("Connected to WiFi");
+    delay(1000);
+    u8g2.firstPage();
+    do {
+      u8g2.setFont(u8g2_font_ncenB08_tr);
+      u8g2.drawStr(0, 10, "Connected to:");
+      u8g2.drawStr(0, 20, ssids[0]);
+      u8g2.drawStr(0, 40, "IP Address:");
+      u8g2.drawStr(0, 50, ip.c_str());
+    } while (u8g2.nextPage());
+  } else {
+    // Display connection failure message
+    draw("Failed to connect to WiFi");
+    delay(2000);
+  }
+
+  delay(5000);
+  draw("WiFi test done!");
+  delay(2000);
+}
+
+String ipToString(const IPAddress& ip) {
+  return String(ip[0]) + "." + String(ip[1]) + "." + String(ip[2]) + "." + String(ip[3]);
 }
