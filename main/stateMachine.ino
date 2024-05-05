@@ -4,13 +4,13 @@
  * @details
  */
 
-void setupStateMachine(){
-  SoftSerial.begin(9600); // the SoftSerial baud rate
-  Serial.begin(9600);     // the Serial port of Arduino baud rate.
+void setupStateMachine() {
+  SoftSerial.begin(9600);  // the SoftSerial baud rate
+  Serial.begin(9600);      // the Serial port of Arduino baud rate.
 
   // Screen
-  u8g2.begin();          // Initialize the display
-  u8g2.setContrast(100); // Adjust the contrast level (0-255)
+  u8g2.begin();           // Initialize the display
+  u8g2.setContrast(100);  // Adjust the contrast level (0-255)
 
   // LEDS
   pinMode(LED_RED, OUTPUT);
@@ -54,89 +54,70 @@ void setupStateMachine(){
     delay(500);
   }
 
+  // Print uid to console
+  uid = auth.token.uid.c_str();
+  Serial.print("User UID: ");
+  delay(100);
+  Serial.println(uid);
+  delay(100);
+
   // Buttons
   pinMode(BUTTON_CONFIRM, INPUT_PULLUP);
   pinMode(BUTTON_ABORT, INPUT_PULLUP);
-
 }
 
-void stateMachine(){
+void stateMachine() {
   unsigned long currentMillis = millis();
-  updateTime();
 
-  // Update buttons at regular intervals
-  if (currentMillis - lastButtonUpdateTime >= buttonUpdateInterval) {
-    uppdateButtons();
-    lastButtonUpdateTime = currentMillis;
-  }
+  updateTime();
+  uppdateButtons();
 
   if (currentMillis - lastCalendarUpdateTime >= calendarUpdateInterval) {
-    lastCalendarUpdateTime = currentMillis; 
-
+    lastCalendarUpdateTime = currentMillis;
     updateDailyCalendar();
 
-    if (roomAvailable == false) {
-      nextAvailableTime = nextFreeSlot(startTimes, endTimes);
-    } else {
-      nextAvailableTime = "";
-    }
-
+    nextAvailableTime = roomAvailable ? "" : nextFreeSlot(startTimes, endTimes);
   }
 
   switch (currentState) {
-  case IDLE:
-    drawIdle();
-    
-    // Om användaren trycker på någon knapp
-    if(button_confirm_state == LOW || button_abort_state == LOW){
-      currentState = BOOK;
-    }
-  break;
+    case IDLE:
+      drawIdle();
 
-  case BOOK:
-    drawDefaultCalender();
+      if (button_confirm_state == LOW && currentMillis - lastButtonPressTime >= DEBOUNCE_DELAY) {
+        currentState = BOOK;
+        lastButtonPressTime = currentMillis;  // Update last button press time
+      }
+      break;
 
-    static unsigned long lastButtonPressTime = 0;
+    case BOOK:
+      drawDefaultCalender();
 
-    // Handle button press
-    if (getButtonState() != "None" && millis() - lastButtonPressTime >= 150) {
-        lastButtonPressTime = millis();
-
-        if (getButtonState() == "Abort") {
-            currentState = IDLE;
-        } else if (getButtonState() == "Down") {
-            cursor = (cursor + 1) % 3;
-        } else if (getButtonState() == "Up") {
-            cursor = (cursor - 1 + 3) % 3;
-        }
-    }
-
-    // Handle RFID data
-    if (SoftSerial.available()) {
+      if (getButtonState() == "Abort") {
+        currentState = IDLE;
+      } else if (getButtonState() == "Down") {
+        cursor = (cursor + 1) % 3;
+      } else if (getButtonState() == "Up") {
+        cursor = (cursor + 2) % 3;
+      } else if (SoftSerial.available()) {
         currentState = RECEIVE_RFID_DATA;
-    }
-    break;
-
-  case RECEIVE_RFID_DATA:
-    if (readRFIDData()) {
-      currentState = DISPLAY_CARD;
-      cardPresent = true; // Set card presence flag
-    }
-    break;
-
-  case DISPLAY_CARD:
-    displayRFIDData();
-    if (!SoftSerial.available() && cardPresent) {
-      if (detectCardRemoval()) {
-        cardPresent = false; // Card is removed
       }
-    } else if (!cardPresent && SoftSerial.available()) {
-      // Detect fresh card presentation
-      if (readRFIDData()) { // Make sure it's a valid card re-presentation
-        currentState =
-            IDLE; // Transition back to IDLE on second card presentation
+      break;
+
+    case RECEIVE_RFID_DATA:
+      if (readRFIDData()) {
+        currentState = DISPLAY_CARD;
+        cardPresent = true;
       }
-    }
-    break;
+      break;
+
+    case DISPLAY_CARD:
+      displayRFIDData();
+
+      if (!SoftSerial.available() && cardPresent && detectCardRemoval()) {
+        cardPresent = false;
+      } else if (!cardPresent && SoftSerial.available() && readRFIDData()) {
+        currentState = IDLE;
+      }
+      break;
   }
 }

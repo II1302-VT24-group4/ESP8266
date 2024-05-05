@@ -16,15 +16,15 @@
  */
 void connectToWiFi(const char *ssid, const char *password) {
   Serial.begin(9600);
-  WiFi.begin(ssid, password); // Connect to WiFi
+  WiFi.begin(ssid, password);  // Connect to WiFi
 
   unsigned long startTime = millis();
   while (WiFi.status() != WL_CONNECTED) {
-    if (millis() - startTime > 30000) { // 30 seconds timeout
+    if (millis() - startTime > 30000) {  // 30 seconds timeout
       Serial.println("Failed to connect to WiFi.");
       break;
     }
-    
+
     digitalWrite(LED_RED, HIGH);
 
     u8g2.firstPage();
@@ -48,7 +48,7 @@ void connectToWiFi(const char *ssid, const char *password) {
       u8g2.print(ssid);
     } while (u8g2.nextPage());
 
-    Serial.print("."); // while wifi not connected yet, print '.'
+    Serial.print(".");  // while wifi not connected yet, print '.'
   }
 
   digitalWrite(LED_RED, LOW);
@@ -62,7 +62,7 @@ void connectToWiFi(const char *ssid, const char *password) {
     u8g2.print(ssid);
   } while (u8g2.nextPage());
 
-  Serial.println(""); // new line, then print WiFi connected and the IP address
+  Serial.println("");  // new line, then print WiFi connected and the IP address
   Serial.println("WiFi connected");
   Serial.println(WiFi.localIP());
 }

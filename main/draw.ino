@@ -4,15 +4,16 @@
  * @details This code is by Christoffer Franzén
  */
 
+/**
+ * @brief Draws the booking screen
+ * 
+ */
 void draw(const char *str) {
   u8g2.firstPage();
   do {
     u8g2.setFont(u8g2_font_ncenB08_tr);
     u8g2.drawStr(0, 10, str);
   } while (u8g2.nextPage());
-
-  //u8g2.setFont(u8g2_font_ncenB08_tr); // Set the font for drawing text
-  //u8g2.drawStr(0, 10, str); // Draw the input string at position (0, 10)
 }
 
 /**
@@ -24,7 +25,7 @@ void drawIdle() {
   u8g2.setFont(u8g2_font_ncenB14_tr);
 
   // Create an array of strings to display
-  String displayTexts[] = {"Anna", formattedTime.substring(0, formattedTime.length() - 3), "Nästa tid", nextAvailableTime.isEmpty() ? "Ledigt" : nextAvailableTime};
+  String displayTexts[] = { "Anna", formattedTime.substring(0, formattedTime.length() - 3), "Next time", nextAvailableTime.isEmpty() ? "Free" : nextAvailableTime };
 
   u8g2.firstPage();
   do {
@@ -36,7 +37,7 @@ void drawIdle() {
     }
   } while (u8g2.nextPage());
 
-  if(nextAvailableTime.isEmpty()){
+  if (nextAvailableTime.isEmpty()) {
     digitalWrite(LED_GREEN, HIGH);
     digitalWrite(LED_RED, LOW);
   } else {
@@ -59,29 +60,29 @@ void drawDefaultCalender() {
     u8g2.print(displayText.c_str());
     u8g2.drawBox(0, 11, 128, 1);
     u8g2.setCursor(0, 22);
-    u8g2.print("Nuvarande: Ledigt");
+    u8g2.print("Current: Vacant");
     u8g2.setCursor(0, 32);
 
     if (cursor == 0) {
-      u8g2.print("08:00 Ledigt <-");
+      u8g2.print("08:00 Free <-");
     } else {
-      u8g2.print("08:00 Ledigt");
+      u8g2.print("08:00 Free");
     }
 
     u8g2.setCursor(0, 42);
 
     if (cursor == 1) {
-      u8g2.print("09:00 Ledigt <-");
+      u8g2.print("09:00 Free <-");
     } else {
-      u8g2.print("09:00 Ledigt");
+      u8g2.print("09:00 Free");
     }
 
     u8g2.setCursor(0, 52);
 
     if (cursor == 2) {
-      u8g2.print("10:00 Ledigt <-");
+      u8g2.print("10:00 Free <-");
     } else {
-      u8g2.print("10:00 Ledigt");
+      u8g2.print("10:00 Free");
     }
 
     u8g2.setCursor(0, 62);

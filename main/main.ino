@@ -9,34 +9,30 @@
  *****************************************************/
 
 #define RUN_TEST_PROGRAM
-//#undef RUN_TEST_PROGRAM // Uncomment this line if you want to run the test program
-
-#define DEBUG_ON 1
-#define DEBUG_OFF 0
-byte debugMode = DEBUG_OFF;
-
-#define DBG(...) debugMode == DEBUG_ON ? Serial.println(__VA_ARGS__) : NULL
+#undef RUN_TEST_PROGRAM  // Uncomment this line if you want to run the test program
 
 /****************************************************
  *               Includes
  *****************************************************/
 
-#include "ESP8266WiFi.h"         // Finns defualt
-#include "Firebase_ESP_Client.h" // Library manager Firebase_ESP_Client
-#include "NTPClient.h"           // Library manager NTPClient
-#include "SoftwareSerial.h"      // Finns defualt
-#include "U8g2lib.h"             // Library manager U8g2 (This code uses the U8g2 library for monochrome displays.)
-#include "WiFiUdp.h"             // Finns defualt
-#include "addons/TokenHelper.h"  // Finns om man laddar ner Firebase_ESP_Client
-#include "pitches.h"             // Sketch -> Include Libary -> Add .ZIP Libary (https://github.com/hibit-dev/buzzer/tree/master/lib)
-#include "ArduinoJson.h" // finns i library manager
+#include "ESP8266WiFi.h"          // Finns defualt
+#include "Firebase_ESP_Client.h"  // Library manager Firebase_ESP_Client
+#include "NTPClient.h"            // Library manager NTPClient
+#include "SoftwareSerial.h"       // Finns defualt
+#include "U8g2lib.h"              // Library manager U8g2 (This code uses the U8g2 library for monochrome displays.)
+#include "WiFiUdp.h"              // Finns defualt
+#include "addons/TokenHelper.h"   // Finns om man laddar ner Firebase_ESP_Client
+#include "pitches.h"              // Sketch -> Include Libary -> Add .ZIP Libary (https://github.com/hibit-dev/buzzer/tree/master/lib)
+#include "Arduino.h"              // Finns defualt
+#include "SPI.h"                  // Finns defualt
+#include "ArduinoJson.h"          // finns i library manager
 
 /****************************************************
  *               WiFI parameters
  *****************************************************/
 
-const char *const ssids[] = {"Christoffers iPhone 12", "iPhone", "KTH-IoT"};
-const char *const passwords[] = {"89korvkorv", "89korvkorv", "LRVsNdJ8bAkHWt6lACzW"};
+const char *ssids[] = { "Christoffers iPhone 12", "iPhone", "KTH-IoT" };
+const char *passwords[] = { "89korvkorv", "89korvkorv", "LRVsNdJ8bAkHWt6lACzW" };
 
 /****************************************************
  *               Firebase parameters
@@ -65,13 +61,15 @@ NTPClient timeClient(ntpUDP, "pool.ntp.org");
 #define SC D5
 #define SI D7
 #define LED_RED D0
-#define LED_GREEN 10 // SD3
+#define LED_GREEN 10  // SD3
 #define BUZZER D6
-#define BUTTON_CONFIRM 3 // RX
-#define BUTTON_ABORT 1   // TX
+#define BUTTON_CONFIRM 3  // RX
+#define BUTTON_ABORT 1    // TX
 #define BUTTONS A0
-#define RX D2 // D2
-#define TX D3 // D3
+#define RX D2  // D2
+#define TX D3  // D3
+
+#define DEBOUNCE_DELAY 100
 
 /****************************************************
  *               Global variabels
@@ -92,13 +90,12 @@ U8G2_ST7565_NHD_C12864_2_4W_HW_SPI u8g2(U8G2_R2, /* cs=*/CS, /* dc=*/RS,
 
 // RFID
 SoftwareSerial SoftSerial(RX, TX);
-unsigned char buffer[64]; // buffer array for data receive over serial port
-int count = 0;            // counter for buffer array
+unsigned char buffer[64];  // buffer array for data receive over serial port
+int count = 0;             // counter for buffer array
 String cardNumber = "";
 
 // States
-enum State
-{
+enum State {
   IDLE,
   BOOK,
   RECEIVE_RFID_DATA,
@@ -106,9 +103,9 @@ enum State
 };
 
 State currentState = IDLE;
-bool cardPresent = false;                  // Flag to check the presence of the card
-unsigned long lastRFIDReadTime = 0;        // Timestamp of the last RFID read
-const unsigned long removalTimeout = 1000; // Timeout in milliseconds (1 second)
+bool cardPresent = false;                   // Flag to check the presence of the card
+unsigned long lastRFIDReadTime = 0;         // Timestamp of the last RFID read
+const unsigned long removalTimeout = 1000;  // Timeout in milliseconds (1 second)
 
 // Time
 String formattedTime;
@@ -125,7 +122,7 @@ int cursor = 0;
 // global stuffs and potential war crimes
 String currentMeetingID = "";
 bool roomAvailable = false;
-const int MAX_DOCUMENTS = 10; // Max antal dokument du förväntar dig hantera
+const int MAX_DOCUMENTS = 10;  // Max antal dokument du förväntar dig hantera
 const int TIME_LENGTH = 6;
 String startTimes[48];
 String endTimes[48];
@@ -133,13 +130,10 @@ int documentsCount = 0;
 String nextAvailableTimeSlot = "";
 String nextAvailableTime = "";
 
-// Calender
 unsigned long lastCalendarUpdateTime = 0;
-const unsigned long calendarUpdateInterval = 500; // Interval in milliseconds (0.5 seconds)
+const unsigned long calendarUpdateInterval = 2000;
 
-unsigned long lastButtonUpdateTime = 0;
-const unsigned long buttonUpdateInterval = 50; // Update buttons every 50 milliseconds
-
+unsigned long lastButtonPressTime = 0;
 
 /****************************************************
  *           Initialization For controller
@@ -152,6 +146,10 @@ void setup() {
   setupStateMachine();
 #endif
 }
+
+/*****************************************************
+ *           Loop Function, to run repeatedly
+ *****************************************************/
 
 void loop() {
 #ifdef RUN_TEST_PROGRAM

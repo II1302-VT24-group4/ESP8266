@@ -27,16 +27,16 @@ bool parseJson(String jsonString, String currentTime) {
     }
   }
   bool result = true;
-  for(int i = 0; i < documentsCount; i++){
+  for (int i = 0; i < documentsCount; i++) {
     Serial.println((currentTime.substring(0, 2) + currentTime.substring(3, 6)).toInt());
     Serial.println((startTimes[i].substring(0, 2) + startTimes[i].substring(3, 6)).toInt());
     Serial.println((currentTime.substring(0, 2) + currentTime.substring(3, 6)).toInt() < (startTimes[i].substring(0, 2) + startTimes[i].substring(3, 6)).toInt());
 
-  if((currentTime.substring(0, 2) + currentTime.substring(3, 6)).toInt() < (startTimes[i].substring(0, 2) + startTimes[i].substring(3, 6)).toInt())
-    return result;
+    if ((currentTime.substring(0, 2) + currentTime.substring(3, 6)).toInt() < (startTimes[i].substring(0, 2) + startTimes[i].substring(3, 6)).toInt())
+      return result;
 
     result = timeInRange(currentTime, startTimes[i], endTimes[i]);
   }
-  
+
   return result;
 }
