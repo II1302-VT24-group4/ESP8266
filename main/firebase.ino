@@ -29,7 +29,7 @@ void updateDailyCalendar(){
     payload.setJsonData(fbdo.payload().c_str());
     Serial.println(fbdo.payload().c_str());
     Serial.println("Efter SetJson");
-    delay(100);
+    //delay(100);
     
     String jsonString = fbdo.payload().c_str();
     bool available = parseJson(jsonString, formattedTime);

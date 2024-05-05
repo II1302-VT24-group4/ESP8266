@@ -9,7 +9,13 @@
  *****************************************************/
 
 #define RUN_TEST_PROGRAM
-#undef RUN_TEST_PROGRAM // Uncomment this line if you want to run the test program
+//#undef RUN_TEST_PROGRAM // Uncomment this line if you want to run the test program
+
+#define DEBUG_ON 1
+#define DEBUG_OFF 0
+byte debugMode = DEBUG_OFF;
+
+#define DBG(...) debugMode == DEBUG_ON ? Serial.println(__VA_ARGS__) : NULL
 
 /****************************************************
  *               Includes
@@ -29,8 +35,8 @@
  *               WiFI parameters
  *****************************************************/
 
-const char *ssids[] = {"LmNf06bfUgFwtbO4L5od", "Christoffers iPhone 12", "iPhone", "KTH-IoT"};
-const char *passwords[] = {"r*\z3Teg|ao.4zFJ0jDA", "89korvkorv", "89korvkorv", "LRVsNdJ8bAkHWt6lACzW"};
+const char *const ssids[] = {"Christoffers iPhone 12", "iPhone", "KTH-IoT"};
+const char *const passwords[] = {"89korvkorv", "89korvkorv", "LRVsNdJ8bAkHWt6lACzW"};
 
 /****************************************************
  *               Firebase parameters
@@ -116,12 +122,6 @@ int buttons_direction;
 // Cursor
 int cursor = 0;
 
-unsigned long debounceDuration = 150; // millis
-unsigned long lastTimeButtonStateChanged = 0;
-
-int val = 0;
-
-
 // global stuffs and potential war crimes
 String currentMeetingID = "";
 bool roomAvailable = false;
@@ -132,6 +132,14 @@ String endTimes[48];
 int documentsCount = 0;
 String nextAvailableTimeSlot = "";
 String nextAvailableTime = "";
+
+// Calender
+unsigned long lastCalendarUpdateTime = 0;
+const unsigned long calendarUpdateInterval = 500; // Interval in milliseconds (0.5 seconds)
+
+unsigned long lastButtonUpdateTime = 0;
+const unsigned long buttonUpdateInterval = 50; // Update buttons every 50 milliseconds
+
 
 /****************************************************
  *           Initialization For controller
@@ -145,12 +153,7 @@ void setup() {
 #endif
 }
 
-/*****************************************************
- *           Loop Function, to run repeatedly
- *****************************************************/
-
-void loop()
-{
+void loop() {
 #ifdef RUN_TEST_PROGRAM
   test();
 #else

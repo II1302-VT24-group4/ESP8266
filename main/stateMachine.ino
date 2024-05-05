@@ -61,14 +61,26 @@ void setupStateMachine(){
 }
 
 void stateMachine(){
+  unsigned long currentMillis = millis();
   updateTime();
-  updateDailyCalendar();
-  uppdateButtons();
 
-  if (roomAvailable == false) {
-    nextAvailableTime = nextFreeSlot(startTimes, endTimes);
-  } else {
-    nextAvailableTime = "";
+  // Update buttons at regular intervals
+  if (currentMillis - lastButtonUpdateTime >= buttonUpdateInterval) {
+    uppdateButtons();
+    lastButtonUpdateTime = currentMillis;
+  }
+
+  if (currentMillis - lastCalendarUpdateTime >= calendarUpdateInterval) {
+    lastCalendarUpdateTime = currentMillis; 
+
+    updateDailyCalendar();
+
+    if (roomAvailable == false) {
+      nextAvailableTime = nextFreeSlot(startTimes, endTimes);
+    } else {
+      nextAvailableTime = "";
+    }
+
   }
 
   switch (currentState) {
@@ -84,37 +96,26 @@ void stateMachine(){
   case BOOK:
     drawDefaultCalender();
 
-    // Om användaren trycker abort gå tillbacka till start state
-    if(getButtonState() == "Abort"){
-      currentState = IDLE;
-      delay(150);
+    static unsigned long lastButtonPressTime = 0;
+
+    // Handle button press
+    if (getButtonState() != "None" && millis() - lastButtonPressTime >= 150) {
+        lastButtonPressTime = millis();
+
+        if (getButtonState() == "Abort") {
+            currentState = IDLE;
+        } else if (getButtonState() == "Down") {
+            cursor = (cursor + 1) % 3;
+        } else if (getButtonState() == "Up") {
+            cursor = (cursor - 1 + 3) % 3;
+        }
     }
 
-    if(getButtonState() == "Down"){
-      cursor++;
-
-      if(cursor >= 3){
-        cursor = 0;
-      }
-
-      delay(150);
-    }
-
-    if(getButtonState() == "Up"){
-      cursor--;
-
-      if(cursor < 0){
-        cursor = 2;
-      }
-
-      delay(150);
-    }
-
-    // Om rfid blip
+    // Handle RFID data
     if (SoftSerial.available()) {
-      currentState = RECEIVE_RFID_DATA;
+        currentState = RECEIVE_RFID_DATA;
     }
-  break;
+    break;
 
   case RECEIVE_RFID_DATA:
     if (readRFIDData()) {

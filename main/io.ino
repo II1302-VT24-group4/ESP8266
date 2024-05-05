@@ -35,7 +35,7 @@ String getButtonState() {
     return "Right";
   } else if(buttons_direction < 200 && buttons_direction > 180){
     return "Up";
-  } else if(buttons_direction < 110 && buttons_direction > 90){
+  } else if(buttons_direction < 100 && buttons_direction > 80){
     return "Down";
   } else {
     return "No button pressed";
