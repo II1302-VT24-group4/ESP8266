@@ -40,6 +40,7 @@ void test() {
   Test_GPIO();
   Test_BUZZER();
   Test_wifi();
+  Test_RFID();
 
   draw("All tests done!");
   delay(4000);
@@ -184,4 +185,28 @@ void Test_wifi() {
 
 String ipToString(const IPAddress& ip) {
   return String(ip[0]) + "." + String(ip[1]) + "." + String(ip[2]) + "." + String(ip[3]);
+}
+
+void Test_RFID(){
+  bool exit = false;
+  draw("RFID test, blip a card");
+
+  while (!exit){
+    if(SoftSerial.available()){
+      draw("Reading card...");
+      readRFIDData();
+      delay(1000);
+
+      u8g2.firstPage();
+      do {
+        u8g2.setFont(u8g2_font_ncenB08_tr);
+        u8g2.drawStr(0, 10, cardNumber.c_str());
+      } while (u8g2.nextPage());
+      delay(6000);
+
+      draw("RFID test done!");
+      delay(3000);
+      exit = true;
+    }
+  }
 }

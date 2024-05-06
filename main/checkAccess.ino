@@ -1,3 +1,9 @@
+/**
+ * @file checkAccess.ino
+ * @brief 
+ * @details
+ */
+
 bool checkAccess(){
   String pathToRFID = "test/" + uid + "/" + currentDate + "/" + currentMeetingID + "/rfid";
 

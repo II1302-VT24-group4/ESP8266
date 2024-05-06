@@ -70,7 +70,11 @@ void stateMachine() {
   unsigned long currentMillis = millis();
 
   updateTime();
-  uppdateButtons();
+  
+  if (currentMillis - lastButtonUpdateTime >= buttonUpdateInterval) {
+    lastButtonUpdateTime = currentMillis;
+    uppdateButtons();
+  }
 
   if (currentMillis - lastCalendarUpdateTime >= calendarUpdateInterval) {
     lastCalendarUpdateTime = currentMillis;
@@ -83,9 +87,8 @@ void stateMachine() {
     case IDLE:
       drawIdle();
 
-      if (button_confirm_state == LOW && currentMillis - lastButtonPressTime >= DEBOUNCE_DELAY) {
+      if (button_confirm_state == LOW) {
         currentState = BOOK;
-        lastButtonPressTime = currentMillis;  // Update last button press time
       }
       break;
 
@@ -98,9 +101,8 @@ void stateMachine() {
         cursor = (cursor + 1) % 3;
       } else if (getButtonState() == "Up") {
         cursor = (cursor + 2) % 3;
-      } else if (SoftSerial.available() || getButtonState() == "Trigger RFID") {
-        //currentState = RECEIVE_RFID_DATA;
-        currentState = DISPLAY_CARD;
+      } else if (SoftSerial.available()) {
+        currentState = RECEIVE_RFID_DATA;
       }
       break;
 
@@ -116,7 +118,7 @@ void stateMachine() {
 
       if (!SoftSerial.available() && cardPresent && detectCardRemoval()) {
         cardPresent = false;
-      } else if (!cardPresent && SoftSerial.available() && readRFIDData() || getButtonState() == "Abort" || getButtonState() == "Confirm") {
+      } else if (!cardPresent && SoftSerial.available() && readRFIDData() || getButtonState() == "Abort") {
         currentState = IDLE;
       }
       break;

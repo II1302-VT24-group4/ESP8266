@@ -31,8 +31,8 @@
  *               WiFI parameters
  *****************************************************/
 
-const char *ssids[] = { "Christoffers iPhone 12", "iPhone", "KTH-IoT" };
-const char *passwords[] = { "89korvkorv", "89korvkorv", "LRVsNdJ8bAkHWt6lACzW" };
+const char *ssids[] = {"KTH-IoT", "Christoffers iPhone 12", "iPhone"};
+const char *passwords[] = {"LRVsNdJ8bAkHWt6lACzW", "89korvkorv", "89korvkorv"};
 
 /****************************************************
  *               Firebase parameters
@@ -66,8 +66,8 @@ NTPClient timeClient(ntpUDP, "pool.ntp.org");
 #define BUTTON_CONFIRM 3  // RX
 #define BUTTON_ABORT 1    // TX
 #define BUTTONS A0
-#define RX D2  // D2
-#define TX D3  // D3
+#define RX D3  // D2
+#define TX D2  // D3
 
 #define DEBOUNCE_DELAY 100
 
@@ -130,10 +130,11 @@ int documentsCount = 0;
 String nextAvailableTimeSlot = "";
 String nextAvailableTime = "";
 
+unsigned long lastButtonUpdateTime = 0;
+const unsigned long buttonUpdateInterval = 200;
+
 unsigned long lastCalendarUpdateTime = 0;
 const unsigned long calendarUpdateInterval = 2000;
-
-unsigned long lastButtonPressTime = 0;
 
 /****************************************************
  *           Initialization For controller
