@@ -205,7 +205,7 @@ void Test_RFID(){
       delay(6000);
 
       draw("RFID test done!");
-      delay(3000);
+      delay(5000);
       exit = true;
     }
   }

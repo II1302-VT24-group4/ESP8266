@@ -97,6 +97,8 @@ String cardNumber = "";
 // States
 enum State {
   IDLE,
+  QUICKBOOK,
+  CONFIRMQUICKBOOK,
   BOOK,
   RECEIVE_RFID_DATA,
   DISPLAY_CARD

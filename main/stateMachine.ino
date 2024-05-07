@@ -70,7 +70,7 @@ void stateMachine() {
   unsigned long currentMillis = millis();
 
   updateTime();
-  
+
   if (currentMillis - lastButtonUpdateTime >= buttonUpdateInterval) {
     lastButtonUpdateTime = currentMillis;
     uppdateButtons();
@@ -87,9 +87,73 @@ void stateMachine() {
     case IDLE:
       drawIdle();
 
-      if (button_confirm_state == LOW) {
-        currentState = BOOK;
+      if (SoftSerial.available() && nextAvailableTime.isEmpty()) {
+        readRFIDData();
+        currentState = QUICKBOOK;
+      } else if (SoftSerial.available() && !nextAvailableTime.isEmpty()) {
+        readRFIDData();
+
+        if (checkAccess()) {
+          draw("Room unlocked!");
+          delay(3000);
+        } else {
+          String owner;
+
+          // Prepare the Firestore paths
+          String rfidPath = "rfid/" + cardParser();
+          String userPath;
+
+          // Retrieve the owner data
+          if (Firebase.Firestore.getDocument(&fbdo, PROJECT_ID, "", rfidPath.c_str(),
+                                             "")) {
+            FirebaseJson payload;
+            payload.setJsonData(fbdo.payload().c_str());
+
+            FirebaseJsonData jsonData;
+            payload.get(jsonData, "fields/owner/stringValue", true);
+
+            owner = jsonData.stringValue;
+            userPath = "users/" + owner;
+
+            currentState = QUICKBOOK;
+
+          } else {
+            draw("Card not registerd");
+            delay(3000);
+          }
+        }
       }
+      break;
+
+    case QUICKBOOK:
+      u8g2.firstPage();
+      do {
+        u8g2.setFont(u8g2_font_ncenB08_tr);
+        u8g2.drawStr(0, 10, cardNumber.c_str());
+        u8g2.drawStr(0, 20, "Do you want too book:");
+        u8g2.drawStr(0, 30, formattedTime.c_str());
+      } while (u8g2.nextPage());
+
+      if (getButtonState() == "Abort") {
+        currentState = IDLE;
+      } else if (getButtonState() == "Confirm") {
+        currentState = CONFIRMQUICKBOOK;
+      }
+
+      break;
+
+    case CONFIRMQUICKBOOK:
+      u8g2.firstPage();
+      do {
+        u8g2.setFont(u8g2_font_ncenB08_tr);
+        u8g2.drawStr(0, 10, formattedTime.c_str());
+        u8g2.drawStr(0, 20, "Booking created");
+      } while (u8g2.nextPage());
+
+      delay(3000);
+
+      currentState = IDLE;
+
       break;
 
     case BOOK:
