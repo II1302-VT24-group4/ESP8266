@@ -14,10 +14,8 @@
  * @return The parsed card number.
  */
 String cardParser() {
-  cardNumber = "550068A773E9"; // Demo 3 no working rfid reader
-
   String cardNumberNew = cardNumber.substring(1, cardNumber.length() - 1);
-  return cardNumber;  // demo 3
+  return cardNumberNew;
 }
 
 /**
@@ -107,7 +105,7 @@ bool readRFIDData() {
     return false;
   }
 
-  tone(BUZZER, 660);
+  tone(BUZZER, TONE_RFID);
   lastRFIDReadTime = millis();  // Update the time when data is received
   delay(50);                    // Wait for data to be ready
   noTone(BUZZER);
@@ -121,19 +119,4 @@ bool readRFIDData() {
   memset(buffer, 0, sizeof(buffer));  // Clear the buffer for the next read
 
   return true;
-}
-
-/**
- * @brief Detects the removal of an RFID card.
- *
- * This function checks if a certain amount of time has passed since the last
- * RFID read. If it has, it assumes that the card has been removed.
- *
- * @return True if the card is assumed to be removed, false otherwise.
- */
-bool detectCardRemoval() {
-  if (millis() - lastRFIDReadTime > removalTimeout) {
-    return true;  // No data for more than 1 second, assume card removed
-  }
-  return false;  // Card is still present or not enough time has passed
 }

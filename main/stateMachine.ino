@@ -70,7 +70,11 @@ void stateMachine() {
   unsigned long currentMillis = millis();
 
   updateTime();
-  uppdateButtons();
+
+  if (currentMillis - lastButtonUpdateTime >= buttonUpdateInterval) {
+    lastButtonUpdateTime = currentMillis;
+    uppdateButtons();
+  }
 
   if (currentMillis - lastCalendarUpdateTime >= calendarUpdateInterval) {
     lastCalendarUpdateTime = currentMillis;
@@ -83,10 +87,98 @@ void stateMachine() {
     case IDLE:
       drawIdle();
 
-      if (button_confirm_state == LOW && currentMillis - lastButtonPressTime >= DEBOUNCE_DELAY) {
-        currentState = BOOK;
-        lastButtonPressTime = currentMillis;  // Update last button press time
+      if (SoftSerial.available() && nextAvailableTime.isEmpty()) {
+        readRFIDData();
+        currentState = QUICKBOOK;
+      } else if (SoftSerial.available() && !nextAvailableTime.isEmpty()) {
+        readRFIDData();
+
+        if (checkAccess()) {
+          draw("Room unlocked!");
+          delay(1000);
+
+          u8g2.firstPage();
+          do {
+            u8g2.setFont(u8g2_font_ncenB08_tr); // Set the font
+
+            // Draw a larger and more detailed unlocked icon
+            u8g2.drawFrame(34, 12, 60, 40); // Outer rectangle
+            u8g2.drawBox(38, 22, 52, 26); // Inner rectangle
+            u8g2.drawCircle(64, 22, 10); // Circle
+            u8g2.drawBox(64, 12, 8, 10); // Rectangle on top of the circle
+
+          } while (u8g2.nextPage());
+
+          delay(3000);
+        } else {
+          // Prepare the Firestore paths
+          String rfidPath = "rfid/" + cardParser();
+          String userPath;
+
+          // Retrieve the owner data
+          if (Firebase.Firestore.getDocument(&fbdo, PROJECT_ID, "", rfidPath.c_str(),
+                                             "")) {
+            
+
+            currentState = QUICKBOOK;
+
+          } else {
+            draw("Card not registerd");
+            delay(3000);
+          }
+        }
       }
+      break;
+
+    case QUICKBOOK:
+
+      if(roomAvailable){
+        draw("roomAvailable :) ");
+        tone(BUZZER, 330);
+        delay(50);
+        noTone(BUZZER);
+        delay(1450);
+      } else {  // Om bokning finns skapa bokning vid nästa lediga tid
+        u8g2.firstPage();
+        do {
+          u8g2.setFont(u8g2_font_ncenB08_tr);
+          u8g2.drawStr(0, 10, cardNumber.c_str());
+          u8g2.drawStr(0, 20, "Do you want too book:");
+          u8g2.drawStr(0, 30, nextAvailableTime.c_str());
+        } while (u8g2.nextPage());
+
+        if (getButtonState() == "Abort") {
+          draw("Booking aborted");
+          tone(BUZZER, TONE_ABORT);
+          delay(50);
+          noTone(BUZZER);
+          delay(1450);
+          currentState = IDLE;
+        } else if (getButtonState() == "Confirm") {
+          tone(BUZZER, TONE_CONFIRM);
+          delay(50);
+          noTone(BUZZER);
+          currentState = CONFIRMQUICKBOOK;
+        }
+      }
+
+
+
+
+      break;
+
+    case CONFIRMQUICKBOOK:
+      u8g2.firstPage();
+      do {
+        u8g2.setFont(u8g2_font_ncenB08_tr);
+        u8g2.drawStr(0, 10, formattedTime.c_str());
+        u8g2.drawStr(0, 20, "Booking created");
+      } while (u8g2.nextPage());
+
+      delay(3000);
+
+      currentState = IDLE;
+
       break;
 
     case BOOK:
@@ -98,26 +190,6 @@ void stateMachine() {
         cursor = (cursor + 1) % 3;
       } else if (getButtonState() == "Up") {
         cursor = (cursor + 2) % 3;
-      } else if (SoftSerial.available() || getButtonState() == "Trigger RFID") {
-        //currentState = RECEIVE_RFID_DATA;
-        currentState = DISPLAY_CARD;
-      }
-      break;
-
-    case RECEIVE_RFID_DATA:
-      if (readRFIDData()) {
-        currentState = DISPLAY_CARD;
-        cardPresent = true;
-      }
-      break;
-
-    case DISPLAY_CARD:
-      displayRFIDData();
-
-      if (!SoftSerial.available() && cardPresent && detectCardRemoval()) {
-        cardPresent = false;
-      } else if (!cardPresent && SoftSerial.available() && readRFIDData() || getButtonState() == "Abort" || getButtonState() == "Confirm") {
-        currentState = IDLE;
       }
       break;
   }
