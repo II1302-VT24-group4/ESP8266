@@ -69,7 +69,13 @@ NTPClient timeClient(ntpUDP, "pool.ntp.org");
 #define RX D3  // D2
 #define TX D2  // D3
 
-#define DEBOUNCE_DELAY 100
+/****************************************************
+ *               Global parameters
+ *****************************************************/
+
+#define TONE_ABORT 330
+#define TONE_CONFIRM 550
+#define TONE_RFID 660
 
 /****************************************************
  *               Global variabels

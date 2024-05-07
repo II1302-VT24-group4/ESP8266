@@ -105,7 +105,7 @@ bool readRFIDData() {
     return false;
   }
 
-  tone(BUZZER, 660);
+  tone(BUZZER, TONE_RFID);
   lastRFIDReadTime = millis();  // Update the time when data is received
   delay(50);                    // Wait for data to be ready
   noTone(BUZZER);

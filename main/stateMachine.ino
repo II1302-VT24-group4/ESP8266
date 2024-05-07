@@ -95,6 +95,20 @@ void stateMachine() {
 
         if (checkAccess()) {
           draw("Room unlocked!");
+          delay(1000);
+
+          u8g2.firstPage();
+          do {
+            u8g2.setFont(u8g2_font_ncenB08_tr); // Set the font
+
+            // Draw a larger and more detailed unlocked icon
+            u8g2.drawFrame(34, 12, 60, 40); // Outer rectangle
+            u8g2.drawBox(38, 22, 52, 26); // Inner rectangle
+            u8g2.drawCircle(64, 22, 10); // Circle
+            u8g2.drawBox(64, 12, 8, 10); // Rectangle on top of the circle
+
+          } while (u8g2.nextPage());
+
           delay(3000);
         } else {
           // Prepare the Firestore paths
@@ -125,37 +139,31 @@ void stateMachine() {
         noTone(BUZZER);
         delay(1450);
       } else {  // Om bokning finns skapa bokning vid nästa lediga tid
-        draw(nextAvailableTime.c_str());
-        delay(5000);
-        currentState = IDLE;
+        u8g2.firstPage();
+        do {
+          u8g2.setFont(u8g2_font_ncenB08_tr);
+          u8g2.drawStr(0, 10, cardNumber.c_str());
+          u8g2.drawStr(0, 20, "Do you want too book:");
+          u8g2.drawStr(0, 30, nextAvailableTime.c_str());
+        } while (u8g2.nextPage());
+
+        if (getButtonState() == "Abort") {
+          draw("Booking aborted");
+          tone(BUZZER, TONE_ABORT);
+          delay(50);
+          noTone(BUZZER);
+          delay(1450);
+          currentState = IDLE;
+        } else if (getButtonState() == "Confirm") {
+          tone(BUZZER, TONE_CONFIRM);
+          delay(50);
+          noTone(BUZZER);
+          currentState = CONFIRMQUICKBOOK;
+        }
       }
 
 
 
-
-
-
-      u8g2.firstPage();
-      do {
-        u8g2.setFont(u8g2_font_ncenB08_tr);
-        u8g2.drawStr(0, 10, cardNumber.c_str());
-        u8g2.drawStr(0, 20, "Do you want too book:");
-        u8g2.drawStr(0, 30, formattedTime.c_str());
-      } while (u8g2.nextPage());
-
-      if (getButtonState() == "Abort") {
-        draw("Booking aborted");
-        tone(BUZZER, 330);
-        delay(50);
-        noTone(BUZZER);
-        delay(1450);
-        currentState = IDLE;
-      } else if (getButtonState() == "Confirm") {
-        tone(BUZZER, 550);
-        delay(50);
-        noTone(BUZZER);
-        currentState = CONFIRMQUICKBOOK;
-      }
 
       break;
 
