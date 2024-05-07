@@ -93,6 +93,6 @@ String nextFreeSlot(String *startTime, String *endTime) {
   if ((endTime[j].substring(0, 2) + endTime[j].substring(3, 6)).toInt() != (startTime[j + 1].substring(0, 2) + startTime[j + 1].substring(3, 6)).toInt()) {
     result = endTime[j] + " - " + startTime[j + 1];
   }
-  //Serial.println("korv" + result);
+
   return result;
 }

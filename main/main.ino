@@ -73,6 +73,10 @@ NTPClient timeClient(ntpUDP, "pool.ntp.org");
  *               Global parameters
  *****************************************************/
 
+// Bitmap stuff
+#define lock_width 64
+#define lock_height 64
+
 #define TONE_ABORT 330
 #define TONE_CONFIRM 550
 #define TONE_RFID 660

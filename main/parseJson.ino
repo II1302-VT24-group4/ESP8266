@@ -1,3 +1,13 @@
+/**
+ * @file parseJson.ino
+ * @brief
+ * @details
+ */
+
+/**
+ * @brief 
+ * 
+ */
 bool parseJson(String jsonString, String currentTime) {
   for (int i = 0; i < 48; i++) {
     startTimes[i] = "";

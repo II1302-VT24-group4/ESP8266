@@ -4,6 +4,10 @@
  * @details
  */
 
+/**
+ * @brief 
+ * 
+ */
 void setupStateMachine() {
   SoftSerial.begin(9600);  // the SoftSerial baud rate
   Serial.begin(9600);      // the Serial port of Arduino baud rate.
@@ -66,6 +70,10 @@ void setupStateMachine() {
   pinMode(BUTTON_ABORT, INPUT_PULLUP);
 }
 
+/**
+ * @brief 
+ * 
+ */
 void stateMachine() {
   unsigned long currentMillis = millis();
 
@@ -94,31 +102,30 @@ void stateMachine() {
         readRFIDData();
 
         if (checkAccess()) {
-          draw("Room unlocked!");
-          delay(1000);
+          //draw("Room unlocked!");
+          //delay(2000);
 
           u8g2.firstPage();
           do {
-            u8g2.setFont(u8g2_font_ncenB08_tr); // Set the font
-
-            // Draw a larger and more detailed unlocked icon
-            u8g2.drawFrame(34, 12, 60, 40); // Outer rectangle
-            u8g2.drawBox(38, 22, 52, 26); // Inner rectangle
-            u8g2.drawCircle(64, 22, 10); // Circle
-            u8g2.drawBox(64, 12, 8, 10); // Rectangle on top of the circle
-
+            drawUnlockedLockIcon();
+            u8g2.setFont(u8g2_font_ncenB08_tr);
+            u8g2.drawStr(20, 62, "Room unlocked!");
           } while (u8g2.nextPage());
 
-          delay(3000);
+          delay(4000);
         } else {
           // Prepare the Firestore paths
           String rfidPath = "rfid/" + cardParser();
           String userPath;
 
           // Retrieve the owner data
-          if (Firebase.Firestore.getDocument(&fbdo, PROJECT_ID, "", rfidPath.c_str(),
-                                             "")) {
-            
+          if (Firebase.Firestore.getDocument(&fbdo, PROJECT_ID, "", rfidPath.c_str(), "")) {
+            FirebaseJson payload;
+            payload.setJsonData(fbdo.payload().c_str());
+
+            FirebaseJsonData jsonData;
+            payload.get(jsonData, "fields/owner/stringValue", true);
+            cardOwner = jsonData.stringValue;
 
             currentState = QUICKBOOK;
 
@@ -134,7 +141,7 @@ void stateMachine() {
 
       if(roomAvailable){
         draw("roomAvailable :) ");
-        tone(BUZZER, 330);
+        tone(BUZZER, TONE_ABORT);
         delay(50);
         noTone(BUZZER);
         delay(1450);
@@ -174,6 +181,13 @@ void stateMachine() {
         u8g2.drawStr(0, 10, formattedTime.c_str());
         u8g2.drawStr(0, 20, "Booking created");
       } while (u8g2.nextPage());
+
+      // Logik för att skapa bokningen
+
+      createBooking();
+
+
+      // kod
 
       delay(3000);
 

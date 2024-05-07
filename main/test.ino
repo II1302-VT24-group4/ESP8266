@@ -1,7 +1,7 @@
 /**
  * @file test.ino
  * @brief Test program for development
- * @details Run this code by uncommenting the RUN_TEST_PROGRAM macro.
+ * @details Run this code by uncommenting the RUN_TEST_PROGRAM macro. Written by Christoffer Franzén
  */
 
 /**

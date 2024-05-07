@@ -1,9 +1,30 @@
 /**
- * @file test.ino
+ * @file checkAccess.ino
  * @brief Test program for development
  * @details Run this code by uncommenting the RUN_TEST_PROGRAM macro.
  */
 
+/**
+ * @brief Initializes the test environment.
+ * 
+ */
+void createBooking(){
+  String pathToIndex = "users/" + cardOwner + "/meetingIndex/" + currentDate;
+
+  draw(cardOwner.c_str());
+  delay(5000);
+
+  if (Firebase.Firestore.patchDocument(&fbdo, PROJECT_ID, "", pathToIndex.c_str(), "", "")) {
+  } else {
+    draw("somthing went wrong :(");
+    delay(5000);
+  }
+}
+
+/**
+ * @brief Initializes the test environment.
+ * 
+ */
 bool checkAccess() {
   String pathToRFID = "test/" + uid + "/" + currentDate + "/" + currentMeetingID + "/rfid/" + cardParser();
 
@@ -28,20 +49,6 @@ bool checkAccess() {
   } else {
     cardOwner = "";
     Serial.println(fbdo.errorReason());
-  }
-
-  String pathToUser = "users/9rsVJfyNVmU2uneewX8PQCTz5Tw2";
-  
-  FirebaseJson contentTest;
-
-  contentTest.set("fields/meetings/stringValue", currentDate);
-
-  if (Firebase.Firestore.patchDocument(&fbdo, PROJECT_ID, "", pathToUser.c_str(), contentTest.raw(), "meetings")) {
-    draw("Set chnage to firebase");
-    delay(5000);
-  } else {
-    draw(fbdo.errorReason().c_str());
-    delay(5000);
   }
 
   return false;
