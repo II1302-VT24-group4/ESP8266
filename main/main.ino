@@ -93,21 +93,18 @@ SoftwareSerial SoftSerial(RX, TX);
 unsigned char buffer[64];  // buffer array for data receive over serial port
 int count = 0;             // counter for buffer array
 String cardNumber = "";
+String cardOwner = "";
 
 // States
 enum State {
   IDLE,
   QUICKBOOK,
   CONFIRMQUICKBOOK,
-  BOOK,
-  RECEIVE_RFID_DATA,
-  DISPLAY_CARD
+  BOOK
 };
 
 State currentState = IDLE;
-bool cardPresent = false;                   // Flag to check the presence of the card
 unsigned long lastRFIDReadTime = 0;         // Timestamp of the last RFID read
-const unsigned long removalTimeout = 1000;  // Timeout in milliseconds (1 second)
 
 // Time
 String formattedTime;

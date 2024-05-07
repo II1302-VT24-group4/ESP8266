@@ -14,7 +14,7 @@ bool checkAccess(){
 
       FirebaseJsonData jsonData;
       payload.get(jsonData, "fields/owner/stringValue", true);
-      String cardOwner = jsonData.stringValue;
+      cardOwner = jsonData.stringValue;
 
       String pathToAttendees = "test/" + uid + "/" + currentDate + "/" + currentMeetingID + "/attendees/" + cardOwner;
       FirebaseJson content;
@@ -27,6 +27,7 @@ bool checkAccess(){
       return true;
    
   } else {
+    cardOwner = "";
     Serial.println(fbdo.errorReason());
   }
     return false;

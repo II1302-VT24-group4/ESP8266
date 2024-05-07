@@ -120,18 +120,3 @@ bool readRFIDData() {
 
   return true;
 }
-
-/**
- * @brief Detects the removal of an RFID card.
- *
- * This function checks if a certain amount of time has passed since the last
- * RFID read. If it has, it assumes that the card has been removed.
- *
- * @return True if the card is assumed to be removed, false otherwise.
- */
-bool detectCardRemoval() {
-  if (millis() - lastRFIDReadTime > removalTimeout) {
-    return true;  // No data for more than 1 second, assume card removed
-  }
-  return false;  // Card is still present or not enough time has passed
-}

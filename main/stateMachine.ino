@@ -97,8 +97,6 @@ void stateMachine() {
           draw("Room unlocked!");
           delay(3000);
         } else {
-          String owner;
-
           // Prepare the Firestore paths
           String rfidPath = "rfid/" + cardParser();
           String userPath;
@@ -106,14 +104,7 @@ void stateMachine() {
           // Retrieve the owner data
           if (Firebase.Firestore.getDocument(&fbdo, PROJECT_ID, "", rfidPath.c_str(),
                                              "")) {
-            FirebaseJson payload;
-            payload.setJsonData(fbdo.payload().c_str());
-
-            FirebaseJsonData jsonData;
-            payload.get(jsonData, "fields/owner/stringValue", true);
-
-            owner = jsonData.stringValue;
-            userPath = "users/" + owner;
+            
 
             currentState = QUICKBOOK;
 
@@ -126,6 +117,24 @@ void stateMachine() {
       break;
 
     case QUICKBOOK:
+
+      if(roomAvailable){
+        draw("roomAvailable :) ");
+        tone(BUZZER, 330);
+        delay(50);
+        noTone(BUZZER);
+        delay(1450);
+      } else {  // Om bokning finns skapa bokning vid nästa lediga tid
+        draw(nextAvailableTime.c_str());
+        delay(5000);
+        currentState = IDLE;
+      }
+
+
+
+
+
+
       u8g2.firstPage();
       do {
         u8g2.setFont(u8g2_font_ncenB08_tr);
@@ -135,8 +144,16 @@ void stateMachine() {
       } while (u8g2.nextPage());
 
       if (getButtonState() == "Abort") {
+        draw("Booking aborted");
+        tone(BUZZER, 330);
+        delay(50);
+        noTone(BUZZER);
+        delay(1450);
         currentState = IDLE;
       } else if (getButtonState() == "Confirm") {
+        tone(BUZZER, 550);
+        delay(50);
+        noTone(BUZZER);
         currentState = CONFIRMQUICKBOOK;
       }
 
@@ -165,25 +182,6 @@ void stateMachine() {
         cursor = (cursor + 1) % 3;
       } else if (getButtonState() == "Up") {
         cursor = (cursor + 2) % 3;
-      } else if (SoftSerial.available()) {
-        currentState = RECEIVE_RFID_DATA;
-      }
-      break;
-
-    case RECEIVE_RFID_DATA:
-      if (readRFIDData()) {
-        currentState = DISPLAY_CARD;
-        cardPresent = true;
-      }
-      break;
-
-    case DISPLAY_CARD:
-      displayRFIDData();
-
-      if (!SoftSerial.available() && cardPresent && detectCardRemoval()) {
-        cardPresent = false;
-      } else if (!cardPresent && SoftSerial.available() && readRFIDData() || getButtonState() == "Abort") {
-        currentState = IDLE;
       }
       break;
   }
