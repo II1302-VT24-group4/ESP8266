@@ -93,6 +93,7 @@ void stateMachine() {
 
   switch (currentState) {
     case IDLE:
+      updateNextMeeting(startTimes);
       drawIdle();
 
       if (SoftSerial.available() && nextAvailableTime.isEmpty()) {
@@ -140,11 +141,33 @@ void stateMachine() {
     case QUICKBOOK:
 
       if(roomAvailable){
-        draw("roomAvailable :) ");
-        tone(BUZZER, TONE_ABORT);
-        delay(50);
-        noTone(BUZZER);
-        delay(1450);
+        int currentTime = (formattedTime.substring(0, 2) + formattedTime.substring(3, 6)).toInt();
+        int nextMeetingTime = (nextMeeting.substring(0, 2) + nextMeeting.substring(3, 6)).toInt();
+        int timeDiff = nextMeetingTime - currentTime;
+        String startTime = "";
+        String endTime = "";
+       
+        if(formattedTime.substring(3, 6).toInt() <= 30){
+          startTime = formattedTime.substring(0, 2) + ":00";
+        } else {
+          startTime = formattedTime.substring(0, 2) + ":30";
+        }
+        if(timeDiff < 100){
+          endTime = nextMeeting;
+        } else {
+          endTime = String(startTime.substring(0,2).toInt() + 1) + ":" + startTime.substring(3,6);
+        }
+
+        String booking = startTime + " - " + endTime;
+
+        u8g2.firstPage();
+          do {
+            u8g2.setFont(u8g2_font_ncenB08_tr);
+            u8g2.drawStr(0, 10, cardNumber.c_str());
+            u8g2.drawStr(0, 20, "Do you want to book:" );
+            u8g2.drawStr(0, 30, booking.c_str());
+          } while (u8g2.nextPage());
+        
       } else { 
         String startTime;
         String endTime;
@@ -211,7 +234,10 @@ void stateMachine() {
           } while (u8g2.nextPage());*/
         }
 
-        if (getButtonState() == "Abort") {
+        
+      }
+      
+      if (getButtonState() == "Abort") {
           quickBookType = 0;
           draw("Booking aborted");
           tone(BUZZER, TONE_ABORT);
@@ -225,7 +251,6 @@ void stateMachine() {
           noTone(BUZZER);
           currentState = CONFIRMQUICKBOOK;
         }
-      }
 
 
 

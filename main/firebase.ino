@@ -72,4 +72,16 @@ void updateNextAvailable(String *startTimes, String *endTimes, int sizeOfArray) 
   }
 }
 
-void updateNextMeeting()
+void updateNextMeeting(String *startTime){
+  int currentTime = (formattedTime.substring(0,2) + formattedTime.substring(3,6)).toInt();
+  int i = 0;
+
+  while(startTime[i] != nullptr){
+    
+    if(currentTime < (startTime[i].substring(0,2) + startTime[i].substring(3,6)).toInt())
+      nextMeeting = startTime[i];
+
+    i++;
+  }
+  
+}
