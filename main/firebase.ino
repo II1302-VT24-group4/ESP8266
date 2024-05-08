@@ -71,3 +71,5 @@ void updateNextAvailable(String *startTimes, String *endTimes, int sizeOfArray) 
     }
   }
 }
+
+void updateNextMeeting()

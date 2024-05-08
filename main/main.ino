@@ -138,6 +138,8 @@ String endTimes[48];
 int documentsCount = 0;
 String nextAvailableTimeSlot = "";
 String nextAvailableTime = "";
+int quickBookType = 0;
+String nextMeeting = "";
 
 unsigned long lastButtonUpdateTime = 0;
 const unsigned long buttonUpdateInterval = 200;

@@ -145,16 +145,74 @@ void stateMachine() {
         delay(50);
         noTone(BUZZER);
         delay(1450);
-      } else {  // Om bokning finns skapa bokning vid nästa lediga tid
-        u8g2.firstPage();
-        do {
-          u8g2.setFont(u8g2_font_ncenB08_tr);
-          u8g2.drawStr(0, 10, cardNumber.c_str());
-          u8g2.drawStr(0, 20, "Do you want too book:");
-          u8g2.drawStr(0, 30, nextAvailableTime.c_str());
-        } while (u8g2.nextPage());
+      } else { 
+        String startTime;
+        String endTime;
+        if(nextAvailableTime.length() == 8){
+          
+          startTime = nextAvailableTime.substring(0, 5);
+          
+          endTime = String(nextAvailableTime.substring(0, 3).toInt() + 1) + ":" + nextAvailableTime.substring(3, 5);
+
+          String booking = startTime + " - " + endTime;
+          u8g2.firstPage();
+          do {
+            u8g2.setFont(u8g2_font_ncenB08_tr);
+            u8g2.drawStr(0, 10, cardNumber.c_str());
+            u8g2.drawStr(0, 20, "Do you want to book:" );
+            u8g2.drawStr(0, 30, booking.c_str());
+          } while (u8g2.nextPage());
+          
+        } else {
+        // Om bokning finns skapa bokning vid nästa lediga tid
+          startTime = nextAvailableTime.substring(0, 5);
+          String test = nextAvailableTime.substring(8,10) + nextAvailableTime.substring(11,14);
+          int startOfIntervall = (nextAvailableTime.substring(0, 2) + nextAvailableTime.substring(3, 6)).toInt();
+          int endOfIntervall = (nextAvailableTime.substring(8,10) + nextAvailableTime.substring(11,14)).toInt();
+          int timeDifference = endOfIntervall - startOfIntervall;
+         
+          
+          if(timeDifference == 100 || timeDifference > 100){
+            
+            startTime = nextAvailableTime.substring(0, 5);
+            
+            endTime = String(nextAvailableTime.substring(0, 3).toInt() + 1) + ":" + nextAvailableTime.substring(3, 5);
+
+            String booking = startTime + " - " + endTime;
+            u8g2.firstPage();
+            do {
+              u8g2.setFont(u8g2_font_ncenB08_tr);
+              u8g2.drawStr(0, 10, cardNumber.c_str());
+              u8g2.drawStr(0, 20, "Do you want to book:" );
+              u8g2.drawStr(0, 30, booking.c_str());
+            } while (u8g2.nextPage());
+          
+
+          } else if(timeDifference == 70 || timeDifference == 30){
+            quickBookType = 1;
+            u8g2.firstPage();
+            do {
+              u8g2.setFont(u8g2_font_ncenB08_tr);
+              u8g2.drawStr(0, 10, cardNumber.c_str());
+              u8g2.drawStr(0, 20, "Do you want to book:" );
+              u8g2.drawStr(0, 30, nextAvailableTime.c_str());
+            } while (u8g2.nextPage());
+
+          }
+
+
+          /*String booking = startTime + " - " + endTime;
+          u8g2.firstPage();
+          do {
+            u8g2.setFont(u8g2_font_ncenB08_tr);
+            u8g2.drawStr(0, 10, cardNumber.c_str());
+            u8g2.drawStr(0, 20, "Do you want to book:" );
+            u8g2.drawStr(0, 30, booking.c_str());
+          } while (u8g2.nextPage());*/
+        }
 
         if (getButtonState() == "Abort") {
+          quickBookType = 0;
           draw("Booking aborted");
           tone(BUZZER, TONE_ABORT);
           delay(50);
@@ -175,16 +233,18 @@ void stateMachine() {
       break;
 
     case CONFIRMQUICKBOOK:
+
+
+      // Logik för att skapa bokningen
+
+      createBooking();
+
       u8g2.firstPage();
       do {
         u8g2.setFont(u8g2_font_ncenB08_tr);
         u8g2.drawStr(0, 10, formattedTime.c_str());
         u8g2.drawStr(0, 20, "Booking created");
       } while (u8g2.nextPage());
-
-      // Logik för att skapa bokningen
-
-      createBooking();
 
 
       // kod
