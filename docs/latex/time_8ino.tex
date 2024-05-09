@@ -1,0 +1,86 @@
+\hypertarget{time_8ino}{}\doxysection{/mnt/b/\+Desktop/dev/\+ESP8266/main/time.ino File Reference}
+\label{time_8ino}\index{/mnt/b/Desktop/dev/ESP8266/main/time.ino@{/mnt/b/Desktop/dev/ESP8266/main/time.ino}}
+
+
+Code for managing time functionalities.  
+
+
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{time_8ino_a19562d96ecbcf8a223d3c38b39993fbf}{update\+Time}} ()
+\begin{DoxyCompactList}\small\item\em Updates the current time and date. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{time_8ino_a9448a4b809f314ff9f9dd5621d09eb98}{time\+In\+Range}} (String current\+Time, String start\+Time, String end\+Time)
+\begin{DoxyCompactList}\small\item\em Checks if the current time is within a specified range. \end{DoxyCompactList}\item 
+String \mbox{\hyperlink{time_8ino_ad78dbcd384509ebc4f535822e8363676}{next\+Free\+Slot}} (String $\ast$start\+Time, String $\ast$end\+Time)
+\begin{DoxyCompactList}\small\item\em Finds the next available time slot. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Code for managing time functionalities. 
+
+\begin{DoxyAuthor}{Author}
+Christoffer Franzén, Erik Heiskanen, Leo Andersson 
+\end{DoxyAuthor}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{time_8ino_ad78dbcd384509ebc4f535822e8363676}\label{time_8ino_ad78dbcd384509ebc4f535822e8363676}} 
+\index{time.ino@{time.ino}!nextFreeSlot@{nextFreeSlot}}
+\index{nextFreeSlot@{nextFreeSlot}!time.ino@{time.ino}}
+\doxysubsubsection{\texorpdfstring{nextFreeSlot()}{nextFreeSlot()}}
+{\footnotesize\ttfamily String next\+Free\+Slot (\begin{DoxyParamCaption}\item[{String $\ast$}]{start\+Time,  }\item[{String $\ast$}]{end\+Time }\end{DoxyParamCaption})}
+
+
+
+Finds the next available time slot. 
+
+Searches for the next available time slot based on the current meeting ID, start times, and end times.
+
+
+\begin{DoxyParams}{Parameters}
+{\em start\+Time} & Array of start times formatted as \char`\"{}\+HH\+:\+MM\char`\"{}. \\
+\hline
+{\em end\+Time} & Array of end times formatted as \char`\"{}\+HH\+:\+MM\char`\"{}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+String Time range of the next available slot. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{time_8ino_a9448a4b809f314ff9f9dd5621d09eb98}\label{time_8ino_a9448a4b809f314ff9f9dd5621d09eb98}} 
+\index{time.ino@{time.ino}!timeInRange@{timeInRange}}
+\index{timeInRange@{timeInRange}!time.ino@{time.ino}}
+\doxysubsubsection{\texorpdfstring{timeInRange()}{timeInRange()}}
+{\footnotesize\ttfamily bool time\+In\+Range (\begin{DoxyParamCaption}\item[{String}]{current\+Time,  }\item[{String}]{start\+Time,  }\item[{String}]{end\+Time }\end{DoxyParamCaption})}
+
+
+
+Checks if the current time is within a specified range. 
+
+Checks if the current time is between two given times.
+
+
+\begin{DoxyParams}{Parameters}
+{\em current\+Time} & Current time formatted as \char`\"{}\+HH\+:\+MM\char`\"{}. \\
+\hline
+{\em start\+Time} & Start time of the range formatted as \char`\"{}\+HH\+:\+MM\char`\"{}. \\
+\hline
+{\em end\+Time} & End time of the range formatted as \char`\"{}\+HH\+:\+MM\char`\"{}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool True if current time is within the range, false otherwise. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{time_8ino_a19562d96ecbcf8a223d3c38b39993fbf}\label{time_8ino_a19562d96ecbcf8a223d3c38b39993fbf}} 
+\index{time.ino@{time.ino}!updateTime@{updateTime}}
+\index{updateTime@{updateTime}!time.ino@{time.ino}}
+\doxysubsubsection{\texorpdfstring{updateTime()}{updateTime()}}
+{\footnotesize\ttfamily void update\+Time (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Updates the current time and date. 
+
+This code is taken from \href{https://randomnerdtutorials.com/}{\texttt{ https\+://randomnerdtutorials.\+com/}}
+
+Retrieves the current time from a time client and updates global variables. 

@@ -8,10 +8,10 @@
  * @brief Initializes the test environment.
  * 
  */
-void createBooking(){
+void createBooking() {
   String pathToUserIndex = "users/" + cardOwner + "/meetingIndex/" + currentDate;
 
-  
+
 
   if (Firebase.Firestore.patchDocument(&fbdo, PROJECT_ID, "", pathToUserIndex.c_str(), "", "")) {
   } else {
@@ -26,9 +26,9 @@ void createBooking(){
     draw("something went wrong :(");
     delay(5000);
   }
-  
-  if(nextAvailableTime.length() == 8 || quickBookType == 0){
-    
+
+  if (nextAvailableTime.length() == 8 || quickBookType == 0) {
+
     FirebaseJson content;
     String startTime = nextAvailableTime.substring(0, 5);
     content.set("fields/startTime/stringValue", startTime);
@@ -58,17 +58,17 @@ void createBooking(){
     rfidContent.set("fields/owner/stringValue", cardOwner);
 
     if (Firebase.Firestore.patchDocument(&fbdo, PROJECT_ID, "", toRfidAccess.c_str(), rfidContent.raw(), "")) {
-  } else {
-    draw("something went wrong :(");
-    delay(5000);
-  }
+    } else {
+      draw("something went wrong :(");
+      delay(5000);
+    }
 
-    
+
     /*draw(startTime.c_str());
     delay(3000);
     draw(endTime.c_str());
     delay(3000);*/
-  } else if(quickBookType == 1){
+  } else if (quickBookType == 1) {
     FirebaseJson content;
     String startTime = nextAvailableTime.substring(0, 5);
     content.set("fields/startTime/stringValue", startTime);
@@ -77,7 +77,7 @@ void createBooking(){
     content.set("fields/owner/stringValue", cardOwner);
     content.set("fields/title/stringValue", "quick booking");
     draw(endTime.c_str());
-    
+
     String toSaveBookingForRoom = "test/" + uid + "/" + currentDate + "/" + startTime;
 
     if (Firebase.Firestore.patchDocument(&fbdo, PROJECT_ID, "", toSaveBookingForRoom.c_str(), content.raw(), "")) {
@@ -99,16 +99,13 @@ void createBooking(){
     rfidContent.set("fields/owner/stringValue", cardOwner);
 
     if (Firebase.Firestore.patchDocument(&fbdo, PROJECT_ID, "", toRfidAccess.c_str(), rfidContent.raw(), "")) {
-  } else {
-    draw("something went wrong :(");
-    delay(5000);
-  }
+    } else {
+      draw("something went wrong :(");
+      delay(5000);
+    }
 
-  quickBookType = 0;
+    quickBookType = 0;
   }
-  
-
-  
 }
 
 /**

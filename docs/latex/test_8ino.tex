@@ -1,0 +1,126 @@
+\hypertarget{test_8ino}{}\doxysection{/mnt/b/\+Desktop/dev/\+ESP8266/main/test.ino File Reference}
+\label{test_8ino}\index{/mnt/b/Desktop/dev/ESP8266/main/test.ino@{/mnt/b/Desktop/dev/ESP8266/main/test.ino}}
+
+
+Test program for development.  
+
+
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{test_8ino_a91caedac6b0209cca9615ddc9c789183}{setup\+Test}} ()
+\begin{DoxyCompactList}\small\item\em Initializes the test environment. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{test_8ino_ae1a3968e7947464bee7714f6d43b7002}{test}} ()
+\begin{DoxyCompactList}\small\item\em Runs the test suite. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{test_8ino_afffab58ec082e11f853b81f61bd9bc69}{test\+Buttons}} ()
+\begin{DoxyCompactList}\small\item\em Tests button functionality. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{test_8ino_a0b97742012acc5aca1e4aa53a8384d83}{test\+GPIO}} ()
+\begin{DoxyCompactList}\small\item\em Tests GPIO functionality. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{test_8ino_aaa57e6dc006fe3c2f04734b0f8b56383}{test\+Buzzer}} ()
+\begin{DoxyCompactList}\small\item\em Tests buzzer functionality. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{test_8ino_a4079a9817dc06e95d3b0648578850f43}{test\+Wifi}} ()
+\begin{DoxyCompactList}\small\item\em Tests Wi\+Fi functionality. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{test_8ino_a2f360a5b27fc085fb59597acf22b5b20}{Test\+\_\+\+RFID}} ()
+\begin{DoxyCompactList}\small\item\em Tests RFID functionality. \end{DoxyCompactList}\item 
+String \mbox{\hyperlink{test_8ino_afeb1c14eae48516c0beb64fabb51b986}{ip\+To\+String}} (const IPAddress \&ip)
+\begin{DoxyCompactList}\small\item\em Converts IP address to string format. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Test program for development. 
+
+\begin{DoxyAuthor}{Author}
+Christoffer Franzén
+\end{DoxyAuthor}
+Run this code by uncommenting the RUN\+\_\+\+TEST\+\_\+\+PROGRAM macro. 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{test_8ino_afeb1c14eae48516c0beb64fabb51b986}\label{test_8ino_afeb1c14eae48516c0beb64fabb51b986}} 
+\index{test.ino@{test.ino}!ipToString@{ipToString}}
+\index{ipToString@{ipToString}!test.ino@{test.ino}}
+\doxysubsubsection{\texorpdfstring{ipToString()}{ipToString()}}
+{\footnotesize\ttfamily String ip\+To\+String (\begin{DoxyParamCaption}\item[{const IPAddress \&}]{ip }\end{DoxyParamCaption})}
+
+
+
+Converts IP address to string format. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ip} & The IP address to convert. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+String The IP address in string format. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{test_8ino_a91caedac6b0209cca9615ddc9c789183}\label{test_8ino_a91caedac6b0209cca9615ddc9c789183}} 
+\index{test.ino@{test.ino}!setupTest@{setupTest}}
+\index{setupTest@{setupTest}!test.ino@{test.ino}}
+\doxysubsubsection{\texorpdfstring{setupTest()}{setupTest()}}
+{\footnotesize\ttfamily void setup\+Test (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Initializes the test environment. 
+
+This function initializes the necessary components and settings for testing. \mbox{\Hypertarget{test_8ino_ae1a3968e7947464bee7714f6d43b7002}\label{test_8ino_ae1a3968e7947464bee7714f6d43b7002}} 
+\index{test.ino@{test.ino}!test@{test}}
+\index{test@{test}!test.ino@{test.ino}}
+\doxysubsubsection{\texorpdfstring{test()}{test()}}
+{\footnotesize\ttfamily void test (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Runs the test suite. 
+
+This function runs a series of tests to verify the functionality of different components. \mbox{\Hypertarget{test_8ino_a2f360a5b27fc085fb59597acf22b5b20}\label{test_8ino_a2f360a5b27fc085fb59597acf22b5b20}} 
+\index{test.ino@{test.ino}!Test\_RFID@{Test\_RFID}}
+\index{Test\_RFID@{Test\_RFID}!test.ino@{test.ino}}
+\doxysubsubsection{\texorpdfstring{Test\_RFID()}{Test\_RFID()}}
+{\footnotesize\ttfamily void Test\+\_\+\+RFID (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Tests RFID functionality. 
+
+This function tests the RFID reader. It waits for a card to be detected and displays its number. \mbox{\Hypertarget{test_8ino_afffab58ec082e11f853b81f61bd9bc69}\label{test_8ino_afffab58ec082e11f853b81f61bd9bc69}} 
+\index{test.ino@{test.ino}!testButtons@{testButtons}}
+\index{testButtons@{testButtons}!test.ino@{test.ino}}
+\doxysubsubsection{\texorpdfstring{testButtons()}{testButtons()}}
+{\footnotesize\ttfamily void test\+Buttons (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Tests button functionality. 
+
+This function tests the functionality of buttons. It checks if buttons are responsive and updates the display accordingly. \mbox{\Hypertarget{test_8ino_aaa57e6dc006fe3c2f04734b0f8b56383}\label{test_8ino_aaa57e6dc006fe3c2f04734b0f8b56383}} 
+\index{test.ino@{test.ino}!testBuzzer@{testBuzzer}}
+\index{testBuzzer@{testBuzzer}!test.ino@{test.ino}}
+\doxysubsubsection{\texorpdfstring{testBuzzer()}{testBuzzer()}}
+{\footnotesize\ttfamily void test\+Buzzer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Tests buzzer functionality. 
+
+This function tests the functionality of the buzzer. It checks if the buzzer is making noise and updates the display accordingly. \mbox{\Hypertarget{test_8ino_a0b97742012acc5aca1e4aa53a8384d83}\label{test_8ino_a0b97742012acc5aca1e4aa53a8384d83}} 
+\index{test.ino@{test.ino}!testGPIO@{testGPIO}}
+\index{testGPIO@{testGPIO}!test.ino@{test.ino}}
+\doxysubsubsection{\texorpdfstring{testGPIO()}{testGPIO()}}
+{\footnotesize\ttfamily void test\+GPIO (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Tests GPIO functionality. 
+
+This function tests the functionality of GPIO pins, specifically LED blinking. It checks if LEDs are blinking and updates the display accordingly. \mbox{\Hypertarget{test_8ino_a4079a9817dc06e95d3b0648578850f43}\label{test_8ino_a4079a9817dc06e95d3b0648578850f43}} 
+\index{test.ino@{test.ino}!testWifi@{testWifi}}
+\index{testWifi@{testWifi}!test.ino@{test.ino}}
+\doxysubsubsection{\texorpdfstring{testWifi()}{testWifi()}}
+{\footnotesize\ttfamily void test\+Wifi (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Tests Wi\+Fi functionality. 
+
+This function tests the Wi\+Fi connection. It attempts to connect to Wi\+Fi and displays the result on the screen. 

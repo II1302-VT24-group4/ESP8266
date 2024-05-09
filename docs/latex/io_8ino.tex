@@ -1,0 +1,51 @@
+\hypertarget{io_8ino}{}\doxysection{/mnt/b/\+Desktop/dev/\+ESP8266/main/io.ino File Reference}
+\label{io_8ino}\index{/mnt/b/Desktop/dev/ESP8266/main/io.ino@{/mnt/b/Desktop/dev/ESP8266/main/io.ino}}
+
+
+Manages hardware I/O operations.  
+
+
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{io_8ino_af32fa88edc93b34e25f058e331ea1134}{update\+Buttons}} ()
+\begin{DoxyCompactList}\small\item\em Reads button and ADC pin states. \end{DoxyCompactList}\item 
+String \mbox{\hyperlink{io_8ino_a967fd11269c72b7a15b0f30181a79099}{get\+Button\+State}} ()
+\begin{DoxyCompactList}\small\item\em Returns the state of the buttons. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Manages hardware I/O operations. 
+
+\begin{DoxyAuthor}{Author}
+Christoffer Franzén 
+\end{DoxyAuthor}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{io_8ino_a967fd11269c72b7a15b0f30181a79099}\label{io_8ino_a967fd11269c72b7a15b0f30181a79099}} 
+\index{io.ino@{io.ino}!getButtonState@{getButtonState}}
+\index{getButtonState@{getButtonState}!io.ino@{io.ino}}
+\doxysubsubsection{\texorpdfstring{getButtonState()}{getButtonState()}}
+{\footnotesize\ttfamily String get\+Button\+State (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns the state of the buttons. 
+
+Checks each button\textquotesingle{}s state and returns a string representing the pressed button.
+
+\begin{DoxyReturn}{Returns}
+String indicating which button is pressed. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{io_8ino_af32fa88edc93b34e25f058e331ea1134}\label{io_8ino_af32fa88edc93b34e25f058e331ea1134}} 
+\index{io.ino@{io.ino}!updateButtons@{updateButtons}}
+\index{updateButtons@{updateButtons}!io.ino@{io.ino}}
+\doxysubsubsection{\texorpdfstring{updateButtons()}{updateButtons()}}
+{\footnotesize\ttfamily void update\+Buttons (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Reads button and ADC pin states. 
+
+Updates global variables with the state of confirm and abort buttons, and the ADC pin value. 

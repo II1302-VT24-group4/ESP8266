@@ -1,0 +1,67 @@
+\hypertarget{rfid_8ino}{}\doxysection{/mnt/b/\+Desktop/dev/\+ESP8266/main/rfid.ino File Reference}
+\label{rfid_8ino}\index{/mnt/b/Desktop/dev/ESP8266/main/rfid.ino@{/mnt/b/Desktop/dev/ESP8266/main/rfid.ino}}
+
+
+RFID functionality.  
+
+
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+String \mbox{\hyperlink{rfid_8ino_a0ea6620910cad88169380a702a90786d}{card\+Parser}} ()
+\begin{DoxyCompactList}\small\item\em Parses the RFID card string. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{rfid_8ino_abb9176035fa910179ecb671e38c0cc57}{display\+RFIDData}} ()
+\begin{DoxyCompactList}\small\item\em Displays RFID data. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{rfid_8ino_a848bf73ba9aaa0255c8add266bedb279}{read\+RFIDData}} ()
+\begin{DoxyCompactList}\small\item\em Reads RFID data from the serial port. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+RFID functionality. 
+
+\begin{DoxyAuthor}{Author}
+Christoffer Franzén, Erik Heiskanen, Leo Andersson
+\end{DoxyAuthor}
+Handles RFID card parsing, data retrieval from Firestore, and display. Some of this code is taken from \href{https://www.instructables.com/}{\texttt{ https\+://www.\+instructables.\+com/}} 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{rfid_8ino_a0ea6620910cad88169380a702a90786d}\label{rfid_8ino_a0ea6620910cad88169380a702a90786d}} 
+\index{rfid.ino@{rfid.ino}!cardParser@{cardParser}}
+\index{cardParser@{cardParser}!rfid.ino@{rfid.ino}}
+\doxysubsubsection{\texorpdfstring{cardParser()}{cardParser()}}
+{\footnotesize\ttfamily String card\+Parser (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Parses the RFID card string. 
+
+Removes unnecessary start and end characters from the card number.
+
+\begin{DoxyReturn}{Returns}
+The parsed card number. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{rfid_8ino_abb9176035fa910179ecb671e38c0cc57}\label{rfid_8ino_abb9176035fa910179ecb671e38c0cc57}} 
+\index{rfid.ino@{rfid.ino}!displayRFIDData@{displayRFIDData}}
+\index{displayRFIDData@{displayRFIDData}!rfid.ino@{rfid.ino}}
+\doxysubsubsection{\texorpdfstring{displayRFIDData()}{displayRFIDData()}}
+{\footnotesize\ttfamily void display\+RFIDData (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Displays RFID data. 
+
+Retrieves owner and email data associated with the RFID card from Firestore and displays it on the screen. \mbox{\Hypertarget{rfid_8ino_a848bf73ba9aaa0255c8add266bedb279}\label{rfid_8ino_a848bf73ba9aaa0255c8add266bedb279}} 
+\index{rfid.ino@{rfid.ino}!readRFIDData@{readRFIDData}}
+\index{readRFIDData@{readRFIDData}!rfid.ino@{rfid.ino}}
+\doxysubsubsection{\texorpdfstring{readRFIDData()}{readRFIDData()}}
+{\footnotesize\ttfamily bool read\+RFIDData (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Reads RFID data from the serial port. 
+
+Reads data from the serial port into a buffer and updates the global card\+Number.
+
+\begin{DoxyReturn}{Returns}
+True if data was read, false otherwise. 
+\end{DoxyReturn}

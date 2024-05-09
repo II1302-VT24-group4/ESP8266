@@ -1,0 +1,42 @@
+\hypertarget{wifi_8ino}{}\doxysection{/mnt/b/\+Desktop/dev/\+ESP8266/main/wifi.ino File Reference}
+\label{wifi_8ino}\index{/mnt/b/Desktop/dev/ESP8266/main/wifi.ino@{/mnt/b/Desktop/dev/ESP8266/main/wifi.ino}}
+
+
+Wi\+Fi connection function.  
+
+
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{wifi_8ino_a0c9a517424be1c5b357e0344f5e47336}{connect\+To\+Wi\+Fi}} (const char $\ast$ssid, const char $\ast$password)
+\begin{DoxyCompactList}\small\item\em Connects to a Wi\+Fi network. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Wi\+Fi connection function. 
+
+\begin{DoxyAuthor}{Author}
+Christoffer Franzén
+\end{DoxyAuthor}
+Code for connecting to a Wi\+Fi network. Some portions of this code are adapted from \href{https://randomnerdtutorials.com/}{\texttt{ https\+://randomnerdtutorials.\+com/}} 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{wifi_8ino_a0c9a517424be1c5b357e0344f5e47336}\label{wifi_8ino_a0c9a517424be1c5b357e0344f5e47336}} 
+\index{wifi.ino@{wifi.ino}!connectToWiFi@{connectToWiFi}}
+\index{connectToWiFi@{connectToWiFi}!wifi.ino@{wifi.ino}}
+\doxysubsubsection{\texorpdfstring{connectToWiFi()}{connectToWiFi()}}
+{\footnotesize\ttfamily void connect\+To\+Wi\+Fi (\begin{DoxyParamCaption}\item[{const char $\ast$}]{ssid,  }\item[{const char $\ast$}]{password }\end{DoxyParamCaption})}
+
+
+
+Connects to a Wi\+Fi network. 
+
+Connects to a Wi\+Fi network using the provided SSID and password. Prints connection status and local IP address upon successful connection.
+
+
+\begin{DoxyParams}{Parameters}
+{\em ssid} & SSID of the Wi\+Fi network. \\
+\hline
+{\em password} & Password of the Wi\+Fi network. \\
+\hline
+\end{DoxyParams}

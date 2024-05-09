@@ -1,0 +1,246 @@
+\hypertarget{main_8ino}{}\doxysection{/mnt/b/\+Desktop/dev/\+ESP8266/main/main.ino File Reference}
+\label{main_8ino}\index{/mnt/b/Desktop/dev/ESP8266/main/main.ino@{/mnt/b/Desktop/dev/ESP8266/main/main.ino}}
+
+
+Main code for the project.  
+
+
+{\ttfamily \#include \char`\"{}ESP8266\+Wi\+Fi.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Firebase\+\_\+\+ESP\+\_\+\+Client.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}NTPClient.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Software\+Serial.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}U8g2lib.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Wi\+Fi\+Udp.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}addons/\+Token\+Helper.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}pitches.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Arduino.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}SPI.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Arduino\+Json.\+h\char`\"{}}\newline
+Include dependency graph for main.\+ino\+:
+% FIG 0
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{main_8ino_aef369f47f2b02187343514918de3dc98}\label{main_8ino_aef369f47f2b02187343514918de3dc98}} 
+\#define {\bfseries RUN\+\_\+\+TEST\+\_\+\+PROGRAM}
+\item 
+\mbox{\Hypertarget{main_8ino_a187af7b881bea2905b906b75ac61c951}\label{main_8ino_a187af7b881bea2905b906b75ac61c951}} 
+\#define {\bfseries API\+\_\+\+KEY}~\char`\"{}AIza\+Sy\+B1vr\+EG7\+FRHz0qx1usl56\+Nph130\+NA-\/KUMM\char`\"{}
+\item 
+\mbox{\Hypertarget{main_8ino_a2cad4e9cf58ce8563a6ea42e57f2c5ac}\label{main_8ino_a2cad4e9cf58ce8563a6ea42e57f2c5ac}} 
+\#define {\bfseries PROJECT\+\_\+\+ID}~\char`\"{}meeting-\/planner-\/56526\char`\"{}
+\item 
+\mbox{\Hypertarget{main_8ino_a7a689f00c928d30a9e6b9c294e8148c1}\label{main_8ino_a7a689f00c928d30a9e6b9c294e8148c1}} 
+\#define {\bfseries FIREBASE\+\_\+\+AUTH}~\char`\"{}vc2\+Vyi\+UJEQZy\+Zrck7bk\+NDX932\+JG3\char`\"{}
+\item 
+\mbox{\Hypertarget{main_8ino_a2e9cd51561553971c5be1798446ff7d5}\label{main_8ino_a2e9cd51561553971c5be1798446ff7d5}} 
+\#define {\bfseries USER\+\_\+\+EMAIL}~\char`\"{}test@test.\+com\char`\"{}
+\item 
+\mbox{\Hypertarget{main_8ino_a198fd6abc61f7245c473dcb2752370e7}\label{main_8ino_a198fd6abc61f7245c473dcb2752370e7}} 
+\#define {\bfseries USER\+\_\+\+PASSWORD}~\char`\"{}test123\char`\"{}
+\item 
+\mbox{\Hypertarget{main_8ino_a65b26605d90a0bcd0e13e05db54f551f}\label{main_8ino_a65b26605d90a0bcd0e13e05db54f551f}} 
+\#define {\bfseries RES}~D4
+\item 
+\mbox{\Hypertarget{main_8ino_a3780e2fe762dc532df7d0f030b55caa0}\label{main_8ino_a3780e2fe762dc532df7d0f030b55caa0}} 
+\#define {\bfseries CS}~D8
+\item 
+\mbox{\Hypertarget{main_8ino_af8903d8eea3868940c60af887473b152}\label{main_8ino_af8903d8eea3868940c60af887473b152}} 
+\#define {\bfseries RS}~D1
+\item 
+\mbox{\Hypertarget{main_8ino_a6bb7a09d1931dfbdd6d373cfe6e23357}\label{main_8ino_a6bb7a09d1931dfbdd6d373cfe6e23357}} 
+\#define {\bfseries SC}~D5
+\item 
+\mbox{\Hypertarget{main_8ino_aa1be7844620ac7bffe73137a180aa044}\label{main_8ino_aa1be7844620ac7bffe73137a180aa044}} 
+\#define {\bfseries SI}~D7
+\item 
+\mbox{\Hypertarget{main_8ino_a31e20330f8ce94e0dd10b005a15c5898}\label{main_8ino_a31e20330f8ce94e0dd10b005a15c5898}} 
+\#define {\bfseries LED\+\_\+\+RED}~D0
+\item 
+\mbox{\Hypertarget{main_8ino_aca338dbd19d7940923334629f6e5f3b7}\label{main_8ino_aca338dbd19d7940923334629f6e5f3b7}} 
+\#define {\bfseries LED\+\_\+\+GREEN}~10
+\item 
+\mbox{\Hypertarget{main_8ino_a145103118f6d9d1129aa4509cf214a13}\label{main_8ino_a145103118f6d9d1129aa4509cf214a13}} 
+\#define {\bfseries BUZZER}~D6
+\item 
+\mbox{\Hypertarget{main_8ino_a5e22e9417c6271eeada4349e498ec570}\label{main_8ino_a5e22e9417c6271eeada4349e498ec570}} 
+\#define {\bfseries BUTTON\+\_\+\+CONFIRM}~3
+\item 
+\mbox{\Hypertarget{main_8ino_ab62ddd4f8dbdec0016a3827614c4163a}\label{main_8ino_ab62ddd4f8dbdec0016a3827614c4163a}} 
+\#define {\bfseries BUTTON\+\_\+\+ABORT}~1
+\item 
+\mbox{\Hypertarget{main_8ino_a2a2f690f8bdeeb4003203ff5e3edaffc}\label{main_8ino_a2a2f690f8bdeeb4003203ff5e3edaffc}} 
+\#define {\bfseries BUTTONS}~A0
+\item 
+\mbox{\Hypertarget{main_8ino_a5070712bba21161ad840408134ee229f}\label{main_8ino_a5070712bba21161ad840408134ee229f}} 
+\#define {\bfseries RX}~D3
+\item 
+\mbox{\Hypertarget{main_8ino_a8b9bd4430d2377182d1c84201fbb9b68}\label{main_8ino_a8b9bd4430d2377182d1c84201fbb9b68}} 
+\#define {\bfseries TX}~D2
+\item 
+\mbox{\Hypertarget{main_8ino_ad1b23a1b37e89d16f46752e0bc920e11}\label{main_8ino_ad1b23a1b37e89d16f46752e0bc920e11}} 
+\#define {\bfseries lock\+\_\+width}~64
+\item 
+\mbox{\Hypertarget{main_8ino_ac072c178911f995190ae07e48e212a58}\label{main_8ino_ac072c178911f995190ae07e48e212a58}} 
+\#define {\bfseries lock\+\_\+height}~64
+\item 
+\mbox{\Hypertarget{main_8ino_a88137ec1c23de8a3586d564fd020bee1}\label{main_8ino_a88137ec1c23de8a3586d564fd020bee1}} 
+\#define {\bfseries TONE\+\_\+\+ABORT}~330
+\item 
+\mbox{\Hypertarget{main_8ino_aead3dd095f763d34b715d51d65b9f216}\label{main_8ino_aead3dd095f763d34b715d51d65b9f216}} 
+\#define {\bfseries TONE\+\_\+\+CONFIRM}~550
+\item 
+\mbox{\Hypertarget{main_8ino_aa5c04783895b8b04e00afb97233c85d6}\label{main_8ino_aa5c04783895b8b04e00afb97233c85d6}} 
+\#define {\bfseries TONE\+\_\+\+RFID}~660
+\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{main_8ino_a5d74787dedbc4e11c1ab15bf487e61f8}\label{main_8ino_a5d74787dedbc4e11c1ab15bf487e61f8}} 
+enum {\bfseries State} \{ {\bfseries IDLE}
+, {\bfseries QUICKBOOK}
+, {\bfseries CONFIRMQUICKBOOK}
+, {\bfseries BOOK}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{main_8ino_ac571627240ecec7fc8cc072438827ce8}\label{main_8ino_ac571627240ecec7fc8cc072438827ce8}} 
+NTPClient {\bfseries time\+Client} (ntp\+UDP, \char`\"{}pool.\+ntp.\+org\char`\"{})
+\item 
+\mbox{\Hypertarget{main_8ino_aaf02505a27220b4d1bc487f77a4c2b97}\label{main_8ino_aaf02505a27220b4d1bc487f77a4c2b97}} 
+U8\+G2\+\_\+\+ST7565\+\_\+\+NHD\+\_\+\+C12864\+\_\+2\+\_\+4\+W\+\_\+\+HW\+\_\+\+SPI {\bfseries u8g2} (U8\+G2\+\_\+\+R2, CS, RS, RES)
+\item 
+\mbox{\Hypertarget{main_8ino_a941550e5802d8cf7e3e969265859e251}\label{main_8ino_a941550e5802d8cf7e3e969265859e251}} 
+Software\+Serial {\bfseries Soft\+Serial} (RX, TX)
+\item 
+\mbox{\Hypertarget{main_8ino_a4fc01d736fe50cf5b977f755b675f11d}\label{main_8ino_a4fc01d736fe50cf5b977f755b675f11d}} 
+void {\bfseries setup} ()
+\item 
+\mbox{\Hypertarget{main_8ino_afe461d27b9c48d5921c00d521181f12f}\label{main_8ino_afe461d27b9c48d5921c00d521181f12f}} 
+void {\bfseries loop} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{main_8ino_a07fb7255f58d0a5adebbd91fc7e3aec9}\label{main_8ino_a07fb7255f58d0a5adebbd91fc7e3aec9}} 
+const char $\ast$ {\bfseries ssids} \mbox{[}$\,$\mbox{]} = \{\char`\"{}KTH-\/IoT\char`\"{}, \char`\"{}Christoffers i\+Phone 12\char`\"{}, \char`\"{}i\+Phone\char`\"{}\}
+\item 
+\mbox{\Hypertarget{main_8ino_a2c6c595c3b796476b044ecdac26ff1ce}\label{main_8ino_a2c6c595c3b796476b044ecdac26ff1ce}} 
+const char $\ast$ {\bfseries passwords} \mbox{[}$\,$\mbox{]} = \{\char`\"{}LRVs\+Nd\+J8b\+Ak\+HWt6l\+ACzW\char`\"{}, \char`\"{}89korvkorv\char`\"{}, \char`\"{}89korvkorv\char`\"{}\}
+\item 
+\mbox{\Hypertarget{main_8ino_a22f33e7e05df58bb6145bb6e543e232a}\label{main_8ino_a22f33e7e05df58bb6145bb6e543e232a}} 
+Wi\+Fi\+UDP {\bfseries ntp\+UDP}
+\item 
+\mbox{\Hypertarget{main_8ino_a12b59da3012cde0aab1fa623b4e46c55}\label{main_8ino_a12b59da3012cde0aab1fa623b4e46c55}} 
+Firebase\+Data {\bfseries fbdo}
+\item 
+\mbox{\Hypertarget{main_8ino_aecbaea371d434c4a1e67568844435de6}\label{main_8ino_aecbaea371d434c4a1e67568844435de6}} 
+Firebase\+Auth {\bfseries auth}
+\item 
+\mbox{\Hypertarget{main_8ino_a5ad753240216beef4b6f05ce546268e3}\label{main_8ino_a5ad753240216beef4b6f05ce546268e3}} 
+Firebase\+Config {\bfseries config}
+\item 
+\mbox{\Hypertarget{main_8ino_a1b257f7983daa0598359b80fc596fc56}\label{main_8ino_a1b257f7983daa0598359b80fc596fc56}} 
+Firebase\+Data {\bfseries db\+Data}
+\item 
+\mbox{\Hypertarget{main_8ino_ae830da93d7e59e7c49155706732faaf5}\label{main_8ino_ae830da93d7e59e7c49155706732faaf5}} 
+String {\bfseries uid}
+\item 
+\mbox{\Hypertarget{main_8ino_adb85e16ac8c9f62df2d33b1262649843}\label{main_8ino_adb85e16ac8c9f62df2d33b1262649843}} 
+String {\bfseries path}
+\item 
+\mbox{\Hypertarget{main_8ino_a565e73452e251d4f83cdf1a42a01a62b}\label{main_8ino_a565e73452e251d4f83cdf1a42a01a62b}} 
+String {\bfseries firebase\+Status} = \char`\"{}on\char`\"{}
+\item 
+\mbox{\Hypertarget{main_8ino_a59e96eea04541ecd67c3faca41b13feb}\label{main_8ino_a59e96eea04541ecd67c3faca41b13feb}} 
+unsigned char {\bfseries buffer} \mbox{[}64\mbox{]}
+\item 
+\mbox{\Hypertarget{main_8ino_ad43c3812e6d13e0518d9f8b8f463ffcf}\label{main_8ino_ad43c3812e6d13e0518d9f8b8f463ffcf}} 
+int {\bfseries count} = 0
+\item 
+\mbox{\Hypertarget{main_8ino_a570473b279227680e342abe90201eccb}\label{main_8ino_a570473b279227680e342abe90201eccb}} 
+String {\bfseries card\+Number} = \char`\"{}\char`\"{}
+\item 
+\mbox{\Hypertarget{main_8ino_a58c921d461396fba7443220bfc359a3e}\label{main_8ino_a58c921d461396fba7443220bfc359a3e}} 
+String {\bfseries card\+Owner} = \char`\"{}\char`\"{}
+\item 
+\mbox{\Hypertarget{main_8ino_a62d920a9a06d7ac5b8c98e175defd014}\label{main_8ino_a62d920a9a06d7ac5b8c98e175defd014}} 
+State {\bfseries current\+State} = IDLE
+\item 
+\mbox{\Hypertarget{main_8ino_af688e75811cd5dc14bec2a47700319e0}\label{main_8ino_af688e75811cd5dc14bec2a47700319e0}} 
+unsigned long {\bfseries last\+RFIDRead\+Time} = 0
+\item 
+\mbox{\Hypertarget{main_8ino_acc179ce67661a292bd4ac75053e83f72}\label{main_8ino_acc179ce67661a292bd4ac75053e83f72}} 
+String {\bfseries formatted\+Time}
+\item 
+\mbox{\Hypertarget{main_8ino_ac514852515e8f5fa6f5da04d6ea092d7}\label{main_8ino_ac514852515e8f5fa6f5da04d6ea092d7}} 
+String {\bfseries current\+Date}
+\item 
+\mbox{\Hypertarget{main_8ino_a25fb006f046f5a52592f2fe73b592dab}\label{main_8ino_a25fb006f046f5a52592f2fe73b592dab}} 
+byte {\bfseries button\+\_\+confirm\+\_\+state}
+\item 
+\mbox{\Hypertarget{main_8ino_a5f409dab40347299863698ae59962033}\label{main_8ino_a5f409dab40347299863698ae59962033}} 
+byte {\bfseries button\+\_\+abort\+\_\+state}
+\item 
+\mbox{\Hypertarget{main_8ino_a5b2f22084cc1777d6af56ee8b7c27704}\label{main_8ino_a5b2f22084cc1777d6af56ee8b7c27704}} 
+int {\bfseries buttons\+\_\+direction}
+\item 
+\mbox{\Hypertarget{main_8ino_af3b2b8ffe2b1effcf3983354beb28099}\label{main_8ino_af3b2b8ffe2b1effcf3983354beb28099}} 
+int {\bfseries cursor} = 0
+\item 
+\mbox{\Hypertarget{main_8ino_a7c2bd6ff53fb7efe2d152a1be057fb8c}\label{main_8ino_a7c2bd6ff53fb7efe2d152a1be057fb8c}} 
+String {\bfseries current\+Meeting\+ID} = \char`\"{}\char`\"{}
+\item 
+\mbox{\Hypertarget{main_8ino_a55dda6c9e24070499b30283937af327f}\label{main_8ino_a55dda6c9e24070499b30283937af327f}} 
+bool {\bfseries room\+Available} = false
+\item 
+\mbox{\Hypertarget{main_8ino_a2a04632a5f8173806465942a637c1be7}\label{main_8ino_a2a04632a5f8173806465942a637c1be7}} 
+const int {\bfseries MAX\+\_\+\+DOCUMENTS} = 10
+\item 
+\mbox{\Hypertarget{main_8ino_ad571a7d9e89c60ebd78b1ffe1162b342}\label{main_8ino_ad571a7d9e89c60ebd78b1ffe1162b342}} 
+const int {\bfseries TIME\+\_\+\+LENGTH} = 6
+\item 
+\mbox{\Hypertarget{main_8ino_a2b62131f37053fb04c81e9a335b67986}\label{main_8ino_a2b62131f37053fb04c81e9a335b67986}} 
+String {\bfseries start\+Times} \mbox{[}48\mbox{]}
+\item 
+\mbox{\Hypertarget{main_8ino_a69dbf5e88eee1aea18e0ef62fe80bf54}\label{main_8ino_a69dbf5e88eee1aea18e0ef62fe80bf54}} 
+String {\bfseries end\+Times} \mbox{[}48\mbox{]}
+\item 
+\mbox{\Hypertarget{main_8ino_aed8ed3e6c4ada50fd27b5f63d58d5e99}\label{main_8ino_aed8ed3e6c4ada50fd27b5f63d58d5e99}} 
+int {\bfseries documents\+Count} = 0
+\item 
+\mbox{\Hypertarget{main_8ino_a91ebdab2b6ec917099c0f0049adb2277}\label{main_8ino_a91ebdab2b6ec917099c0f0049adb2277}} 
+String {\bfseries next\+Available\+Time\+Slot} = \char`\"{}\char`\"{}
+\item 
+\mbox{\Hypertarget{main_8ino_a523d4a87033bc69abb669e53b191f2e3}\label{main_8ino_a523d4a87033bc69abb669e53b191f2e3}} 
+String {\bfseries next\+Available\+Time} = \char`\"{}\char`\"{}
+\item 
+\mbox{\Hypertarget{main_8ino_a0b4aae21b03ea9cc4d8bdb04a2028c00}\label{main_8ino_a0b4aae21b03ea9cc4d8bdb04a2028c00}} 
+int {\bfseries quick\+Book\+Type} = 0
+\item 
+\mbox{\Hypertarget{main_8ino_a15407568b61c73d73a7e7e4b68b0e97f}\label{main_8ino_a15407568b61c73d73a7e7e4b68b0e97f}} 
+String {\bfseries next\+Meeting} = \char`\"{}\char`\"{}
+\item 
+\mbox{\Hypertarget{main_8ino_a6f1af58c3fb20ccc72adad8698446eab}\label{main_8ino_a6f1af58c3fb20ccc72adad8698446eab}} 
+unsigned long {\bfseries last\+Button\+Update\+Time} = 0
+\item 
+\mbox{\Hypertarget{main_8ino_abf2c25ae06197de4482f7dfe06cb7435}\label{main_8ino_abf2c25ae06197de4482f7dfe06cb7435}} 
+const unsigned long {\bfseries button\+Update\+Interval} = 200
+\item 
+\mbox{\Hypertarget{main_8ino_a3084c01a8932d907ada0047023613578}\label{main_8ino_a3084c01a8932d907ada0047023613578}} 
+unsigned long {\bfseries last\+Calendar\+Update\+Time} = 0
+\item 
+\mbox{\Hypertarget{main_8ino_add8023840c9d498fdd296b3f04769820}\label{main_8ino_add8023840c9d498fdd296b3f04769820}} 
+const unsigned long {\bfseries calendar\+Update\+Interval} = 2000
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Main code for the project. 
+
+\begin{DoxyAuthor}{Author}
+Christoffer Franzén, Erik Heiskanen, Leo Andersson, Hein Lee
+\end{DoxyAuthor}
+This file contains the main functionality of the project. GPL v3 license. 
