@@ -38,9 +38,11 @@ void updateDailyCalendar() {
     if (Firebase.Firestore.patchDocument(&fbdo, PROJECT_ID, "", path2.c_str(), content.raw(), "available")) {
       roomAvailable = available;
     } else {
+       
       Serial.println(fbdo.errorReason());
     }
   } else {
+
     String path2 = "test/" + uid;
     FirebaseJson content;
     content.set("fields/available/booleanValue", true);
