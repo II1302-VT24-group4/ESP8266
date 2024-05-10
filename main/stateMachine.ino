@@ -140,7 +140,6 @@ void stateMachine() {
       break;
 
     case QUICKBOOK:  // Logic for handling quick booking
-
       if (roomAvailable) {
         int currentTime = (formattedTime.substring(0, 2) + formattedTime.substring(3, 6)).toInt();
         int nextMeetingTime = (nextMeeting.substring(0, 2) + nextMeeting.substring(3, 6)).toInt();
@@ -168,7 +167,6 @@ void stateMachine() {
           u8g2.drawStr(0, 20, "Do you want to book:");
           u8g2.drawStr(0, 30, booking.c_str());
         } while (u8g2.nextPage());
-
       } else {
         String startTime;
         String endTime;
@@ -190,15 +188,13 @@ void stateMachine() {
         } else {
           // Om bokning finns skapa bokning vid nästa lediga tid
           startTime = nextAvailableTime.substring(0, 5);
-          String test = nextAvailableTime.substring(8, 10) + nextAvailableTime.substring(11, 14);
           int startOfIntervall = (nextAvailableTime.substring(0, 2) + nextAvailableTime.substring(3, 6)).toInt();
           int endOfIntervall = (nextAvailableTime.substring(8, 10) + nextAvailableTime.substring(11, 14)).toInt();
           int timeDifference = endOfIntervall - startOfIntervall;
 
-
           if (timeDifference == 100 || timeDifference > 100) {
 
-            startTime = nextAvailableTime.substring(0, 5);
+            //startTime = nextAvailableTime.substring(0, 5);
 
             endTime = String(nextAvailableTime.substring(0, 3).toInt() + 1) + ":" + nextAvailableTime.substring(3, 5);
 
@@ -211,7 +207,6 @@ void stateMachine() {
               u8g2.drawStr(0, 30, booking.c_str());
             } while (u8g2.nextPage());
 
-
           } else if (timeDifference == 70 || timeDifference == 30) {
             quickBookType = 1;
             u8g2.firstPage();
@@ -222,16 +217,6 @@ void stateMachine() {
               u8g2.drawStr(0, 30, nextAvailableTime.c_str());
             } while (u8g2.nextPage());
           }
-
-
-          /*String booking = startTime + " - " + endTime;
-          u8g2.firstPage();
-          do {
-            u8g2.setFont(u8g2_font_ncenB08_tr);
-            u8g2.drawStr(0, 10, cardNumber.c_str());
-            u8g2.drawStr(0, 20, "Do you want to book:" );
-            u8g2.drawStr(0, 30, booking.c_str());
-          } while (u8g2.nextPage());*/
         }
       }
 
@@ -249,10 +234,6 @@ void stateMachine() {
         noTone(BUZZER);
         currentState = CONFIRMQUICKBOOK;
       }
-
-
-
-
       break;
 
     case CONFIRMQUICKBOOK:  // Logic for confirming quick booking and creating it

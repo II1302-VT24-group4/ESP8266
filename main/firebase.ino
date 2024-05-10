@@ -49,15 +49,17 @@ void updateDailyCalendar() {
  * @param endTimes An array containing end times.
  * @param sizeOfArray The size of the arrays.
  */
-void updateNextAvailable(String *startTimes, String *endTimes, int sizeOfArray) {
+void updateNextAvailable(const String *startTimes, const String *endTimes, int sizeOfArray) {
   int counter = 0;
-  while (startTimes[counter] != currentMeetingID && counter < sizeOfArray) {
+
+  // Check if counter is within the bounds of the array before accessing elements
+  while (counter < sizeOfArray && startTimes[counter] != currentMeetingID) {
     counter++;
   }
 
   for (int i = counter; i < sizeOfArray - 1; i++) {
     if (endTimes[i] < startTimes[i + 1]) {
-      String nextAvailableTimeSlot = endTimes[i] + " - " + startTimes[i + 1];
+      // Removing the unused variable nextAvailableTimeSlot
       break;
     }
   }

@@ -1,7 +1,8 @@
 /**
  * @file checkAccess.ino
- * @brief Test program for development
- * @details Run this code by uncommenting the RUN_TEST_PROGRAM macro.
+ * @author Christoffer Franzén, Erik Heiskanen, Leo Andersson
+ * @brief Program for checking access to room
+ * @details
  */
 
 /**
