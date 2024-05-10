@@ -37,13 +37,15 @@ void setupTest() {
  * This function runs a series of tests to verify the functionality of different components.
  */
 void test() {
-  testButtons();
-  testGPIO();
-  testBuzzer();
-  testWifi();
-  testRFID();
+  //testButtons();
+  //testGPIO();
+  //testBuzzer();
+  //testWifi();
+  //testRFID();
+  testNextRoom();
 
   draw("All tests done!");
+  Serial.write("All tests done!\n");
   delay(4000);
 }
 
@@ -213,6 +215,10 @@ void testRFID() {
       exit = true;
     }
   }
+}
+
+void testNextRoom() {
+
 }
 
 /**

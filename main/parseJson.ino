@@ -21,7 +21,8 @@ bool parseJson(String jsonString, String currentTime) {
   }
 
   documentsCount = 0;
-  const size_t capacity = JSON_OBJECT_SIZE(5) + 190;
+  //const size_t capacity = JSON_OBJECT_SIZE(5) + 190;
+  const size_t capacity = 190;
   DynamicJsonDocument doc(capacity);
 
   deserializeJson(doc, jsonString);

@@ -99,6 +99,9 @@ void stateMachine() {
 
       if (SoftSerial.available() && nextAvailableTime.isEmpty()) {
         readRFIDData();
+
+        
+
         currentState = QUICKBOOK;
       } else if (SoftSerial.available() && !nextAvailableTime.isEmpty()) {
         readRFIDData();
