@@ -98,6 +98,11 @@ void stateMachine() {
 
       drawIdle();
 
+      if (getButtonState() == "Left") {
+        currentState = NEXTROOM;
+      } else if (getButtonState() == "Right") {
+        currentState = NEXTROOM;
+      }
 
       if (SoftSerial.available() && nextAvailableTime.isEmpty()) {
         readRFIDData();
@@ -114,7 +119,7 @@ void stateMachine() {
 
           currentState = QUICKBOOK;
         } else {
-          draw("card not registered");
+          draw("Card not registered!");
           delay(3000);
           currentState = IDLE;
         }
@@ -129,7 +134,7 @@ void stateMachine() {
           u8g2.firstPage();
           do {
             drawUnlockedLockIcon();
-            u8g2.setFont(u8g2_font_ncenB08_tr);
+            u8g2.setFont(u8g2_font_unifont_t_symbols);
             u8g2.drawStr(20, 62, "Room unlocked!");
           } while (u8g2.nextPage());
 
@@ -152,7 +157,7 @@ void stateMachine() {
             currentState = QUICKBOOK;
 
           } else {
-            draw("Card not registerd");
+            draw("Card not registered!");
             delay(3000);
           }
         }
@@ -186,13 +191,7 @@ void stateMachine() {
 
         String booking = startTime + " - " + endTime;
 
-        u8g2.firstPage();
-        do {
-          u8g2.setFont(u8g2_font_ncenB08_tr);
-          u8g2.drawStr(0, 10, cardNumber.c_str());
-          u8g2.drawStr(0, 20, "Do you want to book:");
-          u8g2.drawStr(0, 30, booking.c_str());
-        } while (u8g2.nextPage());
+        drawConfirmBooking(booking);
       } else {
         String startTime;
         String endTime;
@@ -203,13 +202,8 @@ void stateMachine() {
           endTime = String(nextAvailableTime.substring(0, 3).toInt() + 1) + ":" + nextAvailableTime.substring(3, 5);
 
           String booking = startTime + " - " + endTime;
-          u8g2.firstPage();
-          do {
-            u8g2.setFont(u8g2_font_ncenB08_tr);
-            u8g2.drawStr(0, 10, cardNumber.c_str());
-            u8g2.drawStr(0, 20, "Do you want to book:");
-            u8g2.drawStr(0, 30, booking.c_str());
-          } while (u8g2.nextPage());
+
+          drawConfirmBooking(booking);
 
         } else {
           // Om bokning finns skapa bokning vid nästa lediga tid
@@ -218,30 +212,17 @@ void stateMachine() {
           int endOfIntervall = (nextAvailableTime.substring(8, 10) + nextAvailableTime.substring(11, 14)).toInt();
           int timeDifference = endOfIntervall - startOfIntervall;
 
-          if (timeDifference == 100 || timeDifference > 100) {
-
-            //startTime = nextAvailableTime.substring(0, 5);
-
+          if (timeDifference >= 100) {
             endTime = String(nextAvailableTime.substring(0, 3).toInt() + 1) + ":" + nextAvailableTime.substring(3, 5);
 
             String booking = startTime + " - " + endTime;
-            u8g2.firstPage();
-            do {
-              u8g2.setFont(u8g2_font_ncenB08_tr);
-              u8g2.drawStr(0, 10, cardNumber.c_str());
-              u8g2.drawStr(0, 20, "Do you want to book:");
-              u8g2.drawStr(0, 30, booking.c_str());
-            } while (u8g2.nextPage());
+
+            drawConfirmBooking(booking);
 
           } else if (timeDifference == 70 || timeDifference == 30) {
             quickBookType = 1;
-            u8g2.firstPage();
-            do {
-              u8g2.setFont(u8g2_font_ncenB08_tr);
-              u8g2.drawStr(0, 10, cardNumber.c_str());
-              u8g2.drawStr(0, 20, "Do you want to book:");
-              u8g2.drawStr(0, 30, nextAvailableTime.c_str());
-            } while (u8g2.nextPage());
+
+            drawConfirmBooking(nextAvailableTime);
           }
         }
       }
@@ -263,10 +244,6 @@ void stateMachine() {
       break;
 
     case CONFIRMQUICKBOOK:  // Logic for confirming quick booking and creating it
-
-
-      // Logik för att skapa bokningen
-
       createBooking();
 
       u8g2.firstPage();
@@ -276,23 +253,30 @@ void stateMachine() {
         u8g2.drawStr(0, 20, "Booking created");
       } while (u8g2.nextPage());
 
-
-      // kod
-
       delay(3000);
 
       currentState = IDLE;
 
       break;
 
-    case BOOK:  // Logic for booking a room
-      drawDefaultCalender();
+    case NEXTROOM:
+      //drawNextRoom(); //TODO: Implement
+
+      cursor = 0;
+
+      u8g2.firstPage();
+      do {
+        u8g2.setFont(u8g2_font_ncenB08_tr);
+        u8g2.setCursor(0, 15);
+        u8g2.print("Rooms available");
+      } while (u8g2.nextPage());
+
 
       if (getButtonState() == "Abort") {
         currentState = IDLE;
-      } else if (getButtonState() == "Down") {
+      } else if (getButtonState() == "Left") {
         cursor = (cursor + 1) % 3;
-      } else if (getButtonState() == "Up") {
+      } else if (getButtonState() == "Right") {
         cursor = (cursor + 2) % 3;
       }
       break;

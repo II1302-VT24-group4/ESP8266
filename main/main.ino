@@ -112,7 +112,6 @@ enum State {
   IDLE,
   QUICKBOOK,
   CONFIRMQUICKBOOK,
-  BOOK,
   NEXTROOM
 };
 
