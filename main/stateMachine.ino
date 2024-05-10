@@ -95,14 +95,30 @@ void stateMachine() {
   switch (currentState) {
     case IDLE:
       updateNextMeeting(startTimes);
+      
       drawIdle();
+      
 
       if (SoftSerial.available() && nextAvailableTime.isEmpty()) {
         readRFIDData();
+        String rfidPath = "rfid/" + cardParser();
+          // Retrieve the owner data
+        if (Firebase.Firestore.getDocument(&fbdo, PROJECT_ID, "", rfidPath.c_str(), "")) {
+            FirebaseJson payload;
+            payload.setJsonData(fbdo.payload().c_str());
 
+            FirebaseJsonData jsonData;
+            payload.get(jsonData, "fields/owner/stringValue", true);
+            cardOwner = jsonData.stringValue;
+            
+
+            currentState = QUICKBOOK;
+        } else {
+          draw("card not registered");
+          delay(3000);
+          currentState = IDLE;
+        }
         
-
-        currentState = QUICKBOOK;
       } else if (SoftSerial.available() && !nextAvailableTime.isEmpty()) {
         readRFIDData();
 
@@ -120,9 +136,9 @@ void stateMachine() {
           delay(4000);
         } else {
           // Prepare the Firestore paths
+          
+          
           String rfidPath = "rfid/" + cardParser();
-          String userPath;
-
           // Retrieve the owner data
           if (Firebase.Firestore.getDocument(&fbdo, PROJECT_ID, "", rfidPath.c_str(), "")) {
             FirebaseJson payload;
@@ -131,6 +147,7 @@ void stateMachine() {
             FirebaseJsonData jsonData;
             payload.get(jsonData, "fields/owner/stringValue", true);
             cardOwner = jsonData.stringValue;
+            
 
             currentState = QUICKBOOK;
 
@@ -142,23 +159,29 @@ void stateMachine() {
       }
       break;
 
-    case QUICKBOOK:  // Logic for handling quick booking
-      if (roomAvailable) {
+    case QUICKBOOK:
+
+      if(roomAvailable){
+
+        
         int currentTime = (formattedTime.substring(0, 2) + formattedTime.substring(3, 6)).toInt();
         int nextMeetingTime = (nextMeeting.substring(0, 2) + nextMeeting.substring(3, 6)).toInt();
         int timeDiff = nextMeetingTime - currentTime;
         String startTime = "";
         String endTime = "";
-
-        if (formattedTime.substring(3, 6).toInt() <= 30) {
+        
+       
+        if(formattedTime.substring(3, 6).toInt() <= 30){
           startTime = formattedTime.substring(0, 2) + ":00";
         } else {
           startTime = formattedTime.substring(0, 2) + ":30";
         }
-        if (timeDiff < 100) {
+        if(timeDiff < 100 && nextMeeting != nullptr){
           endTime = nextMeeting;
+          quickBookType = 2;
         } else {
-          endTime = String(startTime.substring(0, 2).toInt() + 1) + ":" + startTime.substring(3, 6);
+          endTime = String(startTime.substring(0,2).toInt() + 1) + ":" + startTime.substring(3,6);
+          quickBookType = 2;
         }
 
         String booking = startTime + " - " + endTime;
