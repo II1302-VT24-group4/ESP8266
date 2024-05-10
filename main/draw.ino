@@ -81,16 +81,35 @@ void drawIdle() {
   u8g2.setFont(u8g2_font_ncenB14_tr);
 
   // Create an array of strings to display
-  String displayTexts[] = { "Anna", formattedTime.substring(0, formattedTime.length() - 3), "Next time", nextAvailableTime.isEmpty() ? "Free" : nextAvailableTime };
+
+  String text3 = "";
+  String text4 = "";
+
+  if (nextAvailableTime.isEmpty() && nextMeeting.isEmpty()) {
+    text3 = "Available";
+    text4 = "";
+  } else if(!nextAvailableTime.isEmpty()){
+    text3 = "Booked until";
+    text4 = nextAvailableTime;
+  } else if(!nextMeeting.isEmpty()){
+    text3 = "Next booking";
+    text4 = "-" + nextMeeting;
+  }
+
+  String displayTexts[] = { "Anna", formattedTime.substring(0, formattedTime.length() - 3), text3, text4 };
 
   u8g2.firstPage();
   do {
+    u8g2.setFont(u8g2_font_unifont_t_symbols);
     // Iterate over the displayTexts array and print each string centered on the display
     for (int i = 0; i < 4; i++) {
       int textWidth = u8g2.getStrWidth(displayTexts[i].c_str());
       u8g2.setCursor((128 - textWidth) / 2, 15 + i * 15);
       u8g2.print(displayTexts[i].c_str());
     }
+
+    //u8g2.setFont(u8g2_font_unifont_t_symbols);
+    u8g2.drawGlyph(24, 31, 9200);
   } while (u8g2.nextPage());
 
   if (nextAvailableTime.isEmpty()) {
@@ -103,45 +122,17 @@ void drawIdle() {
 }
 
 /**
- * @brief Draws the default calendar screen.
+ * @brief 
  * 
  */
-void drawDefaultCalender() {
-  String displayText = currentDate + " | " + formattedTime;
 
+void drawConfirmBooking(String timeText) {
   u8g2.firstPage();
   do {
-    u8g2.setFont(u8g2_font_6x10_tf);
-    u8g2.setCursor(0, 10);
-    u8g2.print(displayText.c_str());
-    u8g2.drawBox(0, 11, 128, 1);
-    u8g2.setCursor(0, 22);
-    u8g2.print("Current: Vacant");
-    u8g2.setCursor(0, 32);
-
-    if (cursor == 0) {
-      u8g2.print("08:00 Free <-");
-    } else {
-      u8g2.print("08:00 Free");
-    }
-
-    u8g2.setCursor(0, 42);
-
-    if (cursor == 1) {
-      u8g2.print("09:00 Free <-");
-    } else {
-      u8g2.print("09:00 Free");
-    }
-
-    u8g2.setCursor(0, 52);
-
-    if (cursor == 2) {
-      u8g2.print("10:00 Free <-");
-    } else {
-      u8g2.print("10:00 Free");
-    }
-
-    u8g2.setCursor(0, 62);
-    u8g2.print(getButtonState().c_str());
+    u8g2.setFont(u8g2_font_6x12_t_symbols);
+    u8g2.drawStr(0, 13, "Do you want to book:");
+    u8g2.drawStr(0, 28, timeText.c_str());
+    u8g2.drawStr(0, 43, "Click Confirm");
+    u8g2.drawStr(0, 58, "or Abort");
   } while (u8g2.nextPage());
 }
