@@ -35,6 +35,7 @@ void createBooking() {
     content.set("fields/endTime/stringValue", endTime);
     content.set("fields/owner/stringValue", cardOwner);
     content.set("fields/title/stringValue", "quick booking");
+    content.set("fields/endDate/stringValue", currentDate);
 
     String toSaveBookingForRoom = "test/" + uid + "/" + currentDate + "/" + startTime;
 
@@ -75,6 +76,7 @@ void createBooking() {
     content.set("fields/endTime/stringValue", endTime);
     content.set("fields/owner/stringValue", cardOwner);
     content.set("fields/title/stringValue", "quick booking");
+    content.set("fields/endDate/stringValue", currentDate);
 
     String toSaveBookingForRoom = "test/" + uid + "/" + currentDate + "/" + startTime;
 
@@ -132,6 +134,7 @@ void createBooking() {
     content.set("fields/endTime/stringValue", endTime);
     content.set("fields/owner/stringValue", cardOwner);
     content.set("fields/title/stringValue", "quick booking");
+    content.set("fields/endDate/stringValue", currentDate);
 
 
 
