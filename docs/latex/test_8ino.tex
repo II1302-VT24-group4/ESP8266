@@ -1,5 +1,5 @@
-\hypertarget{test_8ino}{}\doxysection{/mnt/b/\+Desktop/dev/\+ESP8266/main/test.ino File Reference}
-\label{test_8ino}\index{/mnt/b/Desktop/dev/ESP8266/main/test.ino@{/mnt/b/Desktop/dev/ESP8266/main/test.ino}}
+\hypertarget{test_8ino}{}\doxysection{/mnt/c/\+Users/chris/\+One\+Drive/\+Skrivbord/dev/\+ESP8266/main/test.ino File Reference}
+\label{test_8ino}\index{/mnt/c/Users/chris/OneDrive/Skrivbord/dev/ESP8266/main/test.ino@{/mnt/c/Users/chris/OneDrive/Skrivbord/dev/ESP8266/main/test.ino}}
 
 
 Test program for development.  
@@ -20,8 +20,11 @@ void \mbox{\hyperlink{test_8ino_aaa57e6dc006fe3c2f04734b0f8b56383}{test\+Buzzer}
 \begin{DoxyCompactList}\small\item\em Tests buzzer functionality. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{test_8ino_a4079a9817dc06e95d3b0648578850f43}{test\+Wifi}} ()
 \begin{DoxyCompactList}\small\item\em Tests Wi\+Fi functionality. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{test_8ino_a2f360a5b27fc085fb59597acf22b5b20}{Test\+\_\+\+RFID}} ()
+void \mbox{\hyperlink{test_8ino_a29106630abda3f8bf38857f1d4f310c6}{test\+RFID}} ()
 \begin{DoxyCompactList}\small\item\em Tests RFID functionality. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{test_8ino_a60c42a5daec73b58633bf0552bbc9b27}\label{test_8ino_a60c42a5daec73b58633bf0552bbc9b27}} 
+void {\bfseries test\+Next\+Room} ()
+\item 
 String \mbox{\hyperlink{test_8ino_afeb1c14eae48516c0beb64fabb51b986}{ip\+To\+String}} (const IPAddress \&ip)
 \begin{DoxyCompactList}\small\item\em Converts IP address to string format. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
@@ -73,17 +76,7 @@ This function initializes the necessary components and settings for testing. \mb
 
 Runs the test suite. 
 
-This function runs a series of tests to verify the functionality of different components. \mbox{\Hypertarget{test_8ino_a2f360a5b27fc085fb59597acf22b5b20}\label{test_8ino_a2f360a5b27fc085fb59597acf22b5b20}} 
-\index{test.ino@{test.ino}!Test\_RFID@{Test\_RFID}}
-\index{Test\_RFID@{Test\_RFID}!test.ino@{test.ino}}
-\doxysubsubsection{\texorpdfstring{Test\_RFID()}{Test\_RFID()}}
-{\footnotesize\ttfamily void Test\+\_\+\+RFID (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
-
-
-
-Tests RFID functionality. 
-
-This function tests the RFID reader. It waits for a card to be detected and displays its number. \mbox{\Hypertarget{test_8ino_afffab58ec082e11f853b81f61bd9bc69}\label{test_8ino_afffab58ec082e11f853b81f61bd9bc69}} 
+This function runs a series of tests to verify the functionality of different components. \mbox{\Hypertarget{test_8ino_afffab58ec082e11f853b81f61bd9bc69}\label{test_8ino_afffab58ec082e11f853b81f61bd9bc69}} 
 \index{test.ino@{test.ino}!testButtons@{testButtons}}
 \index{testButtons@{testButtons}!test.ino@{test.ino}}
 \doxysubsubsection{\texorpdfstring{testButtons()}{testButtons()}}
@@ -113,7 +106,17 @@ This function tests the functionality of the buzzer. It checks if the buzzer is 
 
 Tests GPIO functionality. 
 
-This function tests the functionality of GPIO pins, specifically LED blinking. It checks if LEDs are blinking and updates the display accordingly. \mbox{\Hypertarget{test_8ino_a4079a9817dc06e95d3b0648578850f43}\label{test_8ino_a4079a9817dc06e95d3b0648578850f43}} 
+This function tests the functionality of GPIO pins, specifically LED blinking. It checks if LEDs are blinking and updates the display accordingly. \mbox{\Hypertarget{test_8ino_a29106630abda3f8bf38857f1d4f310c6}\label{test_8ino_a29106630abda3f8bf38857f1d4f310c6}} 
+\index{test.ino@{test.ino}!testRFID@{testRFID}}
+\index{testRFID@{testRFID}!test.ino@{test.ino}}
+\doxysubsubsection{\texorpdfstring{testRFID()}{testRFID()}}
+{\footnotesize\ttfamily void test\+RFID (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Tests RFID functionality. 
+
+This function tests the RFID reader. It waits for a card to be detected and displays its number. \mbox{\Hypertarget{test_8ino_a4079a9817dc06e95d3b0648578850f43}\label{test_8ino_a4079a9817dc06e95d3b0648578850f43}} 
 \index{test.ino@{test.ino}!testWifi@{testWifi}}
 \index{testWifi@{testWifi}!test.ino@{test.ino}}
 \doxysubsubsection{\texorpdfstring{testWifi()}{testWifi()}}

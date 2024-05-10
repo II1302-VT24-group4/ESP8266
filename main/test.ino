@@ -37,11 +37,11 @@ void setupTest() {
  * This function runs a series of tests to verify the functionality of different components.
  */
 void test() {
-  //testButtons();
-  //testGPIO();
-  //testBuzzer();
-  //testWifi();
-  //testRFID();
+  testButtons();
+  testGPIO();
+  testBuzzer();
+  testWifi();
+  testRFID();
   testNextRoom();
 
   draw("All tests done!");
@@ -218,7 +218,6 @@ void testRFID() {
 }
 
 void testNextRoom() {
-
 }
 
 /**

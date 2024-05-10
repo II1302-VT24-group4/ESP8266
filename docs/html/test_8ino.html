@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ESP8266: /mnt/b/Desktop/dev/ESP8266/main/test.ino File Reference</title>
+<title>ESP8266: /mnt/c/Users/chris/OneDrive/Skrivbord/dev/ESP8266/main/test.ino File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -96,9 +96,12 @@ Functions</h2></td></tr>
 <tr class="memitem:a4079a9817dc06e95d3b0648578850f43"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test_8ino.html#a4079a9817dc06e95d3b0648578850f43">testWifi</a> ()</td></tr>
 <tr class="memdesc:a4079a9817dc06e95d3b0648578850f43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests WiFi functionality.  <a href="test_8ino.html#a4079a9817dc06e95d3b0648578850f43">More...</a><br /></td></tr>
 <tr class="separator:a4079a9817dc06e95d3b0648578850f43"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f360a5b27fc085fb59597acf22b5b20"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test_8ino.html#a2f360a5b27fc085fb59597acf22b5b20">Test_RFID</a> ()</td></tr>
-<tr class="memdesc:a2f360a5b27fc085fb59597acf22b5b20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests RFID functionality.  <a href="test_8ino.html#a2f360a5b27fc085fb59597acf22b5b20">More...</a><br /></td></tr>
-<tr class="separator:a2f360a5b27fc085fb59597acf22b5b20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29106630abda3f8bf38857f1d4f310c6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test_8ino.html#a29106630abda3f8bf38857f1d4f310c6">testRFID</a> ()</td></tr>
+<tr class="memdesc:a29106630abda3f8bf38857f1d4f310c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests RFID functionality.  <a href="test_8ino.html#a29106630abda3f8bf38857f1d4f310c6">More...</a><br /></td></tr>
+<tr class="separator:a29106630abda3f8bf38857f1d4f310c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60c42a5daec73b58633bf0552bbc9b27"><td class="memItemLeft" align="right" valign="top"><a id="a60c42a5daec73b58633bf0552bbc9b27"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>testNextRoom</b> ()</td></tr>
+<tr class="separator:a60c42a5daec73b58633bf0552bbc9b27"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afeb1c14eae48516c0beb64fabb51b986"><td class="memItemLeft" align="right" valign="top">String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test_8ino.html#afeb1c14eae48516c0beb64fabb51b986">ipToString</a> (const IPAddress &amp;ip)</td></tr>
 <tr class="memdesc:afeb1c14eae48516c0beb64fabb51b986"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts IP address to string format.  <a href="test_8ino.html#afeb1c14eae48516c0beb64fabb51b986">More...</a><br /></td></tr>
 <tr class="separator:afeb1c14eae48516c0beb64fabb51b986"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -175,26 +178,6 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a2f360a5b27fc085fb59597acf22b5b20"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2f360a5b27fc085fb59597acf22b5b20">&#9670;&nbsp;</a></span>Test_RFID()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Test_RFID </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Tests RFID functionality. </p>
-<p>This function tests the RFID reader. It waits for a card to be detected and displays its number. </p>
-
-</div>
-</div>
 <a id="afffab58ec082e11f853b81f61bd9bc69"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afffab58ec082e11f853b81f61bd9bc69">&#9670;&nbsp;</a></span>testButtons()</h2>
 
@@ -252,6 +235,26 @@ Functions</h2></td></tr>
 
 <p>Tests GPIO functionality. </p>
 <p>This function tests the functionality of GPIO pins, specifically LED blinking. It checks if LEDs are blinking and updates the display accordingly. </p>
+
+</div>
+</div>
+<a id="a29106630abda3f8bf38857f1d4f310c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a29106630abda3f8bf38857f1d4f310c6">&#9670;&nbsp;</a></span>testRFID()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void testRFID </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tests RFID functionality. </p>
+<p>This function tests the RFID reader. It waits for a card to be detected and displays its number. </p>
 
 </div>
 </div>

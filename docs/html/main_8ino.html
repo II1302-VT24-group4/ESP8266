@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ESP8266: /mnt/b/Desktop/dev/ESP8266/main/main.ino File Reference</title>
+<title>ESP8266: /mnt/c/Users/chris/OneDrive/Skrivbord/dev/ESP8266/main/main.ino File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -92,7 +92,7 @@ $(function() {
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for main.ino:</div>
 <div class="dyncontent">
-<div class="center"><img src="main_8ino__incl.png" border="0" usemap="#a_2mnt_2b_2Desktop_2dev_2ESP8266_2main_2main_8ino" alt=""/></div>
+<div class="center"><img src="main_8ino__incl.png" border="0" usemap="#a_2mnt_2c_2Users_2chris_2OneDrive_2Skrivbord_2dev_2ESP8266_2main_2main_8ino" alt=""/></div>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
@@ -172,10 +172,14 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:a5d74787dedbc4e11c1ab15bf487e61f8"><td class="memItemLeft" align="right" valign="top"><a id="a5d74787dedbc4e11c1ab15bf487e61f8"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>State</b> { <b>IDLE</b>
+<tr class="memitem:a5d74787dedbc4e11c1ab15bf487e61f8"><td class="memItemLeft" align="right" valign="top"><a id="a5d74787dedbc4e11c1ab15bf487e61f8"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>State</b> { <br />
+&#160;&#160;<b>IDLE</b>
 , <b>QUICKBOOK</b>
 , <b>CONFIRMQUICKBOOK</b>
 , <b>BOOK</b>
+, <br />
+&#160;&#160;<b>NEXTROOM</b>
+<br />
  }</td></tr>
 <tr class="separator:a5d74787dedbc4e11c1ab15bf487e61f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -200,10 +204,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>loop</b> ()</td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:a07fb7255f58d0a5adebbd91fc7e3aec9"><td class="memItemLeft" align="right" valign="top"><a id="a07fb7255f58d0a5adebbd91fc7e3aec9"></a>
-const char *&#160;</td><td class="memItemRight" valign="bottom"><b>ssids</b> [] = {&quot;KTH-IoT&quot;, &quot;Christoffers iPhone 12&quot;, &quot;iPhone&quot;}</td></tr>
+const char *&#160;</td><td class="memItemRight" valign="bottom"><b>ssids</b> [] = { &quot;KTH-IoT&quot;, &quot;Christoffers iPhone 12&quot;, &quot;iPhone&quot; }</td></tr>
 <tr class="separator:a07fb7255f58d0a5adebbd91fc7e3aec9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2c6c595c3b796476b044ecdac26ff1ce"><td class="memItemLeft" align="right" valign="top"><a id="a2c6c595c3b796476b044ecdac26ff1ce"></a>
-const char *&#160;</td><td class="memItemRight" valign="bottom"><b>passwords</b> [] = {&quot;LRVsNdJ8bAkHWt6lACzW&quot;, &quot;89korvkorv&quot;, &quot;89korvkorv&quot;}</td></tr>
+const char *&#160;</td><td class="memItemRight" valign="bottom"><b>passwords</b> [] = { &quot;LRVsNdJ8bAkHWt6lACzW&quot;, &quot;89korvkorv&quot;, &quot;89korvkorv&quot; }</td></tr>
 <tr class="separator:a2c6c595c3b796476b044ecdac26ff1ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a22f33e7e05df58bb6145bb6e543e232a"><td class="memItemLeft" align="right" valign="top"><a id="a22f33e7e05df58bb6145bb6e543e232a"></a>
 WiFiUDP&#160;</td><td class="memItemRight" valign="bottom"><b>ntpUDP</b></td></tr>

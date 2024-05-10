@@ -1,5 +1,5 @@
-\hypertarget{main_8ino}{}\doxysection{/mnt/b/\+Desktop/dev/\+ESP8266/main/main.ino File Reference}
-\label{main_8ino}\index{/mnt/b/Desktop/dev/ESP8266/main/main.ino@{/mnt/b/Desktop/dev/ESP8266/main/main.ino}}
+\hypertarget{main_8ino}{}\doxysection{/mnt/c/\+Users/chris/\+One\+Drive/\+Skrivbord/dev/\+ESP8266/main/main.ino File Reference}
+\label{main_8ino}\index{/mnt/c/Users/chris/OneDrive/Skrivbord/dev/ESP8266/main/main.ino@{/mnt/c/Users/chris/OneDrive/Skrivbord/dev/ESP8266/main/main.ino}}
 
 
 Main code for the project.  
@@ -97,10 +97,13 @@ Include dependency graph for main.\+ino\+:
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\Hypertarget{main_8ino_a5d74787dedbc4e11c1ab15bf487e61f8}\label{main_8ino_a5d74787dedbc4e11c1ab15bf487e61f8}} 
-enum {\bfseries State} \{ {\bfseries IDLE}
+enum {\bfseries State} \{ \newline
+{\bfseries IDLE}
 , {\bfseries QUICKBOOK}
 , {\bfseries CONFIRMQUICKBOOK}
 , {\bfseries BOOK}
+, \newline
+{\bfseries NEXTROOM}
  \}
 \end{DoxyCompactItemize}
 \doxysubsection*{Functions}
@@ -125,10 +128,10 @@ void {\bfseries loop} ()
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\Hypertarget{main_8ino_a07fb7255f58d0a5adebbd91fc7e3aec9}\label{main_8ino_a07fb7255f58d0a5adebbd91fc7e3aec9}} 
-const char $\ast$ {\bfseries ssids} \mbox{[}$\,$\mbox{]} = \{\char`\"{}KTH-\/IoT\char`\"{}, \char`\"{}Christoffers i\+Phone 12\char`\"{}, \char`\"{}i\+Phone\char`\"{}\}
+const char $\ast$ {\bfseries ssids} \mbox{[}$\,$\mbox{]} = \{ \char`\"{}KTH-\/IoT\char`\"{}, \char`\"{}Christoffers i\+Phone 12\char`\"{}, \char`\"{}i\+Phone\char`\"{} \}
 \item 
 \mbox{\Hypertarget{main_8ino_a2c6c595c3b796476b044ecdac26ff1ce}\label{main_8ino_a2c6c595c3b796476b044ecdac26ff1ce}} 
-const char $\ast$ {\bfseries passwords} \mbox{[}$\,$\mbox{]} = \{\char`\"{}LRVs\+Nd\+J8b\+Ak\+HWt6l\+ACzW\char`\"{}, \char`\"{}89korvkorv\char`\"{}, \char`\"{}89korvkorv\char`\"{}\}
+const char $\ast$ {\bfseries passwords} \mbox{[}$\,$\mbox{]} = \{ \char`\"{}LRVs\+Nd\+J8b\+Ak\+HWt6l\+ACzW\char`\"{}, \char`\"{}89korvkorv\char`\"{}, \char`\"{}89korvkorv\char`\"{} \}
 \item 
 \mbox{\Hypertarget{main_8ino_a22f33e7e05df58bb6145bb6e543e232a}\label{main_8ino_a22f33e7e05df58bb6145bb6e543e232a}} 
 Wi\+Fi\+UDP {\bfseries ntp\+UDP}
