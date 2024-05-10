@@ -9,7 +9,14 @@
  * 
  */
 void createBooking(){
+
+  
+
+
+ 
+
   String pathToUserIndex = "users/" + cardOwner + "/meetingIndex/" + currentDate;
+
 
   
 
@@ -76,7 +83,7 @@ void createBooking(){
     content.set("fields/endTime/stringValue", endTime);
     content.set("fields/owner/stringValue", cardOwner);
     content.set("fields/title/stringValue", "quick booking");
-    draw(endTime.c_str());
+    
     
     String toSaveBookingForRoom = "test/" + uid + "/" + currentDate + "/" + startTime;
 
@@ -99,16 +106,76 @@ void createBooking(){
     rfidContent.set("fields/owner/stringValue", cardOwner);
 
     if (Firebase.Firestore.patchDocument(&fbdo, PROJECT_ID, "", toRfidAccess.c_str(), rfidContent.raw(), "")) {
-  } else {
+    } else {
     draw("something went wrong :(");
     delay(5000);
-  }
+    }
 
+  
+  } else if(quickBookType == 2){
+   
+
+    int currentTime = (formattedTime.substring(0, 2) + formattedTime.substring(3, 6)).toInt();
+    int nextMeetingTime = (nextMeeting.substring(0, 2) + nextMeeting.substring(3, 6)).toInt();
+    int timeDiff = nextMeetingTime - currentTime;
+    String startTime = "";
+    String endTime = "";
+
+    
+        
+       
+    if(formattedTime.substring(3, 6).toInt() <= 30){
+      startTime = formattedTime.substring(0, 2) + ":00";
+      } else {
+      startTime = formattedTime.substring(0, 2) + ":30";
+      }
+      
+      if(timeDiff < 100 && nextMeeting != nullptr){
+        endTime = nextMeeting;
+        } else {
+        endTime = String(startTime.substring(0,2).toInt() + 1) + ":" + startTime.substring(3,6);
+          
+        }
+         FirebaseJson content;
+       
+        content.set("fields/startTime/stringValue", startTime);
+        content.set("fields/endTime/stringValue", endTime);
+        content.set("fields/owner/stringValue", cardOwner);
+        content.set("fields/title/stringValue", "quick booking");
+       
+        
+        
+        String toSaveBookingForRoom = "test/" + uid + "/" + currentDate + "/" + startTime;
+
+         if (Firebase.Firestore.patchDocument(&fbdo, PROJECT_ID, "", toSaveBookingForRoom.c_str(), content.raw(), "")) {
+    } else {
+      draw("something went wrong :(");
+      delay(5000);
+    }
+
+    String toSaveBookingForUser = "users/" + cardOwner + "/" + currentDate + "/" + startTime;
+    if (Firebase.Firestore.patchDocument(&fbdo, PROJECT_ID, "", toSaveBookingForUser.c_str(), content.raw(), "")) {
+    } else {
+      draw("something went wrong :(");
+      delay(5000);
+    }
+
+    String toRfidAccess = toSaveBookingForRoom + "/rfid/" + cardParser();
+
+    FirebaseJson rfidContent;
+    rfidContent.set("fields/owner/stringValue", cardOwner);
+
+    if (Firebase.Firestore.patchDocument(&fbdo, PROJECT_ID, "", toRfidAccess.c_str(), rfidContent.raw(), "")) {
+    } else {
+      draw("something went wrong :(");
+      delay(5000);
+    }
+
+  }
+  
+  
   quickBookType = 0;
-  }
-  
-
-  
+  cardOwner = "";
 }
 
 /**
@@ -142,4 +209,5 @@ bool checkAccess() {
   }
 
   return false;
+
 }
