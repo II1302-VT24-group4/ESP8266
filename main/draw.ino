@@ -1,7 +1,8 @@
 /**
  * @file draw.ino
- * @brief Display code
- * @details This code is by Christoffer Franzén, Hein added bitmapgit 
+ * @author Christoffer Franzén, Hein Lee
+ * @brief Display code.
+ * @details This file contains functions for drawing on the display.
  */
 
 static unsigned char lock_bits[] = {
@@ -51,7 +52,7 @@ static unsigned char lock_bits[] = {
 };
 
 /**
- * @brief 
+ * @brief Draws an unlocked lock icon on the display.
  * 
  */
 void drawUnlockedLockIcon() {
@@ -59,8 +60,9 @@ void drawUnlockedLockIcon() {
 }
 
 /**
- * @brief Draws the booking screen
+ * @brief Draws the booking screen.
  * 
+ * @param str The string to display.
  */
 void draw(const char *str) {
   u8g2.firstPage();
@@ -71,7 +73,7 @@ void draw(const char *str) {
 }
 
 /**
- * @brief Draws the idle state
+ * @brief Draws the idle state.
  * 
  * This function is responsible for drawing the idle state of the display.
  */
@@ -101,7 +103,7 @@ void drawIdle() {
 }
 
 /**
- * @brief Draws the booking screen
+ * @brief Draws the default calendar screen.
  * 
  */
 void drawDefaultCalender() {

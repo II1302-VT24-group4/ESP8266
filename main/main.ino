@@ -1,7 +1,9 @@
 /**
  * @file main.ino
- * @brief The main code for the project
- * @details GPL v3 license.
+ * @author Christoffer Franzén, Erik Heiskanen, Leo Andersson, Hein Lee
+ * @brief Main code for the project.
+ * @details This file contains the main functionality of the project.
+ * GPL v3 license.
  */
 
 /****************************************************
@@ -31,8 +33,8 @@
  *               WiFI parameters
  *****************************************************/
 
-const char *ssids[] = {"KTH-IoT", "Christoffers iPhone 12", "iPhone"};
-const char *passwords[] = {"LRVsNdJ8bAkHWt6lACzW", "89korvkorv", "89korvkorv"};
+const char *ssids[] = { "KTH-IoT", "Christoffers iPhone 12", "iPhone" };
+const char *passwords[] = { "LRVsNdJ8bAkHWt6lACzW", "89korvkorv", "89korvkorv" };
 
 /****************************************************
  *               Firebase parameters
@@ -94,14 +96,14 @@ String uid;
 String path;
 String firebaseStatus = "on";
 
-// Initialize the display using hardware SPI
+// Display
 U8G2_ST7565_NHD_C12864_2_4W_HW_SPI u8g2(U8G2_R2, /* cs=*/CS, /* dc=*/RS,
                                         /* reset=*/RES);
 
 // RFID
 SoftwareSerial SoftSerial(RX, TX);
-unsigned char buffer[64];  // buffer array for data receive over serial port
-int count = 0;             // counter for buffer array
+unsigned char buffer[64];
+int count = 0;
 String cardNumber = "";
 String cardOwner = "";
 
@@ -110,11 +112,12 @@ enum State {
   IDLE,
   QUICKBOOK,
   CONFIRMQUICKBOOK,
-  BOOK
+  BOOK,
+  NEXTROOM
 };
 
 State currentState = IDLE;
-unsigned long lastRFIDReadTime = 0;         // Timestamp of the last RFID read
+unsigned long lastRFIDReadTime = 0;
 
 // Time
 String formattedTime;
@@ -128,10 +131,10 @@ int buttons_direction;
 // Cursor
 int cursor = 0;
 
-// global stuffs and potential war crimes
+// Global stuff
 String currentMeetingID = "";
 bool roomAvailable = false;
-const int MAX_DOCUMENTS = 10;  // Max antal dokument du förväntar dig hantera
+const int MAX_DOCUMENTS = 10;
 const int TIME_LENGTH = 6;
 String startTimes[48];
 String endTimes[48];

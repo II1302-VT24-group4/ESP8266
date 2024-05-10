@@ -1,18 +1,19 @@
 /**
  * @file wifi.ino
+ * @author Christoffer Franzén
  * @brief WiFi connection function.
- * @details Some of this code is taken from https://randomnerdtutorials.com/
+ * @details Code for connecting to a WiFi network.
+ * Some portions of this code are adapted from https://randomnerdtutorials.com/
  */
 
 /**
  * @brief Connects to a WiFi network.
  *
- * This function connects to a WiFi network using the provided SSID and
- * password. It prints a '.' every second until the connection is established,
- * then prints the local IP address.
+ * Connects to a WiFi network using the provided SSID and password. Prints
+ * connection status and local IP address upon successful connection.
  *
- * @param ssid The SSID of the WiFi network.
- * @param password The password of the WiFi network.
+ * @param ssid SSID of the WiFi network.
+ * @param password Password of the WiFi network.
  */
 void connectToWiFi(const char *ssid, const char *password) {
   Serial.begin(9600);

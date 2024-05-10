@@ -1,7 +1,8 @@
 /**
  * @file test.ino
+ * @author Christoffer Franzén
  * @brief Test program for development
- * @details Run this code by uncommenting the RUN_TEST_PROGRAM macro. Written by Christoffer Franzén
+ * @details Run this code by uncommenting the RUN_TEST_PROGRAM macro.
  */
 
 /**
@@ -10,11 +11,11 @@
  * This function initializes the necessary components and settings for testing.
  */
 void setupTest() {
-  SoftSerial.begin(9600);  // the SoftSerial baud rate
-  Serial.begin(9600);      // the Serial port of Arduino baud rate.
+  SoftSerial.begin(9600);
+  Serial.begin(9600);
 
   // Screen
-  u8g2.begin();           // Initialize the display
+  u8g2.begin();
   u8g2.setContrast(100);  // Adjust the contrast level (0-255)
 
   // LEDS
@@ -36,15 +37,16 @@ void setupTest() {
  * This function runs a series of tests to verify the functionality of different components.
  */
 void test() {
-  Test_BUTTONS();
-  Test_GPIO();
-  Test_BUZZER();
-  Test_wifi();
-  Test_RFID();
+  testButtons();
+  testGPIO();
+  testBuzzer();
+  testWifi();
+  testRFID();
+  testNextRoom();
 
   draw("All tests done!");
+  Serial.write("All tests done!\n");
   delay(4000);
-
 }
 
 /**
@@ -53,13 +55,13 @@ void test() {
  * This function tests the functionality of buttons.
  * It checks if buttons are responsive and updates the display accordingly.
  */
-void Test_BUTTONS() {
+void testButtons() {
   draw("Buttons test click confirm to exit");
   bool exit = false;
 
   while (!exit) {
-    uppdateButtons(); // Continuously update button state
-    
+    uppdateButtons();
+
     if (button_confirm_state == LOW) {
       exit = true;
     }
@@ -83,7 +85,7 @@ void Test_BUTTONS() {
  * This function tests the functionality of GPIO pins, specifically LED blinking.
  * It checks if LEDs are blinking and updates the display accordingly.
  */
-void Test_GPIO() {
+void testGPIO() {
   draw("Are the red and green LED blinking?");
   bool exit = false;
 
@@ -113,7 +115,7 @@ void Test_GPIO() {
  * This function tests the functionality of the buzzer.
  * It checks if the buzzer is making noise and updates the display accordingly.
  */
-void Test_BUZZER() {
+void testBuzzer() {
   draw("Is the buzzer making noise?");
 
   bool exit = false;
@@ -135,10 +137,12 @@ void Test_BUZZER() {
 }
 
 /**
- * @brief 
+ * @brief Tests WiFi functionality.
  * 
+ * This function tests the WiFi connection.
+ * It attempts to connect to WiFi and displays the result on the screen.
  */
-void Test_wifi() {
+void testWifi() {
   draw("Connecting to WiFi...");
 
   // Attempt to connect to WiFi
@@ -183,16 +187,18 @@ void Test_wifi() {
   delay(2000);
 }
 
-String ipToString(const IPAddress& ip) {
-  return String(ip[0]) + "." + String(ip[1]) + "." + String(ip[2]) + "." + String(ip[3]);
-}
-
-void Test_RFID(){
+/**
+ * @brief Tests RFID functionality.
+ * 
+ * This function tests the RFID reader.
+ * It waits for a card to be detected and displays its number.
+ */
+void testRFID() {
   bool exit = false;
   draw("RFID test, blip a card");
 
-  while (!exit){
-    if(SoftSerial.available()){
+  while (!exit) {
+    if (SoftSerial.available()) {
       draw("Reading card...");
       readRFIDData();
       delay(1000);
@@ -209,4 +215,17 @@ void Test_RFID(){
       exit = true;
     }
   }
+}
+
+void testNextRoom() {
+}
+
+/**
+ * @brief Converts IP address to string format.
+ * 
+ * @param ip The IP address to convert.
+ * @return String The IP address in string format.
+ */
+String ipToString(const IPAddress& ip) {
+  return String(ip[0]) + "." + String(ip[1]) + "." + String(ip[2]) + "." + String(ip[3]);
 }

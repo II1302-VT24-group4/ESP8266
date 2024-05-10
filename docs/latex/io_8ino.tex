@@ -1,0 +1,51 @@
+\hypertarget{io_8ino}{}\doxysection{/mnt/c/\+Users/chris/\+One\+Drive/\+Skrivbord/dev/\+ESP8266/main/io.ino File Reference}
+\label{io_8ino}\index{/mnt/c/Users/chris/OneDrive/Skrivbord/dev/ESP8266/main/io.ino@{/mnt/c/Users/chris/OneDrive/Skrivbord/dev/ESP8266/main/io.ino}}
+
+
+Manages hardware I/O operations.  
+
+
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{io_8ino_ab2a2a274d750f545be45928e0e6475e8}{uppdate\+Buttons}} ()
+\begin{DoxyCompactList}\small\item\em Reads button and ADC pin states. \end{DoxyCompactList}\item 
+String \mbox{\hyperlink{io_8ino_a967fd11269c72b7a15b0f30181a79099}{get\+Button\+State}} ()
+\begin{DoxyCompactList}\small\item\em Returns the state of the buttons. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Manages hardware I/O operations. 
+
+\begin{DoxyAuthor}{Author}
+Christoffer Franzén 
+\end{DoxyAuthor}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{io_8ino_a967fd11269c72b7a15b0f30181a79099}\label{io_8ino_a967fd11269c72b7a15b0f30181a79099}} 
+\index{io.ino@{io.ino}!getButtonState@{getButtonState}}
+\index{getButtonState@{getButtonState}!io.ino@{io.ino}}
+\doxysubsubsection{\texorpdfstring{getButtonState()}{getButtonState()}}
+{\footnotesize\ttfamily String get\+Button\+State (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns the state of the buttons. 
+
+Checks each button\textquotesingle{}s state and returns a string representing the pressed button.
+
+\begin{DoxyReturn}{Returns}
+String indicating which button is pressed. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{io_8ino_ab2a2a274d750f545be45928e0e6475e8}\label{io_8ino_ab2a2a274d750f545be45928e0e6475e8}} 
+\index{io.ino@{io.ino}!uppdateButtons@{uppdateButtons}}
+\index{uppdateButtons@{uppdateButtons}!io.ino@{io.ino}}
+\doxysubsubsection{\texorpdfstring{uppdateButtons()}{uppdateButtons()}}
+{\footnotesize\ttfamily void uppdate\+Buttons (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Reads button and ADC pin states. 
+
+Updates global variables with the state of confirm and abort buttons, and the ADC pin value. 

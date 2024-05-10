@@ -1,16 +1,16 @@
 /**
  * @file rfid.ino
- * @brief Rfid code
- * @details Some of this code is taken from https://www.instructables.com/ and
- * modified by Christoffer Franzén
+ * @author Christoffer Franzén, Erik Heiskanen, Leo Andersson
+ * @brief RFID functionality.
+ * @details Handles RFID card parsing, data retrieval from Firestore, and display. 
+ * Some of this code is taken from https://www.instructables.com/
  */
 
 /**
- * @brief Parses the RFID card string to the correct format.
- *
- * This function removes the start and end characters from the card number,
- * which are not needed when comparing the card ID with the database ID.
- *
+ * @brief Parses the RFID card string.
+ * 
+ * Removes unnecessary start and end characters from the card number.
+ * 
  * @return The parsed card number.
  */
 String cardParser() {
@@ -19,11 +19,10 @@ String cardParser() {
 }
 
 /**
- * @brief Displays RFID data on the screen.
- *
- * This function retrieves the owner and email data associated with the RFID
- * card from Firestore, and displays this information on the screen. If the data
- * retrieval fails, it sounds a buzzer.
+ * @brief Displays RFID data.
+ * 
+ * Retrieves owner and email data associated with the RFID card from Firestore
+ * and displays it on the screen.
  */
 void displayRFIDData() {
   String owner;
@@ -90,12 +89,10 @@ void displayRFIDData() {
 
 /**
  * @brief Reads RFID data from the serial port.
- *
- * This function reads data from the serial port into a buffer. It then
- * updates the global cardNumber with the contents of the buffer and clears
- * the buffer for the next read.
- *
- * @return True if data was available and read, false otherwise.
+ * 
+ * Reads data from the serial port into a buffer and updates the global cardNumber.
+ * 
+ * @return True if data was read, false otherwise.
  */
 bool readRFIDData() {
   static char buffer[64];
@@ -106,16 +103,16 @@ bool readRFIDData() {
   }
 
   tone(BUZZER, TONE_RFID);
-  lastRFIDReadTime = millis();  // Update the time when data is received
-  delay(50);                    // Wait for data to be ready
+  lastRFIDReadTime = millis();
+  delay(50);
   noTone(BUZZER);
 
   while (SoftSerial.available() && count < sizeof(buffer)) {
     buffer[count++] = SoftSerial.read();
   }
 
-  Serial.write(buffer, count);        // Echo the buffer for debugging
-  cardNumber = String(buffer);        // Assuming cardNumber is a global String
+  Serial.write(buffer, count);
+  cardNumber = String(buffer);
   memset(buffer, 0, sizeof(buffer));  // Clear the buffer for the next read
 
   return true;

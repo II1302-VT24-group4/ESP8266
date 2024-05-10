@@ -1,0 +1,45 @@
+\hypertarget{parseJson_8ino}{}\doxysection{/mnt/c/\+Users/chris/\+One\+Drive/\+Skrivbord/dev/\+ESP8266/main/parse\+Json.ino File Reference}
+\label{parseJson_8ino}\index{/mnt/c/Users/chris/OneDrive/Skrivbord/dev/ESP8266/main/parseJson.ino@{/mnt/c/Users/chris/OneDrive/Skrivbord/dev/ESP8266/main/parseJson.ino}}
+
+
+JSON parsing functionality.  
+
+
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{parseJson_8ino_a841fb1f20e816702612a546fd2f911e1}{parse\+Json}} (String json\+String, String current\+Time)
+\begin{DoxyCompactList}\small\item\em Parses JSON data to extract start and end times. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+JSON parsing functionality. 
+
+\begin{DoxyAuthor}{Author}
+Erik Heiskanen, Leo Andersson
+\end{DoxyAuthor}
+Parses JSON data to extract start and end times for documents. 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{parseJson_8ino_a841fb1f20e816702612a546fd2f911e1}\label{parseJson_8ino_a841fb1f20e816702612a546fd2f911e1}} 
+\index{parseJson.ino@{parseJson.ino}!parseJson@{parseJson}}
+\index{parseJson@{parseJson}!parseJson.ino@{parseJson.ino}}
+\doxysubsubsection{\texorpdfstring{parseJson()}{parseJson()}}
+{\footnotesize\ttfamily bool parse\+Json (\begin{DoxyParamCaption}\item[{String}]{json\+String,  }\item[{String}]{current\+Time }\end{DoxyParamCaption})}
+
+
+
+Parses JSON data to extract start and end times. 
+
+Parses the provided JSON string to extract start and end times for documents.
+
+
+\begin{DoxyParams}{Parameters}
+{\em json\+String} & The JSON string to parse. \\
+\hline
+{\em current\+Time} & The current time used for comparison. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if parsing is successful, false otherwise. 
+\end{DoxyReturn}

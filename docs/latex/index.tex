@@ -1,0 +1,105 @@
+\label{index_md__mnt_c_Users_chris_OneDrive_Skrivbord_dev_ESP8266_README}%
+\Hypertarget{index_md__mnt_c_Users_chris_OneDrive_Skrivbord_dev_ESP8266_README}%
+ This repository is includes all things related to the ESP8266 microcontroller.\hypertarget{index_autotoc_md5}{}\doxysection{🎯 Getting Started}\label{index_autotoc_md5}
+Follow the guide below to set up and start programming Node\+MCU ESP8266\+:
+
+\href{https://www.youtube.com/watch?v=YN522_npNqs}{\texttt{ 🔗 Complete Guide to Setup and Program Node\+MCU ESP8266}}\hypertarget{index_autotoc_md6}{}\doxysection{📚 Essential Drivers}\label{index_autotoc_md6}
+Make sure you have the necessary drivers installed. You can download them from the link below\+:
+
+\href{https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers?tab=downloads}{\texttt{ 🔗 USB to UART Bridge VCP Drivers}}\hypertarget{index_autotoc_md7}{}\doxysection{🤝 Contributing}\label{index_autotoc_md7}
+We appreciate your interest in contributing to our project! Please read our Contributing Guidelines for information on how to contribute to this project.\hypertarget{index_autotoc_md8}{}\doxysection{📚 Libraries Used}\label{index_autotoc_md8}
+This project uses the following libraries\+:
+
+
+\begin{DoxyItemize}
+\item ESP8266\+Wi\+Fi (GNU)
+\item Firebase-\/\+ESP-\/\+Client (MIT)
+\item Arduino\+Json (MIT)
+\item NTPClient ~\newline
+
+\item Tone (MIT)
+\item u8g2 (BSD)
+\end{DoxyItemize}
+
+Make sure to install these libraries through your Arduino IDE.\hypertarget{index_autotoc_md9}{}\doxysection{📌 Display to Node\+MCU Pin Connections}\label{index_autotoc_md9}
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{4}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Display Pin   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Function   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Node\+MCU Pin   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Function    }\\\cline{1-4}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Display Pin   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Function   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Node\+MCU Pin   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Function    }\\\cline{1-4}
+\endhead
+1 (SCL)   &Serial Clock input   &D5 (GPIO14)   &SPI Clock    \\\cline{1-4}
+2 (SI)   &Serial Data input   &D7 (GPIO13)   &SPI MOSI    \\\cline{1-4}
+3 (VDD)   &Supply Voltage (+3.\+0V)   &3V3   &3.\+3V Power    \\\cline{1-4}
+4 (A0)   &Register Select   &D1 (GPIO5)   &GPIO    \\\cline{1-4}
+5 (/\+RESET)   &Reset signal   &D4 (GPIO2)   &GPIO    \\\cline{1-4}
+6 (/\+CS)   &Chip Select Signal   &D8 (GPIO15)   &GPIO    \\\cline{1-4}
+7 (VSS)   &Ground   &GND   &Ground    \\\cline{1-4}
+8 (H)   &Heater Connection   &-\/   &Not Connected    \\\cline{1-4}
+9 (H)   &Heater Connection   &-\/   &Not Connected    \\\cline{1-4}
+10 (LED-\/)   &Backlight Cathode   &GND   &Ground    \\\cline{1-4}
+11 (LED+)   &Backlight Anode   &3V3   &3.\+3V Power    \\\cline{1-4}
+12 (NC)   &No Connect   &-\/   &Not Connected   \\\cline{1-4}
+\end{longtabu}
+\hypertarget{index_autotoc_md10}{}\doxysection{📌 LEDs to Node\+MCU Pin Connections}\label{index_autotoc_md10}
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Node\+MCU Pin   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Function    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Node\+MCU Pin   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Function    }\\\cline{1-2}
+\endhead
+D0 (GPIO16 )   &Red led    \\\cline{1-2}
+SD3 (GPIO9)   &Green led   \\\cline{1-2}
+\end{longtabu}
+\hypertarget{index_autotoc_md11}{}\doxysection{📌 Buzzer to Node\+MCU Pin Connections}\label{index_autotoc_md11}
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Node\+MCU Pin   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Function    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Node\+MCU Pin   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Function    }\\\cline{1-2}
+\endhead
+D6 (GPIO12)   &Sound   \\\cline{1-2}
+\end{longtabu}
+\hypertarget{index_autotoc_md12}{}\doxysection{📌 Buttons to Node\+MCU Pin Connections}\label{index_autotoc_md12}
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Node\+MCU Pin   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Function    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Node\+MCU Pin   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Function    }\\\cline{1-2}
+\endhead
+RX (GPIO3)   &Confirm button    \\\cline{1-2}
+TX (GPIO1)   &Abort button    \\\cline{1-2}
+ADC0 (A0)   &Up, Down, Left, Right buttons   \\\cline{1-2}
+\end{longtabu}
+\hypertarget{index_autotoc_md13}{}\doxysection{📌 RFID to Node\+MCU Pin Connections}\label{index_autotoc_md13}
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{3}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ RFID Pin   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Function   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Node\+MCU Pin    }\\\cline{1-3}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ RFID Pin   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Function   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Node\+MCU Pin    }\\\cline{1-3}
+\endhead
+1 (TX)   &TX   &D3 (GPIO0)    \\\cline{1-3}
+2 (RX)   &RX   &D2 (GPIO4)    \\\cline{1-3}
+3 (VCC)   &Supply Voltage (+5.\+0V)   &VIN (+5.\+0V)    \\\cline{1-3}
+4 (GND)   &Ground   &GND   \\\cline{1-3}
+\end{longtabu}
