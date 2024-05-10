@@ -1,12 +1,18 @@
 /**
  * @file parseJson.ino
- * @brief
- * @details
+ * @author Erik Heiskanen, Leo Andersson
+ * @brief JSON parsing functionality.
+ * @details Parses JSON data to extract start and end times for documents.
  */
 
 /**
- * @brief 
+ * @brief Parses JSON data to extract start and end times.
  * 
+ * Parses the provided JSON string to extract start and end times for documents.
+ * 
+ * @param jsonString The JSON string to parse.
+ * @param currentTime The current time used for comparison.
+ * @return True if parsing is successful, false otherwise.
  */
 bool parseJson(String jsonString, String currentTime) {
   for (int i = 0; i < 48; i++) {
@@ -15,7 +21,8 @@ bool parseJson(String jsonString, String currentTime) {
   }
 
   documentsCount = 0;
-  const size_t capacity = JSON_OBJECT_SIZE(5) + 190;
+  //const size_t capacity = JSON_OBJECT_SIZE(5) + 190;
+  const size_t capacity = 190;
   DynamicJsonDocument doc(capacity);
 
   deserializeJson(doc, jsonString);

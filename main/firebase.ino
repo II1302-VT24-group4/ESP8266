@@ -1,24 +1,12 @@
 /**
  * @file firebase.ino
- * @brief Firebase code
- * @details
- */
-
-/*
- * The FirebaseJsonData object holds the returned data which can be read from
- * the following properties. jsonData.stringValue - contains the returned
- * string. jsonData.intValue - contains the returned integer value.
- * jsonData.floatValue - contains the returned float value.
- * jsonData.doubleValue - contains the returned double value.
- * jsonData.boolValue - contains the returned boolean value.
- * jsonData.success - used to determine the result of the get operation.
- * jsonData.type - used to determine the type of returned value in string
- * represent the types of value e.g. string, int, double, boolean, array,
- * object, null and undefined.
+ * @author Erik Heiskanen, Leo Andersson
+ * @brief Firebase code.
+ * @details This file contains functions related to Firebase operations.
  */
 
 /**
- * @brief
+ * @brief Updates the daily calendar.
  * 
  */
 void updateDailyCalendar() {
@@ -57,33 +45,42 @@ void updateDailyCalendar() {
 }
 
 /**
- * @brief
+ * @brief Updates the next available time slot.
  * 
+ * @param startTimes An array containing start times.
+ * @param endTimes An array containing end times.
+ * @param sizeOfArray The size of the arrays.
  */
-void updateNextAvailable(String *startTimes, String *endTimes, int sizeOfArray) {
+void updateNextAvailable(const String *startTimes, const String *endTimes, int sizeOfArray) {
   int counter = 0;
-  while (startTimes[counter] != currentMeetingID && counter < sizeOfArray) {
+
+  // Check if counter is within the bounds of the array before accessing elements
+  while (counter < sizeOfArray && startTimes[counter] != currentMeetingID) {
     counter++;
   }
 
   for (int i = counter; i < sizeOfArray - 1; i++) {
     if (endTimes[i] < startTimes[i + 1]) {
-      String nextAvailableTimeSlot = endTimes[i] + " - " + startTimes[i + 1];
+      // Removing the unused variable nextAvailableTimeSlot
       break;
     }
   }
 }
 
-void updateNextMeeting(String *startTime){
-  int currentTime = (formattedTime.substring(0,2) + formattedTime.substring(3,6)).toInt();
+/**
+ * @brief Updates the next meeting time.
+ * 
+ * @param startTime An array containing start times.
+ */
+void updateNextMeeting(String *startTime) {
+  int currentTime = (formattedTime.substring(0, 2) + formattedTime.substring(3, 6)).toInt();
   int i = 0;
 
-  while(startTime[i] != nullptr){
-    
-    if(currentTime < (startTime[i].substring(0,2) + startTime[i].substring(3,6)).toInt())
+  while (startTime[i] != nullptr) {
+
+    if (currentTime < (startTime[i].substring(0, 2) + startTime[i].substring(3, 6)).toInt())
       nextMeeting = startTime[i];
 
     i++;
   }
-  
 }

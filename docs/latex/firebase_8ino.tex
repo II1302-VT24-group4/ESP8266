@@ -1,0 +1,62 @@
+\hypertarget{firebase_8ino}{}\doxysection{/mnt/c/\+Users/chris/\+One\+Drive/\+Skrivbord/dev/\+ESP8266/main/firebase.ino File Reference}
+\label{firebase_8ino}\index{/mnt/c/Users/chris/OneDrive/Skrivbord/dev/ESP8266/main/firebase.ino@{/mnt/c/Users/chris/OneDrive/Skrivbord/dev/ESP8266/main/firebase.ino}}
+
+
+Firebase code.  
+
+
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{firebase_8ino_ad198a3ffe0b1b26abfb99029a176f5ea}\label{firebase_8ino_ad198a3ffe0b1b26abfb99029a176f5ea}} 
+void \mbox{\hyperlink{firebase_8ino_ad198a3ffe0b1b26abfb99029a176f5ea}{update\+Daily\+Calendar}} ()
+\begin{DoxyCompactList}\small\item\em Updates the daily calendar. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{firebase_8ino_a147efef620128888870ef5c3dfa2b243}{update\+Next\+Available}} (const String $\ast$start\+Times, const String $\ast$end\+Times, int size\+Of\+Array)
+\begin{DoxyCompactList}\small\item\em Updates the next available time slot. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{firebase_8ino_a9508d6443b625fbe80a62cdc774a8e32}{update\+Next\+Meeting}} (String $\ast$start\+Time)
+\begin{DoxyCompactList}\small\item\em Updates the next meeting time. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Firebase code. 
+
+\begin{DoxyAuthor}{Author}
+Erik Heiskanen, Leo Andersson
+\end{DoxyAuthor}
+This file contains functions related to Firebase operations. 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{firebase_8ino_a147efef620128888870ef5c3dfa2b243}\label{firebase_8ino_a147efef620128888870ef5c3dfa2b243}} 
+\index{firebase.ino@{firebase.ino}!updateNextAvailable@{updateNextAvailable}}
+\index{updateNextAvailable@{updateNextAvailable}!firebase.ino@{firebase.ino}}
+\doxysubsubsection{\texorpdfstring{updateNextAvailable()}{updateNextAvailable()}}
+{\footnotesize\ttfamily void update\+Next\+Available (\begin{DoxyParamCaption}\item[{const String $\ast$}]{start\+Times,  }\item[{const String $\ast$}]{end\+Times,  }\item[{int}]{size\+Of\+Array }\end{DoxyParamCaption})}
+
+
+
+Updates the next available time slot. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em start\+Times} & An array containing start times. \\
+\hline
+{\em end\+Times} & An array containing end times. \\
+\hline
+{\em size\+Of\+Array} & The size of the arrays. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{firebase_8ino_a9508d6443b625fbe80a62cdc774a8e32}\label{firebase_8ino_a9508d6443b625fbe80a62cdc774a8e32}} 
+\index{firebase.ino@{firebase.ino}!updateNextMeeting@{updateNextMeeting}}
+\index{updateNextMeeting@{updateNextMeeting}!firebase.ino@{firebase.ino}}
+\doxysubsubsection{\texorpdfstring{updateNextMeeting()}{updateNextMeeting()}}
+{\footnotesize\ttfamily void update\+Next\+Meeting (\begin{DoxyParamCaption}\item[{String $\ast$}]{start\+Time }\end{DoxyParamCaption})}
+
+
+
+Updates the next meeting time. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em start\+Time} & An array containing start times. \\
+\hline
+\end{DoxyParams}

@@ -1,45 +1,33 @@
 /**
  * @file io.ino
- * @brief Hardware io code
- * @details 
+ * @author Christoffer Franzén
+ * @brief Manages hardware I/O operations.
  */
 
 /**
- * @brief Updates the state of the buttons.
+ * @brief Reads button and ADC pin states.
  * 
- * This function reads the state of the confirm and abort buttons, and the direction of the directional buttons.
- * The state of each button is stored in a global variable.
+ * Updates global variables with the state of confirm and abort buttons, and the ADC pin value.
  */
 void uppdateButtons() {
   button_confirm_state = digitalRead(BUTTON_CONFIRM);
   button_abort_state = digitalRead(BUTTON_ABORT);
-  buttons_direction = analogRead(BUTTONS);  // For moving left, right, up and down.
+  buttons_direction = analogRead(BUTTONS);
 }
 
 /**
- * @brief Gets the state of the buttons.
+ * @brief Returns the state of the buttons.
  * 
- * This function checks the state of each button and returns a string representing the state.
- * If a button is pressed, the function returns the name of the button.
+ * Checks each button's state and returns a string representing the pressed button.
  * 
- * @return String representing the state of the buttons.
+ * @return String indicating which button is pressed.
  */
 String getButtonState() {
-  if (button_confirm_state == LOW) {
-    return "Confirm";
-  } else if (button_abort_state == LOW) {
-    return "Abort";
-  } else if (buttons_direction < 880 && buttons_direction > 870) {
-    return "Left";
-  } else if (buttons_direction < 45 && buttons_direction > 38) {
-    return "Right";
-  } else if (buttons_direction < 188 && buttons_direction > 180) {
-    return "Up";
-  } else if (buttons_direction < 92 && buttons_direction > 85) {
-    return "Down";
-  } else if (buttons_direction < 889 && buttons_direction > 882) {
-    return "Trigger RFID";
-  } else {
-    return "No button pressed";
-  }
+  if (button_confirm_state == LOW) return "Confirm";
+  if (button_abort_state == LOW) return "Abort";
+  if (buttons_direction < 880 && buttons_direction > 870) return "Left";
+  if (buttons_direction < 45 && buttons_direction > 38) return "Right";
+  if (buttons_direction < 188 && buttons_direction > 180) return "Up";
+  if (buttons_direction < 92 && buttons_direction > 85) return "Down";
+  return "No button pressed";
 }
