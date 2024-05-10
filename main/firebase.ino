@@ -76,6 +76,8 @@ void updateNextMeeting(String *startTime) {
   int currentTime = (formattedTime.substring(0, 2) + formattedTime.substring(3, 6)).toInt();
   int i = 0;
 
+  nextMeeting = "";
+
   while (startTime[i] != nullptr) {
 
     if (currentTime < (startTime[i].substring(0, 2) + startTime[i].substring(3, 6)).toInt())
