@@ -202,3 +202,16 @@ bool checkAccess() {
 
   return false;
 }
+
+// Simple array for available rooms
+bool roomAvailability[] = {false, false, false, true, false}; // Mock data
+const int numberOfRooms = sizeof(roomAvailability) / sizeof(roomAvailability[0]);
+
+bool checkRoomAvailability() {
+    for (int i = 0; i < numberOfRooms; i++) {
+        if (roomAvailability[i]) {
+            return true; // Available room found
+        }
+    }
+    return false; // No rooms available
+}

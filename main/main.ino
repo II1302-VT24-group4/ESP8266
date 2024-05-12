@@ -112,7 +112,8 @@ enum State {
   IDLE,
   QUICKBOOK,
   CONFIRMQUICKBOOK,
-  NEXTROOM
+  NEXTROOM,
+  OTHERROOM
 };
 
 State currentState = IDLE;
