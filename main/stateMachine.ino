@@ -264,13 +264,6 @@ void stateMachine() {
       break;
 
     case NEXTROOM:
-      
-        /* String text3 = "Check other ";
-        String text4 = "Rooms status";
-        String displayTexts[] = {formattedTime.substring(0, formattedTime.length() - 3), text3, text4}; */
-        drawKTHLogo();
-        delay(2000); 
-        
         u8g2.setFont(u8g2_font_ncenB08_tr);
         u8g2.firstPage();
         do {
