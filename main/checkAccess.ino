@@ -18,7 +18,7 @@ void createBooking() {
     delay(5000);
   }
 
-  String pathToRoomIndex = "test/" + uid + "/meetingIndex/" + currentDate;
+  String pathToRoomIndex = "rooms/" + uid + "/meetingIndex/" + currentDate;
 
   if (Firebase.Firestore.patchDocument(&fbdo, PROJECT_ID, "", pathToRoomIndex.c_str(), "", "")) {
   } else {
@@ -36,7 +36,7 @@ void createBooking() {
     content.set("fields/owner/stringValue", cardOwner);
     content.set("fields/title/stringValue", "quick booking");
 
-    String toSaveBookingForRoom = "test/" + uid + "/" + currentDate + "/" + startTime;
+    String toSaveBookingForRoom = "rooms/" + uid + "/" + currentDate + "/" + startTime;
 
     if (Firebase.Firestore.patchDocument(&fbdo, PROJECT_ID, "", toSaveBookingForRoom.c_str(), content.raw(), "")) {
     } else {
@@ -76,7 +76,7 @@ void createBooking() {
     content.set("fields/owner/stringValue", cardOwner);
     content.set("fields/title/stringValue", "quick booking");
 
-    String toSaveBookingForRoom = "test/" + uid + "/" + currentDate + "/" + startTime;
+    String toSaveBookingForRoom = "rooms/" + uid + "/" + currentDate + "/" + startTime;
 
     if (Firebase.Firestore.patchDocument(&fbdo, PROJECT_ID, "", toSaveBookingForRoom.c_str(), content.raw(), "")) {
     } else {
@@ -135,7 +135,7 @@ void createBooking() {
 
 
 
-    String toSaveBookingForRoom = "test/" + uid + "/" + currentDate + "/" + startTime;
+    String toSaveBookingForRoom = "rooms/" + uid + "/" + currentDate + "/" + startTime;
 
     if (Firebase.Firestore.patchDocument(&fbdo, PROJECT_ID, "", toSaveBookingForRoom.c_str(), content.raw(), "")) {
     } else {
@@ -172,7 +172,7 @@ void createBooking() {
  * 
  */
 bool checkAccess() {
-  String pathToRFID = "test/" + uid + "/" + currentDate + "/" + currentMeetingID + "/rfid/" + cardParser();
+  String pathToRFID = "rooms/" + uid + "/" + currentDate + "/" + currentMeetingID + "/rfid/" + cardParser();
 
   if (Firebase.Firestore.getDocument(&fbdo, PROJECT_ID, "", pathToRFID.c_str(), "")) {
 
@@ -183,7 +183,7 @@ bool checkAccess() {
     payload.get(jsonData, "fields/owner/stringValue", true);
     cardOwner = jsonData.stringValue;
 
-    String pathToAttendees = "test/" + uid + "/" + currentDate + "/" + currentMeetingID + "/attendees/" + cardOwner;
+    String pathToAttendees = "rooms/" + uid + "/" + currentDate + "/" + currentMeetingID + "/attendees/" + cardOwner;
     FirebaseJson content;
     content.set("fields/id/stringValue", cardOwner);
 

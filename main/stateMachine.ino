@@ -98,10 +98,20 @@ void stateMachine() {
 
       drawIdle();
 
+      if (!nextAvailableTime.isEmpty()) {
+        if (currentMillis - lastSwitchUpdateTime >= switchUpdateInterval) {
+          lastSwitchUpdateTime = currentMillis;
+          lastSwitch2UpdateTime = currentMillis;
+          currentState = FETCHNEXTROOM;
+        }
+      } else {
+        lastSwitchUpdateTime = currentMillis;
+      }
+
       if (getButtonState() == "Left") {
-        currentState = NEXTROOM;
+        currentState = FETCHNEXTROOM;
       } else if (getButtonState() == "Right") {
-        currentState = NEXTROOM;
+        currentState = FETCHNEXTROOM;
       }
 
       if (SoftSerial.available() && nextAvailableTime.isEmpty()) {
@@ -128,9 +138,6 @@ void stateMachine() {
         readRFIDData();
 
         if (checkAccess()) {
-          //draw("Room unlocked!");
-          //delay(2000);
-
           u8g2.firstPage();
           do {
             drawUnlockedLockIcon();
@@ -245,40 +252,31 @@ void stateMachine() {
 
     case CONFIRMQUICKBOOK:  // Logic for confirming quick booking and creating it
       createBooking();
-
-      u8g2.firstPage();
-      do {
-        u8g2.setFont(u8g2_font_ncenB08_tr);
-        u8g2.drawStr(0, 10, formattedTime.c_str());
-        u8g2.drawStr(0, 20, "Booking created");
-      } while (u8g2.nextPage());
-
+      draw("Booking created");
       delay(3000);
-
       currentState = IDLE;
+      break;
 
+    case FETCHNEXTROOM:
+      fetchRoomData();
+      currentState = NEXTROOM;
       break;
 
     case NEXTROOM:
-      //drawNextRoom(); //TODO: Implement
+      // Display
+      drawNextRoom();
 
-      cursor = 0;
-
-      u8g2.firstPage();
-      do {
-        u8g2.setFont(u8g2_font_ncenB08_tr);
-        u8g2.setCursor(0, 15);
-        u8g2.print("Rooms available");
-      } while (u8g2.nextPage());
-
-
-      if (getButtonState() == "Abort") {
+      // Switch after 10 sec
+      if (currentMillis - lastSwitch2UpdateTime >= switch2UpdateInterval) {
+        lastSwitch2UpdateTime = currentMillis;
         currentState = IDLE;
-      } else if (getButtonState() == "Left") {
-        cursor = (cursor + 1) % 3;
-      } else if (getButtonState() == "Right") {
-        cursor = (cursor + 2) % 3;
       }
+
+      // Exit screen if abort
+      if (getButtonState() == "Abort" || SoftSerial.available()) {
+        currentState = IDLE;
+      }
+
       break;
   }
 }

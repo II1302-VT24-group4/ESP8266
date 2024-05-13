@@ -112,6 +112,7 @@ enum State {
   IDLE,
   QUICKBOOK,
   CONFIRMQUICKBOOK,
+  FETCHNEXTROOM,
   NEXTROOM
 };
 
@@ -148,6 +149,19 @@ const unsigned long buttonUpdateInterval = 200;
 
 unsigned long lastCalendarUpdateTime = 0;
 const unsigned long calendarUpdateInterval = 2000;
+
+unsigned long lastSwitchUpdateTime = 0;
+const unsigned long switchUpdateInterval = 20000;
+
+
+unsigned long lastSwitch2UpdateTime = 0;
+const unsigned long switch2UpdateInterval = 10000;
+
+unsigned long lastDrawUpdateTime = 0;
+const unsigned long drawUpdateInterval = 200;
+
+String nearestRoomsId[5] = {"Anders", "Bengt", "Henrik", "Sara", "Victoria"};
+bool roomsStatus[5];
 
 /****************************************************
  *           Initialization For controller
