@@ -57,6 +57,7 @@ bool parseJson(String jsonString, String currentTime) {
 
   return result;
 }
+
 void parseFirestoreData(String json) {
     FirebaseJson data;
     FirebaseJsonData jsonData;

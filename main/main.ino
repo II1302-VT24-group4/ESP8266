@@ -80,6 +80,9 @@ NTPClient timeClient(ntpUDP, "pool.ntp.org");
 #define lock_width 64
 #define lock_height 64
 
+#define logo_width 30
+#define logo_height 20
+
 #define TONE_ABORT 330
 #define TONE_CONFIRM 550
 #define TONE_RFID 660
