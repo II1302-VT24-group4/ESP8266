@@ -95,10 +95,12 @@ void stateMachine() {
 
   switch (currentState) {
     case IDLE:
+
+
       updateNextMeeting(startTimes);
 
       drawIdle();
-
+      
       if (getButtonState() == "Left") {
         currentState = NEXTROOM;
       } else if (getButtonState() == "Right") {
@@ -135,6 +137,7 @@ void stateMachine() {
           u8g2.firstPage();
           do {
             drawUnlockedLockIcon();
+            //drawKTHLogo();  
             u8g2.setFont(u8g2_font_unifont_t_symbols);
             u8g2.drawStr(20, 62, "Room unlocked!");
           } while (u8g2.nextPage());
@@ -265,6 +268,8 @@ void stateMachine() {
         /* String text3 = "Check other ";
         String text4 = "Rooms status";
         String displayTexts[] = {formattedTime.substring(0, formattedTime.length() - 3), text3, text4}; */
+        drawKTHLogo();
+        delay(2000); 
         
         u8g2.setFont(u8g2_font_ncenB08_tr);
         u8g2.firstPage();
