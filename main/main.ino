@@ -45,6 +45,7 @@ const char *passwords[] = { "LRVsNdJ8bAkHWt6lACzW", "89korvkorv", "89korvkorv" }
 #define FIREBASE_AUTH "vc2VyiUJEQZyZrck7bkNDX932JG3"
 #define USER_EMAIL "test@test.com"
 #define USER_PASSWORD "test123"
+#define ROOM_NAME "Demo"
 
 /****************************************************
  *               NTP parameters

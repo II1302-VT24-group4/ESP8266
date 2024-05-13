@@ -14,7 +14,7 @@ void handleFirebaseError(int httpCode);
 void handleFirebaseError(String errorReason);
 
 void updateDailyCalendar() {
-  String pathToMeetings = "test/" + uid + "/" + currentDate;
+  String pathToMeetings = "rooms/" + uid + "/" + currentDate;
 
   if (Firebase.Firestore.getDocument(&fbdo, PROJECT_ID, "", pathToMeetings.c_str(), "")) {
     FirebaseJson payload;
@@ -23,7 +23,7 @@ void updateDailyCalendar() {
     String jsonString = fbdo.payload().c_str();
     bool available = parseJson(jsonString, formattedTime);
 
-    String path2 = "test/" + uid;
+    String path2 = "rooms/" + uid;
     FirebaseJson content;
     content.set("fields/available/booleanValue", available);
 
@@ -35,7 +35,7 @@ void updateDailyCalendar() {
     }
   } else {
 
-    String path2 = "test/" + uid;
+    String path2 = "rooms/" + uid;
     FirebaseJson content;
     content.set("fields/available/booleanValue", true);
 
