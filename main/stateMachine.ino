@@ -70,7 +70,6 @@ void setupStateMachine() {
   // Buttons
   pinMode(BUTTON_CONFIRM, INPUT_PULLUP);
   pinMode(BUTTON_ABORT, INPUT_PULLUP);
-
 }
 
 /**
@@ -95,8 +94,6 @@ void stateMachine() {
 
   switch (currentState) {
     case IDLE:
-
-
       updateNextMeeting(startTimes);
 
       drawIdle();
@@ -144,7 +141,6 @@ void stateMachine() {
           u8g2.firstPage();
           do {
             drawUnlockedLockIcon();
-            //drawKTHLogo();  
             u8g2.setFont(u8g2_font_unifont_t_symbols);
             u8g2.drawStr(20, 62, "Room unlocked!");
           } while (u8g2.nextPage());
@@ -267,25 +263,20 @@ void stateMachine() {
       break;
 
     case NEXTROOM:
-      //drawNextRoom(); //TODO: Implement
+      // Display
+      drawNextRoom();
 
-      cursor = 0;
-
-      u8g2.firstPage();
-      do {
-        u8g2.setFont(u8g2_font_ncenB08_tr);
-        u8g2.setCursor(0, 15);
-        u8g2.print("Rooms available");
-      } while (u8g2.nextPage());
-
-
-      if (getButtonState() == "Abort") {
+      // Switch after 10 sec
+      if (currentMillis - lastSwitch2UpdateTime >= switch2UpdateInterval) {
+        lastSwitch2UpdateTime = currentMillis;
         currentState = IDLE;
-      } else if (getButtonState() == "Left") {
-        cursor = (cursor + 1) % 3;
-      } else if (getButtonState() == "Right") {
-        cursor = (cursor + 2) % 3;
       }
+
+      // Exit screen if abort
+      if (getButtonState() == "Abort" || SoftSerial.available()) {
+        currentState = IDLE;
+      }
+
       break;
   }
 }
