@@ -90,6 +90,8 @@ void createBooking() {
     }
 
     String toSaveBookingForUser = "users/" + cardOwner + "/" + currentDate + "/" + startTime;
+
+    content.set("fields/room/stringValue", ROOM_NAME);
     if (Firebase.Firestore.patchDocument(&fbdo, PROJECT_ID, "", toSaveBookingForUser.c_str(), content.raw(), "")) {
     } else {
       draw("something went wrong :(");
