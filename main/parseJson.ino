@@ -57,3 +57,44 @@ bool parseJson(String jsonString, String currentTime) {
 
   return result;
 }
+
+void parseFirestoreData(String json) {
+    FirebaseJson data;
+    FirebaseJsonData jsonData;
+
+    data.setJsonData(json);
+
+    if (data.get(jsonData, "documents", FirebaseJson::JSON_ARRAY)) {
+        FirebaseJsonArray documentsArray;
+        jsonData.getArray(documentsArray);
+
+        for (size_t i = 0; i < documentsArray.size(); i++) {
+            FirebaseJsonData docData;
+            if (documentsArray.get(docData, i)) {
+                FirebaseJson docJson;
+                docJson.setJsonData(docData.stringValue);
+
+                String test, name, available;
+                if (docJson.get(jsonData, "fields/test/stringValue")) {
+                    test = jsonData.stringValue;
+                }
+
+                if (docJson.get(jsonData, "fields/available/booleanValue")) {
+                    available = jsonData.boolValue ? "Yes" : "No";
+                }
+
+                // Display on the LCD
+                u8g2.firstPage();
+                do {
+                    u8g2.setFont(u8g2_font_ncenB08_tr); // Choose a suitable font
+                    u8g2.setCursor(0, 15);
+                    u8g2.print("Room: ");
+                    u8g2.print(test);
+                    u8g2.setCursor(0, 30);
+                    u8g2.print("Available: ");
+                    u8g2.print(available);
+                } while (u8g2.nextPage());
+            }
+        }
+    }
+} 

@@ -45,6 +45,7 @@ const char *passwords[] = { "LRVsNdJ8bAkHWt6lACzW", "89korvkorv", "89korvkorv" }
 #define FIREBASE_AUTH "vc2VyiUJEQZyZrck7bkNDX932JG3"
 #define USER_EMAIL "test@test.com"
 #define USER_PASSWORD "test123"
+#define ROOM_NAME "Demo"
 
 /****************************************************
  *               NTP parameters
@@ -78,6 +79,9 @@ NTPClient timeClient(ntpUDP, "pool.ntp.org");
 // Bitmap stuff
 #define lock_width 64
 #define lock_height 64
+
+#define logo_width 30
+#define logo_height 20
 
 #define TONE_ABORT 330
 #define TONE_CONFIRM 550

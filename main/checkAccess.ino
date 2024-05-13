@@ -35,6 +35,8 @@ void createBooking() {
     content.set("fields/endTime/stringValue", endTime);
     content.set("fields/owner/stringValue", cardOwner);
     content.set("fields/title/stringValue", "quick booking");
+    content.set("fields/endDate/stringValue", currentDate);
+    
 
     String toSaveBookingForRoom = "rooms/" + uid + "/" + currentDate + "/" + startTime;
 
@@ -43,6 +45,8 @@ void createBooking() {
       draw("something went wrong :(");
       delay(5000);
     }
+
+    content.set("fields/room/stringValue", ROOM_NAME);
 
     String toSaveBookingForUser = "users/" + cardOwner + "/" + currentDate + "/" + startTime;
     if (Firebase.Firestore.patchDocument(&fbdo, PROJECT_ID, "", toSaveBookingForUser.c_str(), content.raw(), "")) {
@@ -75,6 +79,7 @@ void createBooking() {
     content.set("fields/endTime/stringValue", endTime);
     content.set("fields/owner/stringValue", cardOwner);
     content.set("fields/title/stringValue", "quick booking");
+    content.set("fields/endDate/stringValue", currentDate);
 
     String toSaveBookingForRoom = "rooms/" + uid + "/" + currentDate + "/" + startTime;
 
@@ -85,6 +90,8 @@ void createBooking() {
     }
 
     String toSaveBookingForUser = "users/" + cardOwner + "/" + currentDate + "/" + startTime;
+
+    content.set("fields/room/stringValue", ROOM_NAME);
     if (Firebase.Firestore.patchDocument(&fbdo, PROJECT_ID, "", toSaveBookingForUser.c_str(), content.raw(), "")) {
     } else {
       draw("something went wrong :(");
@@ -132,6 +139,7 @@ void createBooking() {
     content.set("fields/endTime/stringValue", endTime);
     content.set("fields/owner/stringValue", cardOwner);
     content.set("fields/title/stringValue", "quick booking");
+    content.set("fields/endDate/stringValue", currentDate);
 
 
 
@@ -143,6 +151,7 @@ void createBooking() {
       delay(5000);
     }
 
+    content.set("fields/room/stringValue", ROOM_NAME);
     String toSaveBookingForUser = "users/" + cardOwner + "/" + currentDate + "/" + startTime;
     if (Firebase.Firestore.patchDocument(&fbdo, PROJECT_ID, "", toSaveBookingForUser.c_str(), content.raw(), "")) {
     } else {
@@ -199,3 +208,4 @@ bool checkAccess() {
 
   return false;
 }
+
