@@ -70,6 +70,7 @@ void setupStateMachine() {
   // Buttons
   pinMode(BUTTON_CONFIRM, INPUT_PULLUP);
   pinMode(BUTTON_ABORT, INPUT_PULLUP);
+
 }
 
 /**
@@ -260,25 +261,39 @@ void stateMachine() {
       break;
 
     case NEXTROOM:
-      //drawNextRoom(); //TODO: Implement
-
-      cursor = 0;
-
-      u8g2.firstPage();
-      do {
+      
+        /* String text3 = "Check other ";
+        String text4 = "Rooms status";
+        String displayTexts[] = {formattedTime.substring(0, formattedTime.length() - 3), text3, text4}; */
+        
         u8g2.setFont(u8g2_font_ncenB08_tr);
-        u8g2.setCursor(0, 15);
-        u8g2.print("Rooms available");
-      } while (u8g2.nextPage());
+        u8g2.firstPage();
+        do {
+          u8g2.drawStr(0, 10, formattedTime.c_str());
+          u8g2.drawStr(0, 20, "Check other");
+          u8g2.drawStr(0, 30, "Rooms status");
+        } while (u8g2.nextPage());
 
-
-      if (getButtonState() == "Abort") {
-        currentState = IDLE;
-      } else if (getButtonState() == "Left") {
-        cursor = (cursor + 1) % 3;
-      } else if (getButtonState() == "Right") {
-        cursor = (cursor + 2) % 3;
-      }
+        if (getButtonState() == "Confirm" ) {
+          currentState = IDLE;
+        } else if (getButtonState() == "Up") {
+          //cursor = (cursor + 1) % 3;
+          currentState = OTHERROOM;
+        } else if (getButtonState() == "Down") {
+          //cursor = (cursor + 2) % 3;
+          currentState = OTHERROOM;
+        } else if (getButtonState() == "Abort" ) {
+          currentState = IDLE;
+        }
       break;
+
+
+    case OTHERROOM: 
+    if (getButtonState() == "Abort") {
+    currentState = IDLE;
+    break; // Exit the case immediately if aborting.
+    }
+    fetchData();   
+  break; 
   }
 }

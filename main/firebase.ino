@@ -9,6 +9,10 @@
  * @brief Updates the daily calendar.
  * 
  */
+
+void handleFirebaseError(int httpCode);
+void handleFirebaseError(String errorReason);
+
 void updateDailyCalendar() {
   String pathToMeetings = "rooms/" + uid + "/" + currentDate;
 
@@ -85,4 +89,17 @@ void updateNextMeeting(String *startTime) {
 
     i++;
   }
+}
+
+void fetchData() {
+    if (Firebase.Firestore.getDocument(&fbdo, PROJECT_ID, "(default)", "test")) {
+        if (fbdo.httpCode() == 200) {
+            String payload = fbdo.payload();
+            
+            parseFirestoreData(payload);
+        } 
+    } else {
+        Serial.println("Firestore connection failed");
+        Serial.println("Error Reason: " + fbdo.errorReason());
+    }
 }
