@@ -34,8 +34,7 @@ void updateDailyCalendar() {
       Serial.println(fbdo.errorReason());
     }
   } else {
-
-    String path2 = "rooms/" + uid;
+    String path2 = "test/" + uid;
     FirebaseJson content;
     content.set("fields/available/booleanValue", true);
 
@@ -91,15 +90,38 @@ void updateNextMeeting(String *startTime) {
   }
 }
 
-void fetchData() {
-    if (Firebase.Firestore.getDocument(&fbdo, PROJECT_ID, "(default)", "test")) {
-        if (fbdo.httpCode() == 200) {
-            String payload = fbdo.payload();
-            
-            parseFirestoreData(payload);
-        } 
-    } else {
-        Serial.println("Firestore connection failed");
-        Serial.println("Error Reason: " + fbdo.errorReason());
-    }
+/**
+ * @brief Checks room availability.
+ * 
+ * @param roomId Room ID to check.
+ * @return true if room is available, false otherwise.
+ */
+bool roomStatus(String roomId) {
+  String path = "rooms/" + roomId;
+
+  if (Firebase.Firestore.getDocument(&fbdo, PROJECT_ID, "", path.c_str(), "")) {
+    FirebaseJson payload;
+    payload.setJsonData(fbdo.payload().c_str());
+
+    FirebaseJsonData jsonData;
+    payload.get(jsonData, "fields/available/booleanValue", true);
+
+    return jsonData.boolValue;
+  } else {
+    String text = "Error: Room ID not found - " + roomId;
+    draw(text.c_str());
+    delay(500);
+  }
+
+  return false;
 }
+
+/**
+ * @brief 
+ */
+void fetchRoomData() {
+  // Fetch data from the database and store it in the roomData array
+  for (int j = 0; j < 5; j++) {
+    roomsStatus[j] = roomStatus(nearestRoomsId[j]);
+  }
+}  
