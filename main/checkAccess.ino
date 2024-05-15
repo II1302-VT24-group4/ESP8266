@@ -34,7 +34,7 @@ void createBooking() {
     String endTime = String(nextAvailableTime.substring(0, 3).toInt() + 1) + ":" + nextAvailableTime.substring(3, 5);
     content.set("fields/endTime/stringValue", endTime);
     content.set("fields/owner/stringValue", cardOwner);
-    content.set("fields/title/stringValue", "quick booking");
+    content.set("fields/title/stringValue", "Quick Booking");
     content.set("fields/endDate/stringValue", currentDate);
     
 
@@ -78,7 +78,7 @@ void createBooking() {
     String endTime = nextAvailableTime.substring(8, 14);
     content.set("fields/endTime/stringValue", endTime);
     content.set("fields/owner/stringValue", cardOwner);
-    content.set("fields/title/stringValue", "quick booking");
+    content.set("fields/title/stringValue", "Quick Booking");
     content.set("fields/endDate/stringValue", currentDate);
 
     String toSaveBookingForRoom = "rooms/" + uid + "/" + currentDate + "/" + startTime;
@@ -128,7 +128,7 @@ void createBooking() {
       startTime = formattedTime.substring(0, 2) + ":30";
     }
 
-    if (timeDiff < 100 && nextMeeting != nullptr) {
+    if (timeDiff < 100 && nextMeeting != nullptr) {Quick Booking
       endTime = nextMeeting;
     } else {
       endTime = String(startTime.substring(0, 2).toInt() + 1) + ":" + startTime.substring(3, 6);
@@ -138,7 +138,7 @@ void createBooking() {
     content.set("fields/startTime/stringValue", startTime);
     content.set("fields/endTime/stringValue", endTime);
     content.set("fields/owner/stringValue", cardOwner);
-    content.set("fields/title/stringValue", "quick booking");
+    content.set("fields/title/stringValue", "Quick Booking");
     content.set("fields/endDate/stringValue", currentDate);
 
 
