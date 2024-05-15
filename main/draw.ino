@@ -96,7 +96,7 @@ void drawIdle() {
     text4 = "-" + nextMeeting;
   }
 
-  String displayTexts[] = { "Anna", formattedTime.substring(0, formattedTime.length() - 3), text3, text4 };
+  String displayTexts[] = { ROOM_NAME, formattedTime.substring(0, formattedTime.length() - 3), text3, text4 };
 
   u8g2.firstPage();
   do {

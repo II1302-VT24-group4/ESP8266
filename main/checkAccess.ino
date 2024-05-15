@@ -46,7 +46,7 @@ void createBooking() {
       delay(5000);
     }
 
-    content.set("fields/room/stringValue", ROOM_NAME);
+    content.set("fields/room/stringValue", uid);
 
     String toSaveBookingForUser = "users/" + cardOwner + "/" + currentDate + "/" + startTime;
     if (Firebase.Firestore.patchDocument(&fbdo, PROJECT_ID, "", toSaveBookingForUser.c_str(), content.raw(), "")) {
@@ -91,7 +91,7 @@ void createBooking() {
 
     String toSaveBookingForUser = "users/" + cardOwner + "/" + currentDate + "/" + startTime;
 
-    content.set("fields/room/stringValue", ROOM_NAME);
+    content.set("fields/room/stringValue", uid);
     if (Firebase.Firestore.patchDocument(&fbdo, PROJECT_ID, "", toSaveBookingForUser.c_str(), content.raw(), "")) {
     } else {
       draw("something went wrong :(");
@@ -128,7 +128,7 @@ void createBooking() {
       startTime = formattedTime.substring(0, 2) + ":30";
     }
 
-    if (timeDiff < 100 && nextMeeting != nullptr) {Quick Booking
+    if (timeDiff < 100 && nextMeeting != nullptr) {
       endTime = nextMeeting;
     } else {
       endTime = String(startTime.substring(0, 2).toInt() + 1) + ":" + startTime.substring(3, 6);
@@ -151,7 +151,7 @@ void createBooking() {
       delay(5000);
     }
 
-    content.set("fields/room/stringValue", ROOM_NAME);
+    content.set("fields/room/stringValue", uid);
     String toSaveBookingForUser = "users/" + cardOwner + "/" + currentDate + "/" + startTime;
     if (Firebase.Firestore.patchDocument(&fbdo, PROJECT_ID, "", toSaveBookingForUser.c_str(), content.raw(), "")) {
     } else {
