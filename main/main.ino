@@ -80,6 +80,9 @@ NTPClient timeClient(ntpUDP, "pool.ntp.org");
 #define lock_width 64
 #define lock_height 64
 
+#define logo_width 30
+#define logo_height 20
+
 #define TONE_ABORT 330
 #define TONE_CONFIRM 550
 #define TONE_RFID 660
@@ -113,8 +116,8 @@ enum State {
   IDLE,
   QUICKBOOK,
   CONFIRMQUICKBOOK,
-  NEXTROOM,
-  OTHERROOM
+  FETCHNEXTROOM,
+  NEXTROOM
 };
 
 State currentState = IDLE;
@@ -150,6 +153,19 @@ const unsigned long buttonUpdateInterval = 200;
 
 unsigned long lastCalendarUpdateTime = 0;
 const unsigned long calendarUpdateInterval = 2000;
+
+unsigned long lastSwitchUpdateTime = 0;
+const unsigned long switchUpdateInterval = 20000;
+
+
+unsigned long lastSwitch2UpdateTime = 0;
+const unsigned long switch2UpdateInterval = 10000;
+
+unsigned long lastDrawUpdateTime = 0;
+const unsigned long drawUpdateInterval = 200;
+
+String nearestRoomsId[5] = {"Anders", "Bengt", "Henrik", "Sara", "Victoria"};
+bool roomsStatus[5];
 
 /****************************************************
  *           Initialization For controller

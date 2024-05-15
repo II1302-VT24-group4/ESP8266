@@ -70,7 +70,6 @@ void setupStateMachine() {
   // Buttons
   pinMode(BUTTON_CONFIRM, INPUT_PULLUP);
   pinMode(BUTTON_ABORT, INPUT_PULLUP);
-
 }
 
 /**
@@ -99,10 +98,20 @@ void stateMachine() {
 
       drawIdle();
 
+      if (!nextAvailableTime.isEmpty()) {
+        if (currentMillis - lastSwitchUpdateTime >= switchUpdateInterval) {
+          lastSwitchUpdateTime = currentMillis;
+          lastSwitch2UpdateTime = currentMillis;
+          currentState = FETCHNEXTROOM;
+        }
+      } else {
+        lastSwitchUpdateTime = currentMillis;
+      }
+
       if (getButtonState() == "Left") {
-        currentState = NEXTROOM;
+        currentState = FETCHNEXTROOM;
       } else if (getButtonState() == "Right") {
-        currentState = NEXTROOM;
+        currentState = FETCHNEXTROOM;
       }
 
       if (SoftSerial.available() && nextAvailableTime.isEmpty()) {
@@ -129,9 +138,6 @@ void stateMachine() {
         readRFIDData();
 
         if (checkAccess()) {
-          //draw("Room unlocked!");
-          //delay(2000);
-
           u8g2.firstPage();
           do {
             drawUnlockedLockIcon();
@@ -246,54 +252,31 @@ void stateMachine() {
 
     case CONFIRMQUICKBOOK:  // Logic for confirming quick booking and creating it
       createBooking();
-
-      u8g2.firstPage();
-      do {
-        u8g2.setFont(u8g2_font_ncenB08_tr);
-        u8g2.drawStr(0, 10, formattedTime.c_str());
-        u8g2.drawStr(0, 20, "Booking created");
-      } while (u8g2.nextPage());
-
+      draw("Booking created");
       delay(3000);
-
       currentState = IDLE;
+      break;
 
+    case FETCHNEXTROOM:
+      fetchRoomData();
+      currentState = NEXTROOM;
       break;
 
     case NEXTROOM:
-      
-        /* String text3 = "Check other ";
-        String text4 = "Rooms status";
-        String displayTexts[] = {formattedTime.substring(0, formattedTime.length() - 3), text3, text4}; */
-        
-        u8g2.setFont(u8g2_font_ncenB08_tr);
-        u8g2.firstPage();
-        do {
-          u8g2.drawStr(0, 10, formattedTime.c_str());
-          u8g2.drawStr(0, 20, "Check other");
-          u8g2.drawStr(0, 30, "Rooms status");
-        } while (u8g2.nextPage());
+      // Display
+      drawNextRoom();
 
-        if (getButtonState() == "Confirm" ) {
-          currentState = IDLE;
-        } else if (getButtonState() == "Up") {
-          //cursor = (cursor + 1) % 3;
-          currentState = OTHERROOM;
-        } else if (getButtonState() == "Down") {
-          //cursor = (cursor + 2) % 3;
-          currentState = OTHERROOM;
-        } else if (getButtonState() == "Abort" ) {
-          currentState = IDLE;
-        }
+      // Switch after 10 sec
+      if (currentMillis - lastSwitch2UpdateTime >= switch2UpdateInterval) {
+        lastSwitch2UpdateTime = currentMillis;
+        currentState = IDLE;
+      }
+
+      // Exit screen if abort
+      if (getButtonState() == "Abort" || SoftSerial.available()) {
+        currentState = IDLE;
+      }
+
       break;
-
-
-    case OTHERROOM: 
-    if (getButtonState() == "Abort") {
-    currentState = IDLE;
-    break; // Exit the case immediately if aborting.
-    }
-    fetchData();   
-  break; 
   }
 }
