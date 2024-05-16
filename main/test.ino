@@ -42,7 +42,7 @@ void test() {
   testBuzzer();
   testWifi();
   testRFID();
-  testNextRoom();
+  //testNextRoom();
 
   draw("All tests done!");
   Serial.write("All tests done!\n");

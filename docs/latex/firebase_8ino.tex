@@ -8,13 +8,24 @@ Firebase code.
 \doxysubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{firebase_8ino_ad198a3ffe0b1b26abfb99029a176f5ea}\label{firebase_8ino_ad198a3ffe0b1b26abfb99029a176f5ea}} 
-void \mbox{\hyperlink{firebase_8ino_ad198a3ffe0b1b26abfb99029a176f5ea}{update\+Daily\+Calendar}} ()
+\mbox{\Hypertarget{firebase_8ino_a5719cd7412fec546b3be4c4cefd8de76}\label{firebase_8ino_a5719cd7412fec546b3be4c4cefd8de76}} 
+void \mbox{\hyperlink{firebase_8ino_a5719cd7412fec546b3be4c4cefd8de76}{handle\+Firebase\+Error}} (int http\+Code)
 \begin{DoxyCompactList}\small\item\em Updates the daily calendar. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{firebase_8ino_ac99cfe0feeac89a0fb3f69acde0ac77e}\label{firebase_8ino_ac99cfe0feeac89a0fb3f69acde0ac77e}} 
+void {\bfseries handle\+Firebase\+Error} (String error\+Reason)
+\item 
+\mbox{\Hypertarget{firebase_8ino_ad198a3ffe0b1b26abfb99029a176f5ea}\label{firebase_8ino_ad198a3ffe0b1b26abfb99029a176f5ea}} 
+void {\bfseries update\+Daily\+Calendar} ()
+\item 
 void \mbox{\hyperlink{firebase_8ino_a147efef620128888870ef5c3dfa2b243}{update\+Next\+Available}} (const String $\ast$start\+Times, const String $\ast$end\+Times, int size\+Of\+Array)
 \begin{DoxyCompactList}\small\item\em Updates the next available time slot. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{firebase_8ino_a9508d6443b625fbe80a62cdc774a8e32}{update\+Next\+Meeting}} (String $\ast$start\+Time)
-\begin{DoxyCompactList}\small\item\em Updates the next meeting time. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Updates the next meeting time. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{firebase_8ino_a488911e9ca8d8b3371432276531ed4a0}{room\+Status}} (String room\+Id)
+\begin{DoxyCompactList}\small\item\em Checks room availability. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{firebase_8ino_ae309cb4f1880dc26e0a278b95b42eafc}\label{firebase_8ino_ae309cb4f1880dc26e0a278b95b42eafc}} 
+void {\bfseries fetch\+Room\+Data} ()
+\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
@@ -26,6 +37,24 @@ Erik Heiskanen, Leo Andersson
 This file contains functions related to Firebase operations. 
 
 \doxysubsection{Function Documentation}
+\mbox{\Hypertarget{firebase_8ino_a488911e9ca8d8b3371432276531ed4a0}\label{firebase_8ino_a488911e9ca8d8b3371432276531ed4a0}} 
+\index{firebase.ino@{firebase.ino}!roomStatus@{roomStatus}}
+\index{roomStatus@{roomStatus}!firebase.ino@{firebase.ino}}
+\doxysubsubsection{\texorpdfstring{roomStatus()}{roomStatus()}}
+{\footnotesize\ttfamily bool room\+Status (\begin{DoxyParamCaption}\item[{String}]{room\+Id }\end{DoxyParamCaption})}
+
+
+
+Checks room availability. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em room\+Id} & Room ID to check. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if room is available, false otherwise. 
+\end{DoxyReturn}
 \mbox{\Hypertarget{firebase_8ino_a147efef620128888870ef5c3dfa2b243}\label{firebase_8ino_a147efef620128888870ef5c3dfa2b243}} 
 \index{firebase.ino@{firebase.ino}!updateNextAvailable@{updateNextAvailable}}
 \index{updateNextAvailable@{updateNextAvailable}!firebase.ino@{firebase.ino}}

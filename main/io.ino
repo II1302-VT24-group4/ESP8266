@@ -26,8 +26,8 @@ String getButtonState() {
   if (button_confirm_state == LOW) return "Confirm";
   if (button_abort_state == LOW) return "Abort";
   if (buttons_direction < 880 && buttons_direction > 870) return "Left";
-  if (buttons_direction < 45 && buttons_direction > 38) return "Right";
-  if (buttons_direction < 188 && buttons_direction > 180) return "Up";
-  if (buttons_direction < 92 && buttons_direction > 85) return "Down";
+  if (buttons_direction < 46 && buttons_direction > 37) return "Right";
+  if (buttons_direction < 189 && buttons_direction > 180) return "Up";
+  if (buttons_direction < 93 && buttons_direction > 84) return "Down";
   return "No button pressed";
 }

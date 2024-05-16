@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['🚀_20welcome_20to_20the_20esp8266_20code_20repository_21_82',['🚀 Welcome to the ESP8266 Code Repository!',['../index.html',1,'']]]
+  ['🚀_20welcome_20to_20the_20esp8266_20code_20repository_21_84',['🚀 Welcome to the ESP8266 Code Repository!',['../index.html',1,'']]]
 ];

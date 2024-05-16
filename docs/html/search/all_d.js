@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['🚀_20welcome_20to_20the_20esp8266_20code_20repository_21_40',['🚀 Welcome to the ESP8266 Code Repository!',['../index.html',1,'']]]
+  ['wifi_2eino_40',['wifi.ino',['../wifi_8ino.html',1,'']]]
 ];

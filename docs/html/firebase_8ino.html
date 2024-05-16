@@ -78,9 +78,15 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a5719cd7412fec546b3be4c4cefd8de76"><td class="memItemLeft" align="right" valign="top"><a id="a5719cd7412fec546b3be4c4cefd8de76"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="firebase_8ino.html#a5719cd7412fec546b3be4c4cefd8de76">handleFirebaseError</a> (int httpCode)</td></tr>
+<tr class="memdesc:a5719cd7412fec546b3be4c4cefd8de76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the daily calendar. <br /></td></tr>
+<tr class="separator:a5719cd7412fec546b3be4c4cefd8de76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac99cfe0feeac89a0fb3f69acde0ac77e"><td class="memItemLeft" align="right" valign="top"><a id="ac99cfe0feeac89a0fb3f69acde0ac77e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>handleFirebaseError</b> (String errorReason)</td></tr>
+<tr class="separator:ac99cfe0feeac89a0fb3f69acde0ac77e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad198a3ffe0b1b26abfb99029a176f5ea"><td class="memItemLeft" align="right" valign="top"><a id="ad198a3ffe0b1b26abfb99029a176f5ea"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="firebase_8ino.html#ad198a3ffe0b1b26abfb99029a176f5ea">updateDailyCalendar</a> ()</td></tr>
-<tr class="memdesc:ad198a3ffe0b1b26abfb99029a176f5ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the daily calendar. <br /></td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>updateDailyCalendar</b> ()</td></tr>
 <tr class="separator:ad198a3ffe0b1b26abfb99029a176f5ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a147efef620128888870ef5c3dfa2b243"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="firebase_8ino.html#a147efef620128888870ef5c3dfa2b243">updateNextAvailable</a> (const String *startTimes, const String *endTimes, int sizeOfArray)</td></tr>
 <tr class="memdesc:a147efef620128888870ef5c3dfa2b243"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the next available time slot.  <a href="firebase_8ino.html#a147efef620128888870ef5c3dfa2b243">More...</a><br /></td></tr>
@@ -88,12 +94,45 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fire
 <tr class="memitem:a9508d6443b625fbe80a62cdc774a8e32"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="firebase_8ino.html#a9508d6443b625fbe80a62cdc774a8e32">updateNextMeeting</a> (String *startTime)</td></tr>
 <tr class="memdesc:a9508d6443b625fbe80a62cdc774a8e32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the next meeting time.  <a href="firebase_8ino.html#a9508d6443b625fbe80a62cdc774a8e32">More...</a><br /></td></tr>
 <tr class="separator:a9508d6443b625fbe80a62cdc774a8e32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a488911e9ca8d8b3371432276531ed4a0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="firebase_8ino.html#a488911e9ca8d8b3371432276531ed4a0">roomStatus</a> (String roomId)</td></tr>
+<tr class="memdesc:a488911e9ca8d8b3371432276531ed4a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks room availability.  <a href="firebase_8ino.html#a488911e9ca8d8b3371432276531ed4a0">More...</a><br /></td></tr>
+<tr class="separator:a488911e9ca8d8b3371432276531ed4a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae309cb4f1880dc26e0a278b95b42eafc"><td class="memItemLeft" align="right" valign="top"><a id="ae309cb4f1880dc26e0a278b95b42eafc"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>fetchRoomData</b> ()</td></tr>
+<tr class="separator:ae309cb4f1880dc26e0a278b95b42eafc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Firebase code. </p>
 <dl class="section author"><dt>Author</dt><dd>Erik Heiskanen, Leo Andersson</dd></dl>
 <p>This file contains functions related to Firebase operations. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
+<a id="a488911e9ca8d8b3371432276531ed4a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a488911e9ca8d8b3371432276531ed4a0">&#9670;&nbsp;</a></span>roomStatus()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool roomStatus </td>
+          <td>(</td>
+          <td class="paramtype">String&#160;</td>
+          <td class="paramname"><em>roomId</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks room availability. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">roomId</td><td>Room ID to check. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if room is available, false otherwise. </dd></dl>
+
+</div>
+</div>
 <a id="a147efef620128888870ef5c3dfa2b243"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a147efef620128888870ef5c3dfa2b243">&#9670;&nbsp;</a></span>updateNextAvailable()</h2>
 

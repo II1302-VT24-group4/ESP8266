@@ -39,6 +39,9 @@ Include dependency graph for main.\+ino\+:
 \mbox{\Hypertarget{main_8ino_a198fd6abc61f7245c473dcb2752370e7}\label{main_8ino_a198fd6abc61f7245c473dcb2752370e7}} 
 \#define {\bfseries USER\+\_\+\+PASSWORD}~\char`\"{}test123\char`\"{}
 \item 
+\mbox{\Hypertarget{main_8ino_a35cbcf1ffd7ded9fcd7fc1142f923a25}\label{main_8ino_a35cbcf1ffd7ded9fcd7fc1142f923a25}} 
+\#define {\bfseries ROOM\+\_\+\+NAME}~\char`\"{}Demo\char`\"{}
+\item 
 \mbox{\Hypertarget{main_8ino_a65b26605d90a0bcd0e13e05db54f551f}\label{main_8ino_a65b26605d90a0bcd0e13e05db54f551f}} 
 \#define {\bfseries RES}~D4
 \item 
@@ -84,6 +87,12 @@ Include dependency graph for main.\+ino\+:
 \mbox{\Hypertarget{main_8ino_ac072c178911f995190ae07e48e212a58}\label{main_8ino_ac072c178911f995190ae07e48e212a58}} 
 \#define {\bfseries lock\+\_\+height}~64
 \item 
+\mbox{\Hypertarget{main_8ino_a04a52ff93865fc74e10df455625dede2}\label{main_8ino_a04a52ff93865fc74e10df455625dede2}} 
+\#define {\bfseries logo\+\_\+width}~30
+\item 
+\mbox{\Hypertarget{main_8ino_a92c28f0b826f398bc673a94e08a8359c}\label{main_8ino_a92c28f0b826f398bc673a94e08a8359c}} 
+\#define {\bfseries logo\+\_\+height}~20
+\item 
 \mbox{\Hypertarget{main_8ino_a88137ec1c23de8a3586d564fd020bee1}\label{main_8ino_a88137ec1c23de8a3586d564fd020bee1}} 
 \#define {\bfseries TONE\+\_\+\+ABORT}~330
 \item 
@@ -101,7 +110,7 @@ enum {\bfseries State} \{ \newline
 {\bfseries IDLE}
 , {\bfseries QUICKBOOK}
 , {\bfseries CONFIRMQUICKBOOK}
-, {\bfseries BOOK}
+, {\bfseries FETCHNEXTROOM}
 , \newline
 {\bfseries NEXTROOM}
  \}
@@ -230,13 +239,37 @@ String {\bfseries next\+Meeting} = \char`\"{}\char`\"{}
 unsigned long {\bfseries last\+Button\+Update\+Time} = 0
 \item 
 \mbox{\Hypertarget{main_8ino_abf2c25ae06197de4482f7dfe06cb7435}\label{main_8ino_abf2c25ae06197de4482f7dfe06cb7435}} 
-const unsigned long {\bfseries button\+Update\+Interval} = 200
+const unsigned long {\bfseries button\+Update\+Interval} = 300
 \item 
 \mbox{\Hypertarget{main_8ino_a3084c01a8932d907ada0047023613578}\label{main_8ino_a3084c01a8932d907ada0047023613578}} 
 unsigned long {\bfseries last\+Calendar\+Update\+Time} = 0
 \item 
 \mbox{\Hypertarget{main_8ino_add8023840c9d498fdd296b3f04769820}\label{main_8ino_add8023840c9d498fdd296b3f04769820}} 
-const unsigned long {\bfseries calendar\+Update\+Interval} = 2000
+const unsigned long {\bfseries calendar\+Update\+Interval} = 3000
+\item 
+\mbox{\Hypertarget{main_8ino_aa863265d86d73184d543606c7ee812fa}\label{main_8ino_aa863265d86d73184d543606c7ee812fa}} 
+unsigned long {\bfseries last\+Switch\+Update\+Time} = 0
+\item 
+\mbox{\Hypertarget{main_8ino_ab1b78d6b7047fff64ac7c32b04e423c5}\label{main_8ino_ab1b78d6b7047fff64ac7c32b04e423c5}} 
+const unsigned long {\bfseries switch\+Update\+Interval} = 20000
+\item 
+\mbox{\Hypertarget{main_8ino_a67be8bbaeb54c967ee1a9823b1858a39}\label{main_8ino_a67be8bbaeb54c967ee1a9823b1858a39}} 
+unsigned long {\bfseries last\+Switch2\+Update\+Time} = 0
+\item 
+\mbox{\Hypertarget{main_8ino_af3b5d101cd0be6d6d1e52fcfcb0f5818}\label{main_8ino_af3b5d101cd0be6d6d1e52fcfcb0f5818}} 
+const unsigned long {\bfseries switch2\+Update\+Interval} = 10000
+\item 
+\mbox{\Hypertarget{main_8ino_a8e3eb662f6781ebf6a01ee389f706834}\label{main_8ino_a8e3eb662f6781ebf6a01ee389f706834}} 
+unsigned long {\bfseries last\+Draw\+Update\+Time} = 0
+\item 
+\mbox{\Hypertarget{main_8ino_a0030ec4cc550c1813d368adaf88601c0}\label{main_8ino_a0030ec4cc550c1813d368adaf88601c0}} 
+const unsigned long {\bfseries draw\+Update\+Interval} = 200
+\item 
+\mbox{\Hypertarget{main_8ino_a019059b18d5c66fcb1d71ca98487a7bb}\label{main_8ino_a019059b18d5c66fcb1d71ca98487a7bb}} 
+String {\bfseries nearest\+Rooms\+Id} \mbox{[}5\mbox{]} = \{\char`\"{}Anders\char`\"{}, \char`\"{}Bengt\char`\"{}, \char`\"{}Henrik\char`\"{}, \char`\"{}Sara\char`\"{}, \char`\"{}Victoria\char`\"{}\}
+\item 
+\mbox{\Hypertarget{main_8ino_a61cfaa06aa69f2f6ce4c80b63a1222d8}\label{main_8ino_a61cfaa06aa69f2f6ce4c80b63a1222d8}} 
+bool {\bfseries rooms\+Status} \mbox{[}5\mbox{]}
 \end{DoxyCompactItemize}
 
 

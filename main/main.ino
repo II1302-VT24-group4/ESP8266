@@ -149,10 +149,10 @@ int quickBookType = 0;
 String nextMeeting = "";
 
 unsigned long lastButtonUpdateTime = 0;
-const unsigned long buttonUpdateInterval = 200;
+const unsigned long buttonUpdateInterval = 300;
 
 unsigned long lastCalendarUpdateTime = 0;
-const unsigned long calendarUpdateInterval = 2000;
+const unsigned long calendarUpdateInterval = 3000;
 
 unsigned long lastSwitchUpdateTime = 0;
 const unsigned long switchUpdateInterval = 20000;
